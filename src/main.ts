@@ -5,6 +5,10 @@ import roleHarvester from './role.harvester'
 import roleUpgrader from './role.upgrader'
 
 let loop = function () {
+  if(!Memory.foreman || Memory.foreman != foreman) {
+    Memory.foreman = foreman
+  }
+
   foreman.deleteDeadCreeps()
 
   foreman.createCreep('builder', 5)
