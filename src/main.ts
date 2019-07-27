@@ -1,16 +1,10 @@
-console.log('Import code')
-
 import * as foreman from "./foreman"
 
 import * as roleBuilder from "./role.builder"
 import * as roleHarvester from "./role.harvester"
 import * as roleUpgrader from "./role.upgrader"
 
-console.log('Done importing code')
-
 function loop() {
-  console.log('Start loop')
-
   if (!Memory.foreman || Memory.foreman != foreman) {
     Memory.foreman = foreman
   }
