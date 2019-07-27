@@ -1,0 +1,16 @@
+{
+  "name": "screeps",
+  "private": true,
+  "version": "1.0.0",
+  "description": "lee-dohm's screeps code",
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Lee Dohm",
+  "license": "ISC",
+  "dependencies": {
+    "grunt": "^1.0.4",
+    "grunt-screeps": "^1.4.0"
+  }
+}
