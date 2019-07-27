@@ -6,7 +6,7 @@
   "main": "Gruntfile.js",
   "scripts": {
     "build": "tsc",
-    "deploy": "run build && grunt screeps",
+    "deploy": "npm run build && grunt screeps",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Lee Dohm",
