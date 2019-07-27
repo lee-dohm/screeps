@@ -1,4 +1,4 @@
-type Role = 'builder' | 'harvester' | 'soldier' | 'upgrader'
+type Role = "builder" | "harvester" | "soldier" | "upgrader"
 
 type Body = BodyPartConstant[]
 
@@ -31,19 +31,20 @@ let foreman = {
    * @param  {String} role  Role of the creep to create.
    * @param  {Number} count Number of creeps of the given role to create.
    */
-  createCreep: function (role: Role, count: Number) {
-    let spawn = Game.spawns['Spawn1']
+  createCreep: function(role: Role, count: Number) {
+    let spawn = Game.spawns["Spawn1"]
 
     if (!spawn.spawning) {
       let body = this.getBestBodyForRole(spawn, role)
 
-      if(body)
-      {
-        if(spawn.canCreateCreep(body) === OK) {
-          let creeps = this.filterCreeps((creep: Creep) => { return creep.memory.role === role })
+      if (body) {
+        if (spawn.canCreateCreep(body) === OK) {
+          let creeps = this.filterCreeps((creep: Creep) => {
+            return creep.memory.role === role
+          })
 
           if (creeps.length < count) {
-            let newCreep = spawn.createCreep(body, undefined, {role: role, body: body})
+            let newCreep = spawn.createCreep(body, undefined, { role: role, body: body })
             console.log(`Spawn new ${role} with ${body}: ${newCreep}`)
           }
         }
@@ -51,11 +52,11 @@ let foreman = {
     }
   },
 
-  filterCreeps: function (fn: (creep: Creep) => boolean) {
+  filterCreeps: function(fn: (creep: Creep) => boolean) {
     let creeps: Creep[] = []
 
-    for(let creep in Game.creeps) {
-      if(fn(Game.creeps[creep])) {
+    for (let creep in Game.creeps) {
+      if (fn(Game.creeps[creep])) {
         creeps.push(Game.creeps[creep])
       }
     }
@@ -68,17 +69,24 @@ let foreman = {
    *
    * @param {Room} room Room to create extensions in
    */
-  createExtensions: function (room: Room) {
+  createExtensions: function(room: Room) {
     let extensions = room.find(FIND_MY_STRUCTURES, {
-      filter: (structure) => { return structure.structureType == STRUCTURE_EXTENSION }
+      filter: structure => {
+        return structure.structureType == STRUCTURE_EXTENSION
+      }
     })
 
     let extensionsUnderConstruction = room.find(FIND_MY_CONSTRUCTION_SITES, {
-      filter: (site) => { return site.structureType == STRUCTURE_EXTENSION }
+      filter: site => {
+        return site.structureType == STRUCTURE_EXTENSION
+      }
     })
 
-    if(room.controller) {
-      let extensionsNeeded = this.extensionsAllowed(room.controller.level) - extensions.length - extensionsUnderConstruction.length
+    if (room.controller) {
+      let extensionsNeeded =
+        this.extensionsAllowed(room.controller.level) -
+        extensions.length -
+        extensionsUnderConstruction.length
       if (extensionsNeeded > 0) {
         let spawn = room.find(FIND_MY_SPAWNS)[0]
         let spaces = this.lookForEmptyTerrainAround(room, spawn.pos.x, spawn.pos.y, 2)
@@ -94,11 +102,11 @@ let foreman = {
   /**
    * Delete all dead creeps from memory.
    */
-  deleteDeadCreeps: function () {
-    for(let name in Memory.creeps) {
-      if(!Game.creeps[name]) {
-        delete Memory.creeps[name];
-        console.log(`Delete dead creep from memory: ${name}`);
+  deleteDeadCreeps: function() {
+    for (let name in Memory.creeps) {
+      if (!Game.creeps[name]) {
+        delete Memory.creeps[name]
+        console.log(`Delete dead creep from memory: ${name}`)
       }
     }
   },
@@ -109,7 +117,7 @@ let foreman = {
    * @param  {Number} level Level of the room's controller.
    * @return {Number} Number of extensions allowed in the room.
    */
-  extensionsAllowed: function (level: number) {
+  extensionsAllowed: function(level: number) {
     return CONTROLLER_STRUCTURES[STRUCTURE_EXTENSION][level]
   },
 
@@ -124,7 +132,9 @@ let foreman = {
     let bodies = this.getBodiesForRole(role)
     let capacity = this.getTotalEnergyCapacity(spawn)
 
-    return bodies.find((body: Body) => { this.getEnergyCostForBody(body) <= capacity})
+    return bodies.find((body: Body) => {
+      this.getEnergyCostForBody(body) <= capacity
+    })
   },
 
   /**
@@ -133,24 +143,28 @@ let foreman = {
    * @param  {String} role Role to retrieve the body descriptions for.
    * @return {Array} Descriptions of the bodies defined for that role.
    */
-  getBodiesForRole: function (role: Role) {
+  getBodiesForRole: function(role: Role) {
     return bodyForRole[role]
   },
 
-  getEnergyCostForBody: function (body: Body) {
+  getEnergyCostForBody: function(body: Body) {
     let total = 0
 
-    body.forEach((part: BodyPartConstant) => { total += costForPart[part] })
+    body.forEach((part: BodyPartConstant) => {
+      total += costForPart[part]
+    })
 
     return total
   },
 
-  getTotalEnergyCapacity: function (spawn: StructureSpawn) {
+  getTotalEnergyCapacity: function(spawn: StructureSpawn) {
     let total = spawn.energyCapacity
 
-    let extensions = spawn.room.find(FIND_MY_STRUCTURES, { filter: { structureType: STRUCTURE_EXTENSION }})
+    let extensions = spawn.room.find(FIND_MY_STRUCTURES, {
+      filter: { structureType: STRUCTURE_EXTENSION }
+    })
     extensions.forEach((extension: Structure) => {
-      if(extension instanceof StructureExtension) {
+      if (extension instanceof StructureExtension) {
         total += extension.energyCapacity
       }
     })
@@ -163,11 +177,11 @@ let foreman = {
    *
    * @param  {Room} room Room to supervise.
    */
-  supervise: function (room: Room) {
+  supervise: function(room: Room) {
     this.createExtensions(room)
   },
 
-  lookForEmptyTerrainAround: function (room: Room, x: number, y: number, distance: number) {
+  lookForEmptyTerrainAround: function(room: Room, x: number, y: number, distance: number) {
     let top = y - distance
     let left = x - distance
     let bottom = y + distance
@@ -176,11 +190,11 @@ let foreman = {
     let spaces = room.lookAtArea(top, left, bottom, right, true)
 
     return spaces.filter((space: any) => {
-      if (space.type == 'terrain' && room.lookAt(space.x, space.y).length == 1) {
+      if (space.type == "terrain" && room.lookAt(space.x, space.y).length == 1) {
         return true
       }
     })
-  },
+  }
 }
 
 export default foreman

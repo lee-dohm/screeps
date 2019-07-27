@@ -1,13 +1,13 @@
 let roleHarvester = {
-  run: function (creep: Creep) {
-    if(!creep.memory.harvesting && creep.carry.energy === 0) {
+  run: function(creep: Creep) {
+    if (!creep.memory.harvesting && creep.carry.energy === 0) {
       creep.memory.harvesting = true
-      creep.say('Harvesting')
+      creep.say("Harvesting")
     }
 
-    if(creep.memory.harvesting && creep.carry.energy === creep.carryCapacity) {
+    if (creep.memory.harvesting && creep.carry.energy === creep.carryCapacity) {
       creep.memory.harvesting = false
-      creep.say('Depositing')
+      creep.say("Depositing")
     }
 
     if (creep.memory.harvesting) {
@@ -19,10 +19,13 @@ let roleHarvester = {
       }
     } else {
       let targets = creep.room.find(FIND_STRUCTURES, {
-        filter: (structure) => {
-          return (structure.structureType == STRUCTURE_EXTENSION ||
-                  structure.structureType == STRUCTURE_SPAWN ||
-                  structure.structureType == STRUCTURE_TOWER) && structure.energy < structure.energyCapacity
+        filter: structure => {
+          return (
+            (structure.structureType == STRUCTURE_EXTENSION ||
+              structure.structureType == STRUCTURE_SPAWN ||
+              structure.structureType == STRUCTURE_TOWER) &&
+            structure.energy < structure.energyCapacity
+          )
         }
       })
 
