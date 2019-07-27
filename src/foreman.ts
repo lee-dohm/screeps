@@ -64,6 +64,12 @@ let foreman = {
     return creeps
   },
 
+  killAllCreeps: function() {
+    for (const name in Game.creeps) {
+      Game.creeps[name].suicide()
+    }
+  },
+
   /**
    * Creates construction sites for up to the allowed number of extensions in a room.
    *
