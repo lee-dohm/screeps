@@ -5,12 +5,16 @@
   "description": "lee-dohm's screeps code",
   "main": "Gruntfile.js",
   "scripts": {
+    "build": "tsc",
+    "deploy": "run build && grunt screeps",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Lee Dohm",
   "license": "ISC",
   "dependencies": {
+    "@types/screeps": "^2.5.4",
     "grunt": "^1.0.4",
-    "grunt-screeps": "^1.4.0"
+    "grunt-screeps": "^1.4.0",
+    "typescript": "^3.5.3"
   }
 }
