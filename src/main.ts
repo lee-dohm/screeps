@@ -1,8 +1,8 @@
 import foreman from "./foreman"
 
-import roleBuilder from "./role.builder"
-import roleHarvester from "./role.harvester"
-import roleUpgrader from "./role.upgrader"
+import * as roleBuilder from "./role.builder"
+import * as roleHarvester from "./role.harvester"
+import * as roleUpgrader from "./role.upgrader"
 
 let loop = function() {
   if (!Memory.foreman || Memory.foreman != foreman) {
