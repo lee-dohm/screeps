@@ -1,7 +1,5 @@
 class CreepRole {
-  creep: Creep
-
-  constructor(creep: Creep) {
+  constructor(creep) {
     this.creep = creep
   }
 
