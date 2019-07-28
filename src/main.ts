@@ -4,7 +4,7 @@ import * as foreman from "./foreman"
 import * as roleBuilder from "./role.builder"
 import * as roleUpgrader from "./role.upgrader"
 
-import CreepRole from "./creep-role"
+import buildCreep from "./creep-factory"
 
 function loop() {
   debug.log("Start game loop")
@@ -27,7 +27,7 @@ function loop() {
     } else if (creep.memory.role == "upgrader") {
       roleUpgrader.run(creep)
     } else {
-      const creepRole = CreepRole.buildCreep(name)
+      const creepRole = buildCreep(name)
 
       if (creepRole) {
         creepRole.run()
