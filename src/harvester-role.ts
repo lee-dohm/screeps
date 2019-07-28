@@ -30,7 +30,15 @@ export default class HarvesterRole extends CreepRole {
       }
 
       default: {
-        console.log(`ERROR: Unknown harvester mode: ${this.mode}`)
+        // Convert from old memory style
+        if (this.creep.memory.harvesting) {
+          this.mode = "harvesting"
+        } else {
+          this.mode = "depositing"
+        }
+
+        delete this.creep.memory.harvesting
+        this.run()
         break
       }
     }
