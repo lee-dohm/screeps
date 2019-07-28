@@ -1,16 +1,4 @@
-import * as debug from "./debug"
-
-type Role = "builder" | "harvester" | "soldier" | "upgrader"
-
-type Body = BodyPartConstant[]
-
-type BodyCost = [Body, number]
-
-type RoleBodyMap = {
-  [key in Role]: Body[]
-}
-
-const bodyForRole: RoleBodyMap = {
+const bodyForRole = {
   builder: [[CARRY, WORK, MOVE]],
   harvester: [
     [CARRY, WORK, MOVE],
@@ -34,29 +22,29 @@ const costForPart = {
 
 // ***** Exported functions *****
 
-export function killAllCreeps() {
+function killAllCreeps() {
   for (const name in Game.creeps) {
     Game.creeps[name].suicide()
   }
 }
 
-export function listCreeps(role?: Role) {
+function listCreeps(role) {
   let creeps
 
   if (role) {
-    creeps = filterCreeps((creep: Creep) => creep.memory.role === role)
+    creeps = filterCreeps(creep => creep.memory.role === role)
   } else {
-    creeps = filterCreeps((creep: Creep) => true)
+    creeps = filterCreeps(creep => true)
   }
 
-  const names = creeps.map((creep: Creep) => creep.name).sort()
+  const names = creeps.map(creep => creep.name).sort()
 
   for (const name of names) {
     console.log(`Creep: ${name}`)
   }
 }
 
-export function maintainCreeps(role: Role, count: number) {
+function maintainCreeps(role, count) {
   debug.log(`Keep number of ${role} creeps at or above ${count}`)
 
   const spawn = Game.spawns["Spawn1"]
@@ -66,7 +54,7 @@ export function maintainCreeps(role: Role, count: number) {
 
     if (body) {
       if (canSpawnCreep(spawn, body)) {
-        const creeps = filterCreeps((creep: Creep) => creep.memory.role === role)
+        const creeps = filterCreeps(creep => creep.memory.role === role)
 
         if (creeps.length < count) {
           spawnCreep(spawn, body, role)
@@ -76,7 +64,7 @@ export function maintainCreeps(role: Role, count: number) {
   }
 }
 
-export function reclaimDeadCreepMemory() {
+function reclaimDeadCreepMemory() {
   debug.log("Reclaim dead creep memory")
 
   for (let name in Memory.creeps) {
@@ -87,12 +75,12 @@ export function reclaimDeadCreepMemory() {
   }
 }
 
-export function removeConstructionSites(room: Room, type?: string) {
+function removeConstructionSites(room, type) {
   let sites
 
   if (type) {
     sites = room.find(FIND_CONSTRUCTION_SITES, {
-      filter: (structure: ConstructionSite) => {
+      filter: structure => {
         return structure.structureType == type
       }
     })
@@ -107,12 +95,12 @@ export function removeConstructionSites(room: Room, type?: string) {
 
 // ***** Private functions *****
 
-function canSpawnCreep(spawn: StructureSpawn, body: Body) {
+function canSpawnCreep(spawn, body) {
   return spawn.spawnCreep(body, "canSpawnCreep", { dryRun: true }) === OK
 }
 
-function filterCreeps(fn: (creep: Creep) => boolean) {
-  let creeps: Creep[] = []
+function filterCreeps(fn: creep => boolean) {
+  let creeps = []
 
   for (const name in Game.creeps) {
     if (fn(Game.creeps[name])) {
@@ -123,16 +111,16 @@ function filterCreeps(fn: (creep: Creep) => boolean) {
   return creeps
 }
 
-function generateCreepName(role: Role) {
+function generateCreepName(role) {
   return `${role} ${Game.time}`
 }
 
-function getBestBodyForRole(spawn: StructureSpawn, role: Role): Body | undefined {
+function getBestBodyForRole(spawn, role) {
   const bodies = getBodiesForRole(role)
   const bodyCosts = getBodyCosts(bodies)
   const bestCost = bodyCosts
-    .filter((cost: BodyCost) => canSpawnCreep(spawn, cost[0]))
-    .sort((a: BodyCost, b: BodyCost) => a[1] - b[1])
+    .filter(cost => canSpawnCreep(spawn, cost[0]))
+    .sort((a, b) => a[1] - b[1])
     .shift()
 
   if (bestCost) {
@@ -142,25 +130,33 @@ function getBestBodyForRole(spawn: StructureSpawn, role: Role): Body | undefined
   }
 }
 
-function getBodiesForRole(role: Role) {
+function getBodiesForRole(role) {
   return bodyForRole[role]
 }
 
-function getBodyCost(body: Body): number {
-  return body.reduce((cost: number, part: BodyPartConstant) => {
+function getBodyCost(body): number {
+  return body.reduce((cost, part) => {
     return cost + costForPart[part]
   }, 0)
 }
 
-function getBodyCosts(bodies: Body[]): BodyCost[] {
-  return bodies.map((body: Body) => {
+function getBodyCosts(bodies) {
+  return bodies.map(body => {
     return [body, getBodyCost(body)]
   })
 }
 
-function spawnCreep(spawn: StructureSpawn, body: Body, role: Role) {
+function spawnCreep(spawn, body, role) {
   const name = generateCreepName(role)
 
   debug.log(`Spawn ${name}`)
   spawn.spawnCreep(body, name, { memory: { body: body, role: role } })
+}
+
+module.exports = {
+  killAllCreeps,
+  listCreeps,
+  maintainCreeps,
+  reclaimDeadCreepMemory,
+  removeConstructionSites
 }

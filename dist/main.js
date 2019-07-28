@@ -1,10 +1,8 @@
-import * as debug from "./debug"
-import * as foreman from "./foreman"
-
-import * as roleBuilder from "./role.builder"
-import * as roleUpgrader from "./role.upgrader"
-
-import buildCreep from "./creep-factory"
+const buildCreep = require("./creep-factory")
+const debug = require("./debug")
+const foreman = require("./foreman")
+const roleBuilder = require("./role.builder")
+const roleUpgrader = require("./role.upgrader")
 
 function loop() {
   debug.log("Start game loop")
@@ -39,4 +37,4 @@ function loop() {
   debug.logStats()
 }
 
-export = { loop }
+module.exports = { loop }

@@ -1,9 +1,8 @@
-import * as debug from "./debug"
+const CreepRole = require("./creep-role")
+const debug = require("./debug")
 
-import CreepRole from "./creep-role"
-
-export default class HarvesterRole extends CreepRole {
-  constructor(creep: Creep) {
+class HarvesterRole extends CreepRole {
+  constructor(creep) {
     super(creep)
   }
 
@@ -46,7 +45,9 @@ export default class HarvesterRole extends CreepRole {
     }
   }
 
-  private runDepositing() {
+  // ----------
+
+  runDepositing() {
     const targets = this.creep.room.find(FIND_STRUCTURES, {
       filter: structure => {
         return (
@@ -71,7 +72,7 @@ export default class HarvesterRole extends CreepRole {
     }
   }
 
-  private runHarvesting() {
+  runHarvesting() {
     const sources = this.creep.room.find(FIND_SOURCES)
 
     if (this.creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
@@ -79,3 +80,5 @@ export default class HarvesterRole extends CreepRole {
     }
   }
 }
+
+module.exports = HarvesterRole

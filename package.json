@@ -7,7 +7,7 @@
   "scripts": {
     "build": "npm run format",
     "deploy": "npm run format && grunt screeps",
-    "format": "prettier --write **/*.ts",
+    "format": "prettier --write **/*.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Lee Dohm",

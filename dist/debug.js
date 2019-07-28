@@ -1,12 +1,12 @@
 const USED_HISTORY_LENGTH = 10
 
-export function log(message: string) {
+function log(message) {
   if (Memory.debug) {
     console.log(message)
   }
 }
 
-export function logStats() {
+function logStats() {
   const percentUsed = Math.round((Game.cpu.getUsed() / Game.cpu.tickLimit) * 100)
 
   if (Memory.debug || Memory.stats) {
@@ -19,7 +19,7 @@ export function logStats() {
   updateUsedHistory(percentUsed)
 }
 
-function updateUsedHistory(used: number) {
+function updateUsedHistory(used) {
   if (Memory.usedHistory) {
     while (Memory.usedHistory.length > USED_HISTORY_LENGTH - 1) {
       Memory.usedHistory.shift()
@@ -30,3 +30,5 @@ function updateUsedHistory(used: number) {
     Memory.usedHistory = [used]
   }
 }
+
+module.exports = { log, logStats }

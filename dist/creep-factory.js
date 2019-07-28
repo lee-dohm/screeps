@@ -1,7 +1,7 @@
-import CreepRole from "./creep-role"
-import HarvesterRole from "./harvester-role"
+const CreepRole = require("./creep-role")
+const HarvesterRole = require("./harvester-role")
 
-export default function buildCreep(name: string): CreepRole | undefined {
+function buildCreep(name) {
   const creep = Game.creeps[name]
 
   if (creep) {
@@ -17,3 +17,5 @@ export default function buildCreep(name: string): CreepRole | undefined {
     }
   }
 }
+
+module.exports = buildCreep

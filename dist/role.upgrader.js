@@ -1,4 +1,4 @@
-export function run(creep: Creep) {
+function run(creep) {
   if (creep.memory.upgrading && creep.carry.energy === 0) {
     creep.memory.upgrading = false
     creep.say("Harvesting")
@@ -25,3 +25,5 @@ export function run(creep: Creep) {
     }
   }
 }
+
+module.exports = { run }
