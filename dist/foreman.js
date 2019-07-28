@@ -1,3 +1,5 @@
+const debug = require("./debug")
+
 const bodyForRole = {
   builder: [[CARRY, WORK, MOVE]],
   harvester: [
