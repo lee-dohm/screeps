@@ -34,6 +34,22 @@ export function killAllCreeps() {
   }
 }
 
+export function listCreeps(role?: Role) {
+  let creeps
+
+  if (role) {
+    creeps = filterCreeps((creep: Creep) => creep.memory.role === role)
+  } else {
+    creeps = filterCreeps((creep: Creep) => true)
+  }
+
+  const names = creeps.map((creep: Creep) => creep.name).sort()
+
+  for (const name of names) {
+    console.log(`Creep: ${name}`)
+  }
+}
+
 export function maintainCreeps(role: Role, count: number) {
   debug.log(`Keep number of ${role} creeps at or above ${count}`)
 
