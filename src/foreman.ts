@@ -1,3 +1,5 @@
+import * as debug from "./debug"
+
 type Role = "builder" | "harvester" | "soldier" | "upgrader"
 
 type Body = BodyPartConstant[]
@@ -31,7 +33,7 @@ export function killAllCreeps() {
 }
 
 export function maintainCreeps(role: Role, count: number) {
-  console.log(`Keep number of ${role} creeps at or above ${count}`)
+  debug.log(`Keep number of ${role} creeps at or above ${count}`)
 
   const spawn = Game.spawns["Spawn1"]
 
@@ -51,11 +53,11 @@ export function maintainCreeps(role: Role, count: number) {
 }
 
 export function reclaimDeadCreepMemory() {
-  console.log("Reclaim dead creep memory")
+  debug.log("Reclaim dead creep memory")
 
   for (let name in Memory.creeps) {
     if (!Game.creeps[name]) {
-      console.log(`Delete dead creep from memory: ${name}`)
+      debug.log(`Delete dead creep from memory: ${name}`)
       delete Memory.creeps[name]
     }
   }
@@ -94,6 +96,6 @@ function getBodiesForRole(role: Role) {
 function spawnCreep(spawn: StructureSpawn, body: Body, role: Role) {
   const name = generateCreepName(role)
 
-  console.log(`Spawn ${name}`)
+  debug.log(`Spawn ${name}`)
   spawn.spawnCreep(body, name, { memory: { body: body, role: role } })
 }
