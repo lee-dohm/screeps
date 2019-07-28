@@ -73,13 +73,13 @@ class HarvesterRole extends CreepRole {
   runDepositing() {
     const target = this.getTarget()
 
-    this.actOrMoveCloser(target, (target) => this.creep.transfer(target, RESOURCE_ENERGY))
+    this.actOrMoveCloser(target, target => this.creep.transfer(target, RESOURCE_ENERGY))
   }
 
   runHarvesting() {
     const target = this.getTarget()
 
-    this.actOrMoveCloser(target, (target) => this.creep.harvest(target))
+    this.actOrMoveCloser(target, target => this.creep.harvest(target))
   }
 }
 
