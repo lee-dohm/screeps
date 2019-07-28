@@ -65,6 +65,24 @@ export function reclaimDeadCreepMemory() {
   }
 }
 
+export function removeConstructionSites(room: Room, type?: string) {
+  let sites
+
+  if (type) {
+    sites = room.find(FIND_CONSTRUCTION_SITES, {
+      filter: (structure: ConstructionSite) => {
+        return structure.structureType == type
+      }
+    })
+  } else {
+    sites = room.find(FIND_CONSTRUCTION_SITES)
+  }
+
+  for (const site of sites) {
+    site.remove()
+  }
+}
+
 // ***** Private functions *****
 
 function canSpawnCreep(spawn: StructureSpawn, body: Body) {
