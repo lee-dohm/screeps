@@ -65,7 +65,7 @@ export function maintainCreeps(role: Role, count: number) {
     const body = getBestBodyForRole(spawn, role)
 
     if (body) {
-      if (canSpawnCreep(spawn, body) === OK) {
+      if (canSpawnCreep(spawn, body)) {
         const creeps = filterCreeps((creep: Creep) => creep.memory.role === role)
 
         if (creeps.length < count) {
@@ -108,7 +108,7 @@ export function removeConstructionSites(room: Room, type?: string) {
 // ***** Private functions *****
 
 function canSpawnCreep(spawn: StructureSpawn, body: Body) {
-  return spawn.spawnCreep(body, "canSpawnCreep", { dryRun: true })
+  return spawn.spawnCreep(body, "canSpawnCreep", { dryRun: true }) === OK
 }
 
 function filterCreeps(fn: (creep: Creep) => boolean) {
@@ -131,9 +131,7 @@ function getBestBodyForRole(spawn: StructureSpawn, role: Role): Body | undefined
   const bodies = getBodiesForRole(role)
   const bodyCosts = getBodyCosts(bodies)
   const bestCost = bodyCosts
-    .filter((cost: BodyCost) => {
-      return canSpawnCreep(spawn, cost[0]) === OK
-    })
+    .filter((cost: BodyCost) => canSpawnCreep(spawn, cost[0]))
     .sort((a: BodyCost, b: BodyCost) => a[1] - b[1])
     .shift()
 
