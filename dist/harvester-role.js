@@ -73,11 +73,15 @@ class HarvesterRole extends CreepRole {
   runDepositing() {
     const target = this.getTarget()
 
+    this.creep.room.visual.line(this.creep.pos, target.pos, {lineStyle: "dashed"})
+
     this.actOrMoveCloser(target, target => this.creep.transfer(target, RESOURCE_ENERGY))
   }
 
   runHarvesting() {
     const target = this.getTarget()
+
+    this.creep.room.visual.line(this.creep.pos, target.pos, {lineStyle: "dashed"})
 
     this.actOrMoveCloser(target, target => this.creep.harvest(target))
   }
