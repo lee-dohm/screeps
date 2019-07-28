@@ -1,3 +1,5 @@
+const USED_HISTORY_LENGTH = 10
+
 export function log(message: string) {
   if (Memory.debug) {
     console.log(message)
@@ -19,7 +21,7 @@ export function logStats() {
 
 function updateUsedHistory(used: number) {
   if (Memory.usedHistory) {
-    while (Memory.usedHistory.length > 4) {
+    while (Memory.usedHistory.length > USED_HISTORY_LENGTH - 1) {
       Memory.usedHistory.shift()
     }
 
