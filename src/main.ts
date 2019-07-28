@@ -35,9 +35,7 @@ function loop() {
   }
 
   debug.log("Game loop end reached")
-  debug.log(
-    `${Math.round((Game.cpu.getUsed() / Game.cpu.tickLimit) * 100)}% of available CPU time used`
-  )
+  debug.logStats()
 }
 
 export = { loop }
