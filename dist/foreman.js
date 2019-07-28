@@ -99,7 +99,7 @@ function canSpawnCreep(spawn, body) {
   return spawn.spawnCreep(body, "canSpawnCreep", { dryRun: true }) === OK
 }
 
-function filterCreeps(fn: creep => boolean) {
+function filterCreeps(fn) {
   let creeps = []
 
   for (const name in Game.creeps) {
@@ -134,7 +134,7 @@ function getBodiesForRole(role) {
   return bodyForRole[role]
 }
 
-function getBodyCost(body): number {
+function getBodyCost(body) {
   return body.reduce((cost, part) => {
     return cost + costForPart[part]
   }, 0)
