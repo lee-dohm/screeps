@@ -2,8 +2,9 @@ import * as debug from "./debug"
 import * as foreman from "./foreman"
 
 import * as roleBuilder from "./role.builder"
-import * as roleHarvester from "./role.harvester"
 import * as roleUpgrader from "./role.upgrader"
+
+import CreepRole from "./creep-role"
 
 function loop() {
   debug.log("Start game loop")
@@ -23,14 +24,14 @@ function loop() {
 
     if (creep.memory.role == "builder") {
       roleBuilder.run(creep)
-    }
-
-    if (creep.memory.role == "harvester") {
-      roleHarvester.run(creep)
-    }
-
-    if (creep.memory.role == "upgrader") {
+    } else if (creep.memory.role == "upgrader") {
       roleUpgrader.run(creep)
+    } else {
+      const creepRole = CreepRole.buildCreep(name)
+
+      if (creepRole) {
+        creepRole.run()
+      }
     }
   }
 
