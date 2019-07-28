@@ -30,7 +30,7 @@ export default class HarvesterRole extends CreepRole {
       }
 
       default: {
-        console.error(`Unknown harvester mode: ${this.mode}`)
+        console.log(`ERROR: Unknown harvester mode: ${this.mode}`)
         break
       }
     }

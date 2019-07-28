@@ -11,7 +11,7 @@ export default function buildCreep(name: string): CreepRole | undefined {
       }
 
       default: {
-        console.error(`Unknown creep role for ${name}: ${JSON.stringify(creep.memory)}`)
+        console.log(`ERROR: Unknown creep role for ${name}: ${JSON.stringify(creep.memory)}`)
         return undefined
       }
     }
