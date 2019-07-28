@@ -4,13 +4,19 @@ type Role = "builder" | "harvester" | "soldier" | "upgrader"
 
 type Body = BodyPartConstant[]
 
+type BodyCost = [Body, number]
+
 type RoleBodyMap = {
   [key in Role]: Body[]
 }
 
 const bodyForRole: RoleBodyMap = {
   builder: [[CARRY, WORK, MOVE]],
-  harvester: [[CARRY, WORK, MOVE]],
+  harvester: [
+    [CARRY, WORK, MOVE],
+    [CARRY, WORK, WORK, MOVE],
+    [CARRY, WORK, WORK, WORK, WORK, MOVE, MOVE]
+  ],
   soldier: [[ATTACK, ATTACK, MOVE, MOVE]],
   upgrader: [[CARRY, WORK, MOVE]]
 }
@@ -56,7 +62,7 @@ export function maintainCreeps(role: Role, count: number) {
   const spawn = Game.spawns["Spawn1"]
 
   if (!spawn.spawning) {
-    let body = getBestBodyForRole(spawn, role)
+    const body = getBestBodyForRole(spawn, role)
 
     if (body) {
       if (canSpawnCreep(spawn, body) === OK) {
@@ -121,14 +127,37 @@ function generateCreepName(role: Role) {
   return `${role} ${Game.time}`
 }
 
-function getBestBodyForRole(spawn: StructureSpawn, role: Role) {
+function getBestBodyForRole(spawn: StructureSpawn, role: Role): Body | undefined {
   const bodies = getBodiesForRole(role)
+  const bodyCosts = getBodyCosts(bodies)
+  const bestCost = bodyCosts
+    .filter((cost: BodyCost) => {
+      return canSpawnCreep(spawn, cost[0]) === OK
+    })
+    .sort((a: BodyCost, b: BodyCost) => a[1] - b[1])
+    .shift()
 
-  return bodies[0]
+  if (bestCost) {
+    return bestCost[0]
+  } else {
+    return bestCost
+  }
 }
 
 function getBodiesForRole(role: Role) {
   return bodyForRole[role]
+}
+
+function getBodyCost(body: Body): number {
+  return body.reduce((cost: number, part: BodyPartConstant) => {
+    return cost + costForPart[part]
+  }, 0)
+}
+
+function getBodyCosts(bodies: Body[]): BodyCost[] {
+  return bodies.map((body: Body) => {
+    return [body, getBodyCost(body)]
+  })
 }
 
 function spawnCreep(spawn: StructureSpawn, body: Body, role: Role) {
