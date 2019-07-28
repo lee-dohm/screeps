@@ -13,7 +13,6 @@ export function run(creep: Creep) {
     let sources = creep.room.find(FIND_SOURCES)
 
     if (creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
-      creep.room.createConstructionSite(creep.pos, STRUCTURE_ROAD)
       creep.moveTo(sources[0])
     }
   } else {
@@ -30,7 +29,6 @@ export function run(creep: Creep) {
 
     if (targets.length > 0) {
       if (creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-        creep.room.createConstructionSite(creep.pos, STRUCTURE_ROAD)
         creep.moveTo(targets[0])
       }
     } else {
