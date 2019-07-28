@@ -22,6 +22,18 @@ class CreepRole {
     }
   }
 
+  getTarget() {
+    const id = this.creep.memory.targetId
+
+    if (id) {
+      return Game.getObjectById(id)
+    }
+  }
+
+  setTarget(target) {
+    this.creep.memory.targetId = target.hasOwnProperty("id") ? target.id : target
+  }
+
   run() {
     this.checkMode()
     this.runMode()

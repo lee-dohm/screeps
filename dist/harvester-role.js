@@ -10,12 +10,35 @@ class HarvesterRole extends CreepRole {
     if (this.mode !== "harvesting" && this.creep.carry.energy === 0) {
       this.mode = "harvesting"
       this.creep.say("Harvesting")
+      this.setTarget(this.findNextSource())
     }
 
     if (this.mode === "harvesting" && this.creep.carry.energy === this.creep.carryCapacity) {
       this.mode = "depositing"
       this.creep.say("Depositing")
+      this.setTarget(this.findNextEnergyStructure())
     }
+  }
+
+  findNextEnergyStructure() {
+    const targets = this.creep.room.find(FIND_STRUCTURES, {
+      filter: structure => {
+        return (
+          (structure.structureType == STRUCTURE_EXTENSION ||
+            structure.structureType == STRUCTURE_SPAWN ||
+            structure.structureType == STRUCTURE_TOWER) &&
+          structure.energy < structure.energyCapacity
+        )
+      }
+    })
+
+    return targets[0]
+  }
+
+  findNextSource() {
+    const sources = this.creep.room.find(FIND_SOURCES)
+
+    return sources[0]
   }
 
   runMode() {
@@ -48,32 +71,15 @@ class HarvesterRole extends CreepRole {
   // ----------
 
   runDepositing() {
-    const targets = this.creep.room.find(FIND_STRUCTURES, {
-      filter: structure => {
-        return (
-          (structure.structureType == STRUCTURE_EXTENSION ||
-            structure.structureType == STRUCTURE_SPAWN ||
-            structure.structureType == STRUCTURE_TOWER) &&
-          structure.energy < structure.energyCapacity
-        )
-      }
-    })
+    const target = this.getTarget()
 
-    if (targets.length > 0) {
-      this.actOrMoveCloser(targets[0], (target) => this.creep.transfer(target, RESOURCE_ENERGY))
-    } else {
-      const flags = this.creep.room.find(FIND_FLAGS)
-
-      if (flags.length > 0) {
-        this.creep.moveTo(flags[0])
-      }
-    }
+    this.actOrMoveCloser(target, (target) => this.creep.transfer(target, RESOURCE_ENERGY))
   }
 
   runHarvesting() {
-    const sources = this.creep.room.find(FIND_SOURCES)
+    const target = this.getTarget()
 
-    this.actOrMoveCloser(sources[0], (target) => this.creep.harvest(target))
+    this.actOrMoveCloser(target, (target) => this.creep.harvest(target))
   }
 }
 
