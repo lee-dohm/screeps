@@ -12,7 +12,6 @@ export function run(creep: Creep) {
   if (creep.memory.upgrading) {
     if (creep.room.controller) {
       if (creep.upgradeController(creep.room.controller) == ERR_NOT_IN_RANGE) {
-        creep.room.createConstructionSite(creep.pos, STRUCTURE_ROAD)
         creep.moveTo(creep.room.controller)
       }
     }
@@ -21,7 +20,6 @@ export function run(creep: Creep) {
 
     if (source) {
       if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
-        creep.room.createConstructionSite(creep.pos, STRUCTURE_ROAD)
         creep.moveTo(source)
       }
     }
