@@ -15,5 +15,18 @@ export default abstract class CreepRole {
     this.creep.memory.mode = newMode
   }
 
-  abstract run(): void
+  /**
+   * Checks the current mode and state to determine if a mode switch needs to occur.
+   */
+  abstract checkMode(): void
+
+  /**
+   * Executes the instructions for the current mode.
+   */
+  abstract runMode(): void
+
+  run() {
+    this.checkMode()
+    this.runMode()
+  }
 }

@@ -7,7 +7,7 @@ export default class HarvesterRole extends CreepRole {
     super(creep)
   }
 
-  run() {
+  checkMode() {
     if (this.mode !== "harvesting" && this.creep.carry.energy === 0) {
       this.mode = "harvesting"
       this.creep.say("Harvesting")
@@ -17,7 +17,9 @@ export default class HarvesterRole extends CreepRole {
       this.mode = "depositing"
       this.creep.say("Depositing")
     }
+  }
 
+  runMode() {
     switch (this.mode) {
       case "harvesting": {
         this.runHarvesting()
