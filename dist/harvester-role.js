@@ -60,9 +60,7 @@ class HarvesterRole extends CreepRole {
     })
 
     if (targets.length > 0) {
-      if (this.creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
-        this.creep.moveTo(targets[0])
-      }
+      this.actOrMoveCloser(targets[0], (target) => this.creep.transfer(target, RESOURCE_ENERGY))
     } else {
       const flags = this.creep.room.find(FIND_FLAGS)
 
@@ -75,9 +73,7 @@ class HarvesterRole extends CreepRole {
   runHarvesting() {
     const sources = this.creep.room.find(FIND_SOURCES)
 
-    if (this.creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
-      this.creep.moveTo(sources[0])
-    }
+    this.actOrMoveCloser(sources[0], (target) => this.creep.harvest(target))
   }
 }
 
