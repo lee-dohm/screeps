@@ -26,6 +26,8 @@ const costForPart = {
   tough: 10
 }
 
+// ***** Exported functions *****
+
 export function killAllCreeps() {
   for (const name in Game.creeps) {
     Game.creeps[name].suicide()
@@ -62,6 +64,8 @@ export function reclaimDeadCreepMemory() {
     }
   }
 }
+
+// ***** Private functions *****
 
 function canSpawnCreep(spawn: StructureSpawn, body: Body) {
   return spawn.spawnCreep(body, "canSpawnCreep", { dryRun: true })
