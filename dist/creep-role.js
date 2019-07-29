@@ -30,6 +30,14 @@ class CreepRole {
     }
   }
 
+  indicateTarget() {
+    const target = this.getTarget()
+
+    if (target) {
+      this.creep.room.visual.line(this.creep.pos, target.pos, { lineStyle: "dashed" })
+    }
+  }
+
   setTarget(target) {
     this.creep.memory.targetId = target.hasOwnProperty("id") ? target.id : target
   }
