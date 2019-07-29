@@ -16,7 +16,7 @@ function loop() {
   foreman.maintainCreeps("harvester", 3)
 
   for (let name in Game.creeps) {
-    const creepRole = buildCreep(Game.creeps[name])
+    const creepRole = buildCreep(name)
 
     if (creepRole) {
       creepRole.run()

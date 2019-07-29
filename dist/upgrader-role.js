@@ -24,6 +24,8 @@ class UpgraderRole extends CreepRole {
           this.creep.moveTo(this.creep.room.controller)
         }
       }
+
+      this.indicateTarget(this.creep.room.controller)
     } else {
       const source = this.creep.pos.findClosestByRange(FIND_SOURCES)
 
@@ -32,6 +34,8 @@ class UpgraderRole extends CreepRole {
           this.creep.moveTo(source)
         }
       }
+
+      this.indicateTarget(source)
     }
   }
 }
