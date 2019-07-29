@@ -57,7 +57,7 @@ class CreepRole {
   moveAway(t) {
     const target = t ? t : this.getTarget()
 
-    const path = PathFinder.search(this.creep.pos, {pos: target.pos, range: 2}, { flee: true })
+    const path = PathFinder.search(this.creep.pos, { pos: target.pos, range: 2 }, { flee: true })
 
     this.creep.moveTo(path.pop())
   }

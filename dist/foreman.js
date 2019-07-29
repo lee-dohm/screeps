@@ -1,14 +1,21 @@
 const debug = require("./debug")
 
 const bodyForRole = {
-  builder: [[CARRY, WORK, MOVE]],
+  builder: [
+    [CARRY, WORK, MOVE],
+    [CARRY, WORK, WORK, MOVE],
+    [CARRY, WORK, WORK, WORK, WORK, MOVE, MOVE]
+  ],
   harvester: [
     [CARRY, WORK, MOVE],
     [CARRY, WORK, WORK, MOVE],
     [CARRY, WORK, WORK, WORK, WORK, MOVE, MOVE]
   ],
-  soldier: [[ATTACK, ATTACK, MOVE, MOVE]],
-  upgrader: [[CARRY, WORK, MOVE]]
+  upgrader: [
+    [CARRY, WORK, MOVE],
+    [CARRY, WORK, WORK, MOVE],
+    [CARRY, WORK, WORK, WORK, WORK, MOVE, MOVE]
+  ]
 }
 
 const costForPart = {
