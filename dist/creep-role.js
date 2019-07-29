@@ -54,6 +54,14 @@ class CreepRole {
     }
   }
 
+  moveAway(t) {
+    const target = t ? t : this.getTarget()
+
+    const path = PathFinder.search(this.creep.pos, {pos: target.pos, range: 2}, { flee: true })
+
+    this.creep.moveTo(path.pop())
+  }
+
   setTarget(target) {
     this.creep.memory.targetId = target.hasOwnProperty("id") ? target.id : target
   }
