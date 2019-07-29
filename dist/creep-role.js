@@ -1,3 +1,5 @@
+const { humanize } = require("./utility")
+
 class CreepRole {
   constructor(creep) {
     this.creep = creep
@@ -60,6 +62,11 @@ class CreepRole {
     const path = PathFinder.search(this.creep.pos, { pos: target.pos, range: 2 }, { flee: true })
 
     this.creep.moveTo(path.pop())
+  }
+
+  setMode(mode) {
+    this.mode = mode
+    this.creep.say(humanize(this.mode))
   }
 
   setTarget(target) {

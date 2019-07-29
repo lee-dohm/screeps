@@ -8,14 +8,12 @@ class HarvesterRole extends CreepRole {
 
   checkMode() {
     if (this.mode !== "harvesting" && this.creep.carry.energy === 0) {
-      this.mode = "harvesting"
-      this.creep.say("Harvesting")
+      this.setMode("harvesting")
       this.setTarget(this.findNextSource())
     }
 
     if (this.mode === "harvesting" && this.creep.carry.energy === this.creep.carryCapacity) {
-      this.mode = "depositing"
-      this.creep.say("Depositing")
+      this.setMode("depositing")
       this.setTarget(this.findNextEnergyStructure())
     }
   }
@@ -60,15 +58,8 @@ class HarvesterRole extends CreepRole {
       }
 
       default: {
-        // Convert from old memory style
-        if (this.creep.memory.harvesting) {
-          this.mode = "harvesting"
-        } else {
-          this.mode = "depositing"
-        }
-
-        delete this.creep.memory.harvesting
-        this.run()
+        console.log(`ERROR: Unknown mode ${this.mode}, defaulting to harvesting`)
+        this.setMode("harvesting")
         break
       }
     }
