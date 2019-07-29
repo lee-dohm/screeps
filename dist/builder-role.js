@@ -6,12 +6,12 @@ class BuilderRole extends CreepRole {
   }
 
   checkMode() {
-    if (this.mode === "harvesting" && this.creep.carry.energy === 0) {
+    if (this.mode === "harvesting" && this.creep.carry.energy === this.creep.carryCapacity) {
       this.mode = "building"
       this.creep.say("Building")
     }
 
-    if (this.mode === "building" && this.creep.carry.energy === this.creep.carryCapacity) {
+    if (this.mode === "building" && this.creep.carry.energy === 0) {
       this.mode = "harvesting"
       this.creep.say("Harvesting")
     }
