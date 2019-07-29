@@ -64,9 +64,7 @@ class BuilderRole extends CreepRole {
     const site = target ? target : this.findNextConstructionSite()
 
     if (site) {
-      if (this.creep.build(site) == ERR_NOT_IN_RANGE) {
-        this.creep.moveTo(site)
-      }
+      this.actOrMoveCloser(site, (target) => { return this.creep.build(target) })
     }
 
     this.indicateTarget(site)
@@ -77,9 +75,7 @@ class BuilderRole extends CreepRole {
     const source = target ? target : this.findNextSource()
 
     if (source) {
-      if (this.creep.harvest(source) == ERR_NOT_IN_RANGE) {
-        this.creep.moveTo(source)
-      }
+      this.actOrMoveCloser(source, (target) => { return this.creep.harvest(target) })
     }
 
     this.indicateTarget(source)
