@@ -127,8 +127,9 @@ function getBestBodyForRole(spawn, role) {
   const bodies = getBodiesForRole(role)
   const bodyCosts = getBodyCosts(bodies)
   const bestCost = bodyCosts
+    .filter(cost => hasCapacityToSpawnCreep(spawn, cost[0]))
     .filter(cost => canSpawnCreep(spawn, cost[0]))
-    .sort((a, b) => a[1] - b[1])
+    .sort((a, b) => b[1] - a[1])
     .shift()
 
   if (bestCost) {
@@ -146,6 +147,12 @@ function getBodyCosts(bodies) {
   return bodies.map(body => {
     return [body, getBodyCost(body)]
   })
+}
+
+function hasCapacityToSpawnCreep(spawn, body) {
+  const cost = getBodyCost(body)
+
+  return spawn.energyCapacity >= cost
 }
 
 function spawnCreep(spawn, body, role) {
