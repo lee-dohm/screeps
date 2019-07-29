@@ -1,6 +1,7 @@
 const BuilderRole = require("./builder-role")
 const CreepRole = require("./creep-role")
 const HarvesterRole = require("./harvester-role")
+const UpgraderRole = require("./upgrader-role")
 
 function buildCreep(name) {
   const creep = Game.creeps[name]
@@ -13,6 +14,10 @@ function buildCreep(name) {
 
       case "harvester": {
         return new HarvesterRole(creep)
+      }
+
+      case "upgrader": {
+        return new UpgraderRole(creep)
       }
 
       default: {

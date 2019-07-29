@@ -1,7 +1,6 @@
 const buildCreep = require("./creep-factory")
 const debug = require("./debug")
 const foreman = require("./foreman")
-const roleUpgrader = require("./role.upgrader")
 
 function loop() {
   debug.log("Start game loop")
@@ -17,16 +16,10 @@ function loop() {
   foreman.maintainCreeps("harvester", 3)
 
   for (let name in Game.creeps) {
-    let creep = Game.creeps[name]
+    const creepRole = buildCreep(Game.creeps[name])
 
-    if (creep.memory.role == "upgrader") {
-      roleUpgrader.run(creep)
-    } else {
-      const creepRole = buildCreep(name)
-
-      if (creepRole) {
-        creepRole.run()
-      }
+    if (creepRole) {
+      creepRole.run()
     }
   }
 
