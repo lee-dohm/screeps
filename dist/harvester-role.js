@@ -44,7 +44,7 @@ class HarvesterRole extends CreepRole {
   findNextSource() {
     const sources = this.creep.room.find(FIND_SOURCES)
 
-    return sources[0]
+    return this.creep.pos.findClosestByPath(sources)
   }
 
   runMode() {
