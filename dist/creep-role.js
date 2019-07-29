@@ -22,6 +22,12 @@ class CreepRole {
     }
   }
 
+  getTerrain() {
+    const found = this.creep.pos.lookFor(LOOK_TERRAIN)
+
+    return found[0].terrain
+  }
+
   getTarget() {
     const id = this.creep.memory.targetId
 
@@ -35,6 +41,16 @@ class CreepRole {
 
     if (target) {
       this.creep.room.visual.line(this.creep.pos, target.pos, { lineStyle: "dashed" })
+    }
+  }
+
+  markForPaving() {
+    this.creep.pos.createConstructionSite(STRUCTURE_ROAD)
+  }
+
+  markSwampForPaving() {
+    if (this.getTerrain() === "swamp") {
+      this.markForPaving()
     }
   }
 
