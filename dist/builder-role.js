@@ -57,3 +57,5 @@ class BuilderRole extends CreepRole {
     }
   }
 }
+
+module.exports = BuilderRole
