@@ -79,7 +79,7 @@ class HarvesterRole extends CreepRole {
   runDepositing() {
     const target = this.getTarget()
 
-    if (target) {
+    if (target && target.energy < target.energyCapacity) {
       this.actOrMoveCloser(target, target => this.creep.transfer(target, RESOURCE_ENERGY))
       this.indicateTarget()
     } else {
