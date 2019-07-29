@@ -36,7 +36,12 @@ class BuilderRole extends CreepRole {
   }
 
   findNextConstructionSite() {
-    const target = this.creep.pos.findClosestByRange(FIND_CONSTRUCTION_SITES)
+    const target = this.creep.pos.findClosestByRange(FIND_CONSTRUCTION_SITES, {
+      filter: structure => {
+        return this.creep.pos.getRangeTo(structure) >= 3
+      }
+    })
+
     this.setTarget(target)
 
     return target
@@ -64,7 +69,9 @@ class BuilderRole extends CreepRole {
     const site = target ? target : this.findNextConstructionSite()
 
     if (site) {
-      this.actOrMoveCloser(site, (target) => { return this.creep.build(target) })
+      this.actOrMoveCloser(site, target => {
+        return this.creep.build(target)
+      })
     }
 
     this.indicateTarget(site)
@@ -75,7 +82,9 @@ class BuilderRole extends CreepRole {
     const source = target ? target : this.findNextSource()
 
     if (source) {
-      this.actOrMoveCloser(source, (target) => { return this.creep.harvest(target) })
+      this.actOrMoveCloser(source, target => {
+        return this.creep.harvest(target)
+      })
     }
 
     this.indicateTarget(source)
