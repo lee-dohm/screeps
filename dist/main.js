@@ -1,7 +1,6 @@
 const buildCreep = require("./creep-factory")
 const debug = require("./debug")
 const foreman = require("./foreman")
-const roleBuilder = require("./role.builder")
 const roleUpgrader = require("./role.upgrader")
 
 function loop() {
