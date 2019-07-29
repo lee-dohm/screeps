@@ -28,6 +28,8 @@ class BuilderRole extends CreepRole {
           }
         }
 
+        this.indicateTarget(source)
+
         break
       }
 
@@ -39,6 +41,8 @@ class BuilderRole extends CreepRole {
             this.creep.moveTo(target)
           }
         }
+
+        this.indicateTarget(target)
 
         break
       }

@@ -36,8 +36,8 @@ class CreepRole {
     }
   }
 
-  indicateTarget() {
-    const target = this.getTarget()
+  indicateTarget(t) {
+    const target = t ? t : this.getTarget()
 
     if (target) {
       this.creep.room.visual.line(this.creep.pos, target.pos, { lineStyle: "dashed" })

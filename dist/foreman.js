@@ -24,6 +24,12 @@ const costForPart = {
 
 // ***** Exported functions *****
 
+function getBodyCost(body) {
+  return body.reduce((cost, part) => {
+    return cost + costForPart[part]
+  }, 0)
+}
+
 function killAllCreeps() {
   for (const name in Game.creeps) {
     Game.creeps[name].suicide()
@@ -136,12 +142,6 @@ function getBodiesForRole(role) {
   return bodyForRole[role]
 }
 
-function getBodyCost(body) {
-  return body.reduce((cost, part) => {
-    return cost + costForPart[part]
-  }, 0)
-}
-
 function getBodyCosts(bodies) {
   return bodies.map(body => {
     return [body, getBodyCost(body)]
@@ -156,6 +156,7 @@ function spawnCreep(spawn, body, role) {
 }
 
 module.exports = {
+  getBodyCost,
   killAllCreeps,
   listCreeps,
   maintainCreeps,
