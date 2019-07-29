@@ -25,7 +25,7 @@ class CreepRole {
   getTerrain() {
     const found = this.creep.pos.lookFor(LOOK_TERRAIN)
 
-    return found[0].terrain
+    return found[0]
   }
 
   getTarget() {
