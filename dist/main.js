@@ -12,9 +12,9 @@ function loop() {
 
   foreman.reclaimDeadCreepMemory()
 
-  foreman.maintainCreeps("builder", 5)
-  foreman.maintainCreeps("upgrader", 5)
-  foreman.maintainCreeps("harvester", 5)
+  foreman.maintainCreeps("builder", 3)
+  foreman.maintainCreeps("upgrader", 3)
+  foreman.maintainCreeps("harvester", 3)
 
   for (let name in Game.creeps) {
     let creep = Game.creeps[name]
