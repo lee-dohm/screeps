@@ -32,7 +32,13 @@ class HarvesterRole extends CreepRole {
       }
     })
 
-    return targets[0]
+    const highestEnergyDeficit = targets
+      .sort((a, b) => {
+        return a.energyCapacity - a.energy - (b.energyCapaticy - b.energy)
+      })
+      .pop()
+
+    return highestEnergyDeficit
   }
 
   findNextSource() {
