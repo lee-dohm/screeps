@@ -1,3 +1,4 @@
+const BuilderRole = require("./builder-role")
 const CreepRole = require("./creep-role")
 const HarvesterRole = require("./harvester-role")
 
@@ -6,6 +7,10 @@ function buildCreep(name) {
 
   if (creep) {
     switch (creep.memory.role) {
+      case "builder": {
+        return new BuilderRole(creep)
+      }
+
       case "harvester": {
         return new HarvesterRole(creep)
       }

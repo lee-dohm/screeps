@@ -20,9 +20,7 @@ function loop() {
   for (let name in Game.creeps) {
     let creep = Game.creeps[name]
 
-    if (creep.memory.role == "builder") {
-      roleBuilder.run(creep)
-    } else if (creep.memory.role == "upgrader") {
+    if (creep.memory.role == "upgrader") {
       roleUpgrader.run(creep)
     } else {
       const creepRole = buildCreep(name)
