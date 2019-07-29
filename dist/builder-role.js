@@ -20,11 +20,11 @@ class BuilderRole extends CreepRole {
   runMode() {
     switch (this.mode) {
       case "harvesting": {
-        let source = creep.pos.findClosestByRange(FIND_SOURCES)
+        let source = this.creep.pos.findClosestByRange(FIND_SOURCES)
 
         if (source) {
-          if (creep.harvest(source) == ERR_NOT_IN_RANGE) {
-            creep.moveTo(source)
+          if (this.creep.harvest(source) == ERR_NOT_IN_RANGE) {
+            this.creep.moveTo(source)
           }
         }
 
@@ -32,11 +32,11 @@ class BuilderRole extends CreepRole {
       }
 
       case "building": {
-        let target = creep.pos.findClosestByRange(FIND_CONSTRUCTION_SITES)
+        let target = this.creep.pos.findClosestByRange(FIND_CONSTRUCTION_SITES)
 
         if (target) {
-          if (creep.build(target) == ERR_NOT_IN_RANGE) {
-            creep.moveTo(target)
+          if (this.creep.build(target) == ERR_NOT_IN_RANGE) {
+            this.creep.moveTo(target)
           }
         }
 
