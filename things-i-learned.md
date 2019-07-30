@@ -16,8 +16,10 @@ The best way to log errors is to fail fast by throwing an exception. I found [th
 
 ```javascript
 function UnknownModeError(creep, mode) {
-  this.name = 'UnknownModeError'
+  this.name = "UnknownModeError"
   this.message = `Creep ${creep.name} has an unknown mode ${mode}`
+
+  // prettier-ignore
   this.stack = ((new Error())).stack
 }
 ```
