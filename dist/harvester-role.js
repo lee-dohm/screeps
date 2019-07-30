@@ -71,10 +71,12 @@ class HarvesterRole extends CreepRole {
     const target = this.getTarget()
 
     if (target && target.energy < target.energyCapacity) {
-      this.actOrMoveCloser(target, target => this.creep.transfer(target, RESOURCE_ENERGY))
+      const amount = target.energyCapacity - target.energy
+      this.actOrMoveCloser(target, target => this.creep.transfer(target, RESOURCE_ENERGY, amount))
       this.indicateTarget()
     } else {
       this.setTarget(this.findNextEnergyStructure())
+      this.runDepositing()
     }
 
     this.markSwampForPaving()
