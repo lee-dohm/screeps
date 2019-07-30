@@ -1,5 +1,4 @@
 const BuilderRole = require("./builder-role")
-const CreepRole = require("./creep-role")
 const HarvesterRole = require("./harvester-role")
 const UpgraderRole = require("./upgrader-role")
 
