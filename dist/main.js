@@ -23,10 +23,8 @@ function loop() {
         creepRole.run()
       }
     } catch (e) {
-      console.log(`Exception caught: ${e}`)
-      for (const line of e.stack) {
-        console.log(`    ${line}`)
-      }
+      console.log(`Exception caught: ${e.message}`)
+      console.log(e.stack)
     }
   }
 
