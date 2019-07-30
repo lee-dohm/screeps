@@ -75,8 +75,6 @@ class HarvesterRole extends CreepRole {
       this.setTarget(this.findNextEnergyStructure())
       this.runDepositing()
     }
-
-    this.markSwampForPaving()
   }
 
   runHarvesting() {
@@ -88,8 +86,6 @@ class HarvesterRole extends CreepRole {
     } else {
       this.setTarget(this.findNextSource())
     }
-
-    this.markSwampForPaving()
   }
 }
 

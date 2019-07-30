@@ -31,6 +31,15 @@ const costForPart = {
 
 // ***** Exported functions *****
 
+function plotRoad(room, posA, posB, range = 1) {
+  const path = room.findPath(posA, posB, { ignoreCreeps: true, ignoreRoads: true, range })
+
+  for (const step of path) {
+    const pos = room.getPositionAt(step.x, step.y)
+    pos.createConstructionSite(STRUCTURE_ROAD)
+  }
+}
+
 function getBodyCost(body) {
   return body.reduce((cost, part) => {
     return cost + costForPart[part]
@@ -40,6 +49,12 @@ function getBodyCost(body) {
 function killAllCreeps() {
   for (const name in Game.creeps) {
     Game.creeps[name].suicide()
+  }
+}
+
+function killAllConstructionSites(room) {
+  for (const site of room.find(FIND_MY_CONSTRUCTION_SITES)) {
+    site.remove()
   }
 }
 
@@ -172,8 +187,10 @@ function spawnCreep(spawn, body, role) {
 module.exports = {
   getBodyCost,
   killAllCreeps,
+  killAllConstructionSites,
   listCreeps,
   maintainCreeps,
+  plotRoad,
   reclaimDeadCreepMemory,
   removeConstructionSites
 }
