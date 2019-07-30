@@ -16,10 +16,17 @@ function loop() {
   foreman.maintainCreeps("harvester", 3)
 
   for (let name in Game.creeps) {
-    const creepRole = buildCreep(name)
+    try {
+      const creepRole = buildCreep(name)
 
-    if (creepRole) {
-      creepRole.run()
+      if (creepRole) {
+        creepRole.run()
+      }
+    } catch (e) {
+      console.log(`Exception caught: ${e}`)
+      for (const line of e.stack) {
+        console.log(`    ${line}`)
+      }
     }
   }
 
