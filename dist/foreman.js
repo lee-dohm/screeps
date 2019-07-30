@@ -3,17 +3,17 @@ const debug = require("./debug")
 const bodyForRole = {
   builder: [
     [CARRY, WORK, MOVE],
-    [CARRY, WORK, WORK, MOVE],
+    [CARRY, WORK, WORK, MOVE, MOVE],
     [CARRY, WORK, WORK, WORK, WORK, MOVE, MOVE]
   ],
   harvester: [
     [CARRY, WORK, MOVE],
-    [CARRY, WORK, WORK, MOVE],
+    [CARRY, WORK, WORK, MOVE, MOVE],
     [CARRY, WORK, WORK, WORK, WORK, MOVE, MOVE]
   ],
   upgrader: [
     [CARRY, WORK, MOVE],
-    [CARRY, WORK, WORK, MOVE],
+    [CARRY, WORK, WORK, MOVE, MOVE],
     [CARRY, WORK, WORK, WORK, WORK, MOVE, MOVE]
   ]
 }
@@ -30,17 +30,6 @@ const costForPart = {
 }
 
 // ***** Exported functions *****
-
-function plotRoad(room, posA, posB, range = 1) {
-  const path = room.findPath(posA, posB, { ignoreCreeps: true, ignoreRoads: true, range })
-
-  for (const step of path) {
-    const pos = room.getPositionAt(step.x, step.y)
-    if (pos.lookFor(LOOK_TERRAIN)[0] === "swamp") {
-      pos.createConstructionSite(STRUCTURE_ROAD)
-    }
-  }
-}
 
 function getBodyCost(body) {
   return body.reduce((cost, part) => {
@@ -86,6 +75,17 @@ function maintainCreeps(role, count) {
           spawnCreep(spawn, body, role)
         }
       }
+    }
+  }
+}
+
+function plotRoad(room, posA, posB, range = 1) {
+  const path = room.findPath(posA, posB, { ignoreCreeps: true, ignoreRoads: true, range })
+
+  for (const step of path) {
+    const pos = room.getPositionAt(step.x, step.y)
+    if (pos.lookFor(LOOK_TERRAIN)[0] === "swamp") {
+      pos.createConstructionSite(STRUCTURE_ROAD)
     }
   }
 }
