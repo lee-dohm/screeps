@@ -46,6 +46,10 @@ class CreepRole {
     }
   }
 
+  logError(message) {
+    console.log(`ERROR ${this.creep.name}: ${message}`)
+  }
+
   markForPaving() {
     this.creep.pos.createConstructionSite(STRUCTURE_ROAD)
   }
@@ -70,7 +74,11 @@ class CreepRole {
   }
 
   setTarget(target) {
-    this.creep.memory.targetId = target.hasOwnProperty("id") ? target.id : target
+    if (target) {
+      this.creep.memory.targetId = target.hasOwnProperty("id") ? target.id : target
+    } else {
+      this.logError(`Attempt to set invalid target: ${target}`)
+    }
   }
 
   run() {
