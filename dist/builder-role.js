@@ -1,5 +1,11 @@
 const CreepRole = require("./creep-role")
 
+function UnknownModeError(creep, mode) {
+  this.name = 'UnknownModeError'
+  this.message = `Creep ${creep.name} has an unknown mode ${mode}`
+  this.stack = ((new Error())).stack
+}
+
 class BuilderRole extends CreepRole {
   constructor(creep) {
     super(creep)
@@ -28,9 +34,7 @@ class BuilderRole extends CreepRole {
       }
 
       default: {
-        console.log(`ERROR: Unknown mode ${this.mode}, defaulting to harvesting`)
-        this.startHarvesting()
-        break
+        throw new UnknownModeError(this.creep, this.mode)
       }
     }
   }
