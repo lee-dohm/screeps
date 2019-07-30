@@ -20,6 +20,10 @@ The code doesn't need to be built, but you can autoformat the code using `npm ru
 1. Add your own credentials to the `.screeps.json` file
 1. Deploy any code changes with `npm run deploy`
 
+## Documentation
+
+* [Things I learned](things-i-learned.md)
+
 ## License
 
 [MIT](LICENSE.md)
