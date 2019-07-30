@@ -1,3 +1,4 @@
+const Body = require("./body")
 const debug = require("./debug")
 
 const bodyForRole = {
@@ -18,23 +19,12 @@ const bodyForRole = {
   ]
 }
 
-const costForPart = {
-  move: 50,
-  work: 100,
-  carry: 50,
-  attack: 80,
-  ranged_attack: 150,
-  heal: 250,
-  claim: 600,
-  tough: 10
-}
-
 // ***** Exported functions *****
 
-function getBodyCost(body) {
-  return body.reduce((cost, part) => {
-    return cost + costForPart[part]
-  }, 0)
+function getBodyCost(parts) {
+  const body = new Body(parts)
+
+  return body.getCost()
 }
 
 function killAllCreeps() {
