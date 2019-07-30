@@ -12,6 +12,10 @@ class BuilderRole extends CreepRole {
   }
 
   checkMode() {
+    if (!this.mode) {
+      this.mode = "harvesting"
+    }
+
     if (this.mode !== "building" && this.creep.carry.energy === this.creep.carryCapacity) {
       this.startBuilding()
     }
