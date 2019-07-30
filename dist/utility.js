@@ -1,3 +1,7 @@
+function energyDeficit(structure) {
+  structure.energyCapacity - structure.energy
+}
+
 function humanize(text) {
   let newText = text.split(/(?=[A-Z])/).join(" ")
 
@@ -5,5 +9,6 @@ function humanize(text) {
 }
 
 module.exports = {
+  energyDeficit,
   humanize
 }

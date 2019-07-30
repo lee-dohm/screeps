@@ -1,5 +1,6 @@
 const CreepRole = require("./creep-role")
 const debug = require("./debug")
+const { energyDeficit } = require("./utility")
 
 class HarvesterRole extends CreepRole {
   constructor(creep) {
@@ -30,11 +31,7 @@ class HarvesterRole extends CreepRole {
       }
     })
 
-    const highestEnergyDeficit = targets
-      .sort((a, b) => {
-        return a.energyCapacity - a.energy - (b.energyCapaticy - b.energy)
-      })
-      .pop()
+    const highestEnergyDeficit = targets.sort((a, b) => energyDeficit(b) - energyDeficit(a)).pop()
 
     return highestEnergyDeficit
   }
@@ -58,7 +55,7 @@ class HarvesterRole extends CreepRole {
       }
 
       default: {
-        console.log(`ERROR: Unknown mode ${this.mode}, defaulting to harvesting`)
+        console.log(`ERROR ${this.creep.name}: Unknown mode ${this.mode}, defaulting to harvesting`)
         this.setMode("harvesting")
         break
       }
@@ -71,7 +68,7 @@ class HarvesterRole extends CreepRole {
     const target = this.getTarget()
 
     if (target && target.energy < target.energyCapacity) {
-      const amount = target.energyCapacity - target.energy
+      const amount = energyDeficit(target)
       this.actOrMoveCloser(target, target => this.creep.transfer(target, RESOURCE_ENERGY, amount))
       this.indicateTarget()
     } else {
