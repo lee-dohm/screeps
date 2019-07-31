@@ -14,10 +14,6 @@ class Body {
     this.parts = parts
   }
 
-  get parts() {
-    return this.parts
-  }
-
   /**
    * Calculate the energy cost required to spawn this body.
    */
