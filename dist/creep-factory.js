@@ -1,6 +1,6 @@
 const BuilderRole = require("./builder-role")
 const GathererCreep = require("./gatherer-creep")
-const HarvesterRole = require("./harvester-role")
+const HarvesterCreep = require("./harvester-creep")
 const UpgraderRole = require("./upgrader-role")
 
 function buildCreep(name) {
@@ -17,7 +17,7 @@ function buildCreep(name) {
       }
 
       case "harvester": {
-        return new HarvesterRole(creep)
+        return new HarvesterCreep(creep)
       }
 
       case "upgrader": {

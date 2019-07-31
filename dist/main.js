@@ -1,4 +1,5 @@
 require("./creep-patch")
+require("./room-position-patch")
 
 const buildCreep = require("./creep-factory")
 const debug = require("./debug")
