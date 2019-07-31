@@ -1,5 +1,6 @@
-const { energyDeficit } = require("./utility")
-
+/**
+ * Defines the behavior of gathering dropped energy until the creep is full.
+ */
 class GatherBehavior {
   constructor(creep) {
     this.creep = creep

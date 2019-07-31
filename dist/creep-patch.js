@@ -50,6 +50,14 @@ Creep.prototype.getBestBody = function(energyCapacity) {
   })
 }
 
+Creep.prototype.isEmpty = function() {
+  if (!this._isEmpty) {
+    this._isEmpty = _.sum(this.carry) === 0
+  }
+
+  return this._isEmpty
+}
+
 Creep.prototype.isFull = function() {
   if (!this._isFull) {
     this._isFull = _.sum(this.carry) === this.carryCapacity
