@@ -2,10 +2,7 @@ const CreepBase = require("./creep-base")
 
 const BEHAVIOR_TRANSITIONS = {}
 
-const BODY_DEFINITIONS = [
-  [WORK, WORK, WORK, WORK, MOVE, MOVE],
-  [WORK, WORK, MOVE, MOVE]
-]
+const BODY_DEFINITIONS = [[WORK, WORK, WORK, WORK, MOVE, MOVE], [WORK, WORK, MOVE, MOVE]]
 
 /**
  * A creep that navigates to an energy source and harvests it until death.
