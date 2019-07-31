@@ -33,12 +33,12 @@ Object.defineProperty(Source.prototype, 'memory', defineProperty({
  * Gets the room positions adjacent to the source that are walkable.
  */
 Source.prototype.getHarvestablePositions = function() {
-  this.pos.getAdjacent().filter(pos => pos.isWalkable())
+  return this.pos.getAdjacent().filter(pos => pos.isWalkable())
 }
 
 /**
  * Gets the room positions adjacent to the source that are walkable and do not have a creep in them.
  */
 Source.prototype.getOpenPositions = function() {
-  this.pos.getAdjacent().filter(pos => pos.isWalkable() && !pos.isOccupied())
+  return this.pos.getAdjacent().filter(pos => pos.isWalkable() && !pos.isOccupied())
 }
