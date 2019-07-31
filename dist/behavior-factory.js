@@ -18,7 +18,13 @@ function buildBehavior(creep) {
     }
 
     default: {
-      throw new InvalidBehaviorError(creep, mode)
+      if (creep.defaultMode) {
+        creep.mode = creep.defaultMode
+
+        return buildBehavior(creep)
+      } else {
+        throw new InvalidBehaviorError(creep, mode)
+      }
     }
   }
 }
