@@ -22,6 +22,7 @@ The code doesn't need to be built, but you can autoformat the code using `npm ru
 
 ## Documentation
 
+* [Roles and Behaviors](roles-and-behaviors.md)
 * [Things I learned](things-i-learned.md)
 
 ## License

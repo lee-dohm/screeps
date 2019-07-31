@@ -1,3 +1,5 @@
+require("./creep-patch")
+
 const buildCreep = require("./creep-factory")
 const debug = require("./debug")
 const foreman = require("./foreman")

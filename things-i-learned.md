@@ -8,6 +8,36 @@ Part of the fun of Screeps is the process of learning the little tidbits of know
 
 The [`Creep.transfer()` function](https://docs.screeps.com/api/#Creep.transfer) accepts an optional `amount` parameter. The default value for `amount` is "everything the creep is carrying", meaning that if you transfer more than the target can accept, you've wasted the excess.
 
+## Control levels
+
+The amount of available energy in a room varies based on the [Room Controller Level](https://docs.screeps.com/control.html#Room-Controller-Level). So the body definitions that we design for each role should be built around the maximum available spawn energy for each RCL:
+
+| RCL | Max available energy |
+|-----|----------------------|
+| 0 | 0 |
+| 1 | 300 |
+| 2 | 550 |
+| 3 | 800 |
+| 4 | 1,300 |
+| 5 | 1,800 |
+| 6 | 2,300 |
+| 7 | 5,300 |
+| 8 | 12,300 |
+
+This means that at RCL 1 we could build any of the following:
+
+* `[WORK, WORK, MOVE, MOVE]` - Harvester
+* `[WORK, MOVE, MOVE, CARRY]` - Builder/Upgrader
+* `[HEAL, MOVE]` - Healer
+* `[MOVE, MOVE, MOVE, CARRY, CARRY, CARRY]` - Gatherer
+
+But at RCL 2 we could build any of the following:
+
+* `[WORK, WORK, WORK, WORK, MOVE, MOVE]` - Harvester
+* `[WORK, WORK, MOVE, MOVE, MOVE, CARRY]` - Builder/Upgrader
+* `[HEAL, HEAL, MOVE]` - Healer
+* `[MOVE, MOVE, MOVE, MOVE, MOVE, CARRY, CARRY, CARRY, CARRY, CARRY]` - Gatherer
+
 ## Logging
 
 ### Errors
