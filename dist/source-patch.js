@@ -33,6 +33,36 @@ Object.defineProperty(
   })
 )
 
+Object.defineProperty(Source.prototype, "assignedHarvesters", defineProperty({
+  get: function() {
+    if (!this._assignedHarvesters) {
+      if (!this.memory.assignedHarvesters) {
+        this.memory.assignedHarvesters = []
+      }
+
+      this._assignedHarvesters = this.memory.assignedHarvesters
+    }
+
+    return this._assignedHarvesters
+  }
+}))
+
+Object.defineProperty(Source.prototype, "harvestablePositionCount", defineProperty({
+  get: function() {
+    if (!this._harvestablePositionCount) {
+      if (!this.memory.harvestablePositionCount) {
+        const count = this.getHarvestablePositions().length
+
+        this.memory.harvestablePositionCount = count
+      }
+
+      this._harvestablePositionCount = this.memory.harvestablePositionCount
+    }
+
+    return this._harvestablePositionCount
+  }
+}))
+
 /**
  * Gets the room positions adjacent to the source that are walkable.
  */

@@ -1,10 +1,12 @@
 require("./creep-patch")
+require("./room-patch")
 require("./room-position-patch")
 require("./source-patch")
 
 const buildCreep = require("./creep-factory")
 const debug = require("./debug")
 const foreman = require("./foreman")
+const foremanPlus = require("./foreman-plus")
 
 function loop() {
   debug.log("Start game loop")
@@ -13,7 +15,8 @@ function loop() {
     Memory.foreman = foreman
   }
 
-  foreman.reclaimDeadCreepMemory()
+  foremanPlus.install()
+  foremanPlus.reclaimDeadMemory()
 
   foreman.maintainCreeps("builder", 3)
   foreman.maintainCreeps("upgrader", 3)
