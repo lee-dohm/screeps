@@ -1,5 +1,3 @@
-const Body = require("./body")
-
 const BEHAVIOR_TRANSITIONS = {
   gathering: "depositing",
   depositing: "gathering"
@@ -17,14 +15,6 @@ class GathererCreep extends Creep {
     this.defaultMode = "gathering"
 
     super(creep.id)
-  }
-
-  getBestBody(energyCapacity) {
-    return this.bodyDefinitions.find(parts => {
-      const body = new Body(parts)
-
-      return energyCapacity > body.getCost()
-    })
   }
 }
 

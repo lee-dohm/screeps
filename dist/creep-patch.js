@@ -1,3 +1,4 @@
+const Body = require("./body")
 const buildBehavior = require("./behavior-factory")
 const defineProperty = require("./define-property")
 
@@ -40,6 +41,14 @@ Object.defineProperty(
     }
   })
 )
+
+Creep.prototype.getBestBody = function(energyCapacity) {
+  return this.bodyDefinitions.find(parts => {
+    const body = new Body(parts)
+
+    return energyCapacity > body.getCost()
+  })
+}
 
 Creep.prototype.run = function() {
   const behavior = buildBehavior(this)
