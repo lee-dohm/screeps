@@ -5,33 +5,26 @@ require("./source-patch")
 
 const buildCreep = require("./creep-factory")
 const debug = require("./debug")
-const foreman = require("./foreman")
-const foremanPlus = require("./foreman-plus")
+const foreman = require("./foreman-plus")
 
 function loop() {
   debug.log("Start game loop")
 
-  if (!Memory.foreman || Memory.foreman != foreman) {
-    Memory.foreman = foreman
-  }
-
-  foremanPlus.install()
-  foremanPlus.reclaimDeadMemory()
-
-  foreman.maintainCreeps("builder", 3)
-  foreman.maintainCreeps("upgrader", 3)
-  foreman.maintainCreeps("harvester", 3)
+  foreman.install()
+  foreman.reclaimDeadMemory()
 
   for (let name in Game.creeps) {
     try {
-      const creepRole = buildCreep(name)
+      const creep = buildCreep(name)
 
-      if (creepRole) {
-        creepRole.run()
+      if (creep) {
+        creep.run()
       }
     } catch (e) {
-      console.log(`Exception caught: ${e.message}`)
-      console.log(e.stack)
+      const message = `ERROR: ${e.message}\n${e.stack}`
+
+      console.log(message)
+      Game.notify(message)
     }
   }
 

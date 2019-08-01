@@ -13,7 +13,7 @@ function InvalidTargetError(creep, target) {
  *
  * @typedef {Object} Creep
  * @property {string} mode Current mode of the creep
- * @property {string} role Role that the creep fulfills
+ * @property {string} role Immutable role that the creep fulfills
  * @property {Object} target Object that the creep has targeted for its current mode
  */
 
