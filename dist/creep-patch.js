@@ -8,6 +8,15 @@ function InvalidTargetError(creep, target) {
   this.stack = new Error().stack
 }
 
+/**
+ * Represents a creep in the game.
+ *
+ * @typedef {Object} Creep
+ * @property {string} mode Current mode of the creep
+ * @property {string} role Role that the creep fulfills
+ * @property {Object} target Object that the creep has targeted for its current mode
+ */
+
 Object.defineProperty(
   Creep.prototype,
   "mode",
@@ -22,19 +31,34 @@ Object.defineProperty(
   })
 )
 
+Object.defineProperty(Creep.prototype, "role", defineProperty({
+  get: function() {
+    return this.memory.role
+  }
+}))
+
 Object.defineProperty(
   Creep.prototype,
   "target",
   defineProperty({
     get: function() {
-      return Game.getObjectById(this.memory.targetId)
+      if (!this._target) {
+        if (this.memory.targetId) {
+          this._target = Game.getObjectById(this.memory.target)
+        } else {
+          this._target = null
+        }
+      }
+
+      return this._target
     },
 
-    set: function(newTarget) {
+    set: function(target) {
       if (!target) {
-        this.memory.targetId = null
+        this._target = this.memory.targetId = null
       } else if (target.id) {
         this.memory.targetId = target.id
+        this._target = target
       } else {
         throw new InvalidTargetError(this, target)
       }
@@ -50,6 +74,9 @@ Creep.prototype.getBestBody = function(energyCapacity) {
   })
 }
 
+/**
+ * Determines if the creep's `CARRY` modules are empty.
+ */
 Creep.prototype.isEmpty = function() {
   if (!this._isEmpty) {
     this._isEmpty = _.sum(this.carry) === 0
@@ -58,6 +85,9 @@ Creep.prototype.isEmpty = function() {
   return this._isEmpty
 }
 
+/**
+ * Determines if the creep's `CARRY` modules are full.
+ */
 Creep.prototype.isFull = function() {
   if (!this._isFull) {
     this._isFull = _.sum(this.carry) === this.carryCapacity
@@ -66,6 +96,9 @@ Creep.prototype.isFull = function() {
   return this._isFull
 }
 
+/**
+ * Executes the creep's currently assigned behavior.
+ */
 Creep.prototype.run = function() {
   const behavior = buildBehavior(this)
 
@@ -76,6 +109,9 @@ Creep.prototype.run = function() {
   }
 }
 
+/**
+ * Transitions to the next behavior mode.
+ */
 Creep.prototype.setNextMode = function() {
   this.mode = this.behaviorTransitions[this.mode]
 }
