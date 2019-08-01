@@ -16,7 +16,7 @@ Object.defineProperty(
         return undefined
       }
 
-      return (Memory.rooms[this.name] = Memory.rooms[this.name] || {})
+      return Memory.rooms[this.name] || {}
     },
 
     set: function(value) {

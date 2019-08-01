@@ -11,11 +11,11 @@ class HarvesterCreep extends CreepBase {
   static role = "harvester"
 
   constructor(creep) {
+    super(creep.id)
+
     this.behaviorTransitions = BEHAVIOR_TRANSITIONS
     this.bodyDefinitions = BODY_DEFINITIONS
     this.defaultMode = "harvesting"
-
-    super(creep.id)
   }
 }
 
