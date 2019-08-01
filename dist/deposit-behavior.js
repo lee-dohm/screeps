@@ -4,6 +4,8 @@ const { energyDeficit } = require("./utility")
  * Defines the behavior of depositing carried energy until empty.
  */
 class DepositBehavior {
+  static mode = "depositing"
+
   constructor(creep) {
     this.creep = creep
   }

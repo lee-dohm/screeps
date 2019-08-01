@@ -1,4 +1,6 @@
 class HarvestBehavior {
+  static mode = "harvesting"
+
   constructor(creep) {
     this.creep = creep
   }
@@ -14,3 +16,5 @@ class HarvestBehavior {
     }
   }
 }
+
+module.exports = HarvestBehavior

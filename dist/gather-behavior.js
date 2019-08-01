@@ -2,6 +2,8 @@
  * Defines the behavior of gathering dropped energy until the creep is full.
  */
 class GatherBehavior {
+  static mode = "gathering"
+
   constructor(creep) {
     this.creep = creep
   }

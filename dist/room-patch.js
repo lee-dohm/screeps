@@ -36,25 +36,37 @@ Object.defineProperty(
 /**
  * Adds a `sources` property to `Room` objects that returns the list of sources in the room.
  *
- * Caches the IDs of the source objects on first access.
+ * Caches the IDs of the `Source` objects in `Memory` on first access. Caches the `Source` objects
+ * in temporary memory on first access within a tick.
  */
-Object.defineProperty(Room.prototype, "sources", defineProperty({
-  get: function() {
-    if (!this._sources) {
-      if (!this.memory.sources) {
-        const sourceIds = this.find(FIND_SOURCES).map(source => source.id)
+Object.defineProperty(
+  Room.prototype,
+  "sources",
+  defineProperty({
+    get: function() {
+      if (!this._sources) {
+        let sources
 
-        this.memory.sources = sourceIds
+        if (!this.memory.sources) {
+          sources = this.find(FIND_SOURCES)
+          const sourceIds = sources.map(source => source.id)
+
+          this.memory.sources = sourceIds
+        }
+
+        const sourceMap = sources.reduce((source, map) => {
+          map[source.id] = source
+
+          return map
+        }, {})
+
+        this._sources = sourceMap
       }
 
-      const sources = this.memory.sources.map(id => Game.getObjectById(id))
-
-      this._sources = sources
+      return this._sources
     }
-
-    return this._sources
-  }
-}))
+  })
+)
 
 Room.prototype.hasFriendlySpawns = function() {
   return this.find(FIND_MY_SPAWNS).length > 0

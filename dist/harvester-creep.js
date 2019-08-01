@@ -8,6 +8,8 @@ const BODY_DEFINITIONS = [[WORK, WORK, WORK, WORK, MOVE, MOVE], [WORK, WORK, MOV
  * A creep that navigates to an energy source and harvests it until death.
  */
 class HarvesterCreep extends CreepBase {
+  static role = "harvester"
+
   constructor(creep) {
     this.behaviorTransitions = BEHAVIOR_TRANSITIONS
     this.bodyDefinitions = BODY_DEFINITIONS

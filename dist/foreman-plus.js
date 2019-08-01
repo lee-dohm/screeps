@@ -1,4 +1,5 @@
 const debug = require("./debug")
+const HarvesterCreep = require("./harvester-creep")
 
 class ForemanPlus {
   install() {
@@ -12,11 +13,11 @@ class ForemanPlus {
       const room = Game.rooms[name]
 
       if (room.hasFriendlySpawns()) {
-        const sources = room.sources
-        const harvestablePositionCount = sources.reduce((source, total) => source.harvestablePositionCount + total)
-
-        for (const openPosition of openPositions) {
-          this.assignHarvester(openPosition)
+        for (const source of room.sources) {
+          if (source.harvestablePositionCount > source.harvesters.keys.length) {
+            // Spawn a new harvester
+            // Assign the harvester
+          }
         }
       }
     }
@@ -30,6 +31,16 @@ class ForemanPlus {
   reclaimDeadCreepMemory() {
     for (const name in Memory.creeps) {
       if (!Game.creeps[name]) {
+        const creepMemory = Memory.creeps[name]
+
+        if (creepMemory.role === HarvesterCreep.role && creepMemory.target) {
+          const sourceMemory = Memory.sources[creepMemory.target]
+
+          if (sourceMemory && sourceMemory.harvesters[name]) {
+            delete sourceMemory.harvesters[name]
+          }
+        }
+
         debug.log(`Delete dead creep from memory: ${name}`)
         delete Memory.creeps[name]
       }

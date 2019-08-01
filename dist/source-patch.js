@@ -33,35 +33,50 @@ Object.defineProperty(
   })
 )
 
-Object.defineProperty(Source.prototype, "assignedHarvesters", defineProperty({
-  get: function() {
-    if (!this._assignedHarvesters) {
-      if (!this.memory.assignedHarvesters) {
-        this.memory.assignedHarvesters = []
+Object.defineProperty(
+  Source.prototype,
+  "harvesters",
+  defineProperty({
+    get: function() {
+      if (!this._harvesters) {
+        if (!this.memory.harvesters) {
+          this.memory.harvesters = {}
+        }
+
+        this._harvesters = this.memory.harvesters
       }
 
-      this._assignedHarvesters = this.memory.assignedHarvesters
+      return this._harvesters
     }
+  })
+)
 
-    return this._assignedHarvesters
-  }
-}))
+Object.defineProperty(
+  Source.prototype,
+  "harvestablePositionCount",
+  defineProperty({
+    get: function() {
+      if (!this._harvestablePositionCount) {
+        if (!this.memory.harvestablePositionCount) {
+          const count = this.getHarvestablePositions().length
 
-Object.defineProperty(Source.prototype, "harvestablePositionCount", defineProperty({
-  get: function() {
-    if (!this._harvestablePositionCount) {
-      if (!this.memory.harvestablePositionCount) {
-        const count = this.getHarvestablePositions().length
+          this.memory.harvestablePositionCount = count
+        }
 
-        this.memory.harvestablePositionCount = count
+        this._harvestablePositionCount = this.memory.harvestablePositionCount
       }
 
-      this._harvestablePositionCount = this.memory.harvestablePositionCount
+      return this._harvestablePositionCount
     }
+  })
+)
 
-    return this._harvestablePositionCount
-  }
-}))
+Source.prototype.assignHarvester = function(harvesterOrName, pos) {
+  const harvester =
+    harvesterOrName instanceof HarvesterCreep ? harvesterOrName : Game.creeps[harvesterOrName]
+
+  this.harvesters[harvester.name] = { x: pos.x, y: pos.y }
+}
 
 /**
  * Gets the room positions adjacent to the source that are walkable.
@@ -75,4 +90,11 @@ Source.prototype.getHarvestablePositions = function() {
  */
 Source.prototype.getOpenPositions = function() {
   return this.pos.getAdjacent().filter(pos => pos.isWalkable() && !pos.isOccupied())
+}
+
+Source.prototype.unassignHarvester = function(harvesterOrName) {
+  const harvester =
+    harvesterOrName instanceof HarvesterCreep ? harvesterOrName : Game.creeps[harvesterOrName]
+
+  delete this.harvesters[harvester.name]
 }

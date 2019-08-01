@@ -9,6 +9,8 @@ const BODY_DEFINITIONS = [
 ]
 
 class GathererCreep extends Creep {
+  static role = "gatherer"
+
   constructor(creep) {
     this.behaviorTransitions = BEHAVIOR_TRANSITIONS
     this.bodyDefinitions = BODY_DEFINITIONS

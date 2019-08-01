@@ -12,11 +12,11 @@ function buildCreep(name) {
         return new BuilderRole(creep)
       }
 
-      case "gatherer": {
+      case GathererCreep.role: {
         return new GathererCreep(creep)
       }
 
-      case "harvester": {
+      case HarvesterCreep.role: {
         return new HarvesterCreep(creep)
       }
 

@@ -9,11 +9,11 @@ function InvalidBehaviorError(creep, mode) {
 
 function buildBehavior(creep) {
   switch (creep.mode) {
-    case "depositing": {
+    case DepositBehavior.mode: {
       return new DepositBehavior(creep)
     }
 
-    case "gathering": {
+    case GathererBehavior.mode: {
       return new GatherBehavior(creep)
     }
 
