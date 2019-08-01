@@ -1,5 +1,5 @@
 # Screeps Documentation
 
-* [Features](docs/features.md)
-* [Roles and Behaviors](docs/roles-and-behaviors.md)
-* [Things I learned](docs/things-i-learned.md)
+* [Features](features.md)
+* [Roles and Behaviors](roles-and-behaviors.md)
+* [Things I learned](things-i-learned.md)
