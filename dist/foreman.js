@@ -13,6 +13,14 @@ class Foreman {
     }
   }
 
+  maintainHarvesters() {
+    const creeps = this.filterCreeps(creep => creep.memory.role === HarvesterCreep.role)
+
+    if (creeps.length < 3) {
+      
+    }
+  }
+
   reclaimDeadMemory() {
     this.reclaimDeadCreepMemory()
     this.reclaimInaccessibleRoomMemory()
@@ -22,6 +30,20 @@ class Foreman {
     debug.log("Begin game loop")
 
     this.install()
+  }
+
+  filterCreeps(fn) {
+    let creeps = []
+
+    for (const name in Game.creeps) {
+      const creep = Game.creeps[name]
+
+      if (fn(creep)) {
+        creeps.push(creep)
+      }
+    }
+
+    return creeps
   }
 
   install() {

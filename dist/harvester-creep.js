@@ -7,7 +7,7 @@ const BEHAVIOR_TRANSITIONS = {
   [DepositBehavior.mode]: HarvestBehavior.mode
 }
 
-const BODY_DEFINITIONS = [[WORK, WORK, WORK, WORK, MOVE, MOVE], [WORK, WORK, MOVE, MOVE]]
+const BODY_DEFINITIONS = [[WORK, WORK, WORK, WORK, MOVE, MOVE], [WORK, MOVE, MOVE, CARRY]]
 
 class HarvesterCreep extends Creep {
   static role = "harvester"
