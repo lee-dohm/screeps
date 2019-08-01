@@ -1,13 +1,6 @@
 const DepositBehavior = require("./deposit-behavior")
 const GatherBehavior = require("./gather-behavior")
-
-class InvalidBehaviorError {
-  constructor(creep, mode) {
-    this.name = "InvalidBehaviorError"
-    this.message = `Creep ${creep.name} requested an invalid behavior ${mode}`
-    this.stack = new Error().stack
-  }
-}
+const InvalidBehaviorError = require("./invalid-behavior-error")
 
 function buildBehavior(creep) {
   switch (creep.mode) {
