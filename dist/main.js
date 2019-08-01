@@ -4,13 +4,11 @@ require("./room-position-patch")
 require("./source-patch")
 
 const buildCreep = require("./creep-factory")
-const debug = require("./debug")
-const foreman = require("./foreman-plus")
+const foreman = require("./foreman")
 
 function loop() {
-  debug.log("Start game loop")
+  foreman.startShift()
 
-  foreman.install()
   foreman.reclaimDeadMemory()
 
   for (let name in Game.creeps) {
@@ -28,8 +26,7 @@ function loop() {
     }
   }
 
-  debug.log("Game loop end reached")
-  debug.logStats()
+  foreman.endShift()
 }
 
 module.exports = { loop }

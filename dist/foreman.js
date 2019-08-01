@@ -1,16 +1,27 @@
 const debug = require("./debug")
 const HarvesterCreep = require("./harvester-creep")
 
-class ForemanPlus {
-  install() {
-    if (!Memory.foremanPlus || Memory.foremanPlus != this) {
-      Memory.foremanPlus = this
-    }
+class Foreman {
+  endShift() {
+    debug.logStats()
+    debug.log("End game loop")
   }
 
   reclaimDeadMemory() {
     this.reclaimDeadCreepMemory()
     this.reclaimInaccessibleRoomMemory()
+  }
+
+  startShift() {
+    debug.log("Begin game loop")
+
+    this.install()
+  }
+
+  install() {
+    if (!Memory.foreman || Memory.foreman != this) {
+      Memory.foreman = this
+    }
   }
 
   reclaimDeadCreepMemory() {
@@ -32,4 +43,4 @@ class ForemanPlus {
   }
 }
 
-module.exports = new ForemanPlus()
+module.exports = new Foreman()
