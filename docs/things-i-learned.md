@@ -42,19 +42,21 @@ But at RCL 2 we could build any of the following:
 
 ### Errors
 
-The best way to log errors is to fail fast by throwing an exception. I found [this technique](https://github.com/screepers/screeps-profiler/blob/4014ef56997d520295a481a28f5cd6acf70042f0/screeps-profiler.js#L7-L11) for creating a named error object with a stack trace:
+The best way to log errors is to fail fast by throwing an exception. I found [this technique](https://github.com/screepers/screeps-profiler/blob/4014ef56997d520295a481a28f5cd6acf70042f0/screeps-profiler.js#L7-L11) for creating a named error object with a stack trace using old, old JavaScript semantics. But we can use JavaScript classes for these too:
 
 ```javascript
-function UnknownModeError(creep, mode) {
-  this.name = "UnknownModeError"
-  this.message = `Creep ${creep.name} has an unknown mode ${mode}`
-
-  // prettier-ignore
-  this.stack = ((new Error())).stack
+class UnknownModeError {
+  constructor(creep, mode) {
+    this.name = "UnknownModeError"
+    this.message = `Creep ${creep.name} has an unknown mode ${mode}`
+    this.stack = new Error().stack
+  }
 }
 ```
 
 Reasons why this is preferable:
 
-1. Errors like this are emailed to the player
+1. Errors like this are emailed to the player if they're not caught
+    * You can use [`Game.notify()`](https://docs.screeps.com/api/#Game.notify) to send emails for caught exceptions
 1. You get a stack trace
+1. You can catch them, so if a creep runs into an error, you can continue with the next creep instead of forfeiting your tick
