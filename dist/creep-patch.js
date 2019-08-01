@@ -31,11 +31,15 @@ Object.defineProperty(
   })
 )
 
-Object.defineProperty(Creep.prototype, "role", defineProperty({
-  get: function() {
-    return this.memory.role
-  }
-}))
+Object.defineProperty(
+  Creep.prototype,
+  "role",
+  defineProperty({
+    get: function() {
+      return this.memory.role
+    }
+  })
+)
 
 Object.defineProperty(
   Creep.prototype,

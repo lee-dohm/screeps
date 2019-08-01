@@ -7,6 +7,12 @@ class Foreman {
     debug.log("End game loop")
   }
 
+  killAllCreeps() {
+    for (const name in Game.creeps) {
+      Game.creeps[name].suicide()
+    }
+  }
+
   reclaimDeadMemory() {
     this.reclaimDeadCreepMemory()
     this.reclaimInaccessibleRoomMemory()
