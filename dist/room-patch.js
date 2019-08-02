@@ -1,39 +1,6 @@
 const defineProperty = require("./define-property")
 
 /**
- * Adds `memory` property to `Room` objects.
- */
-Object.defineProperty(
-  Room.prototype,
-  "memory",
-  defineProperty({
-    get: function() {
-      if (!Memory.rooms) {
-        Memory.rooms = {}
-      }
-
-      if (!_.isObject(Memory.rooms)) {
-        return undefined
-      }
-
-      return Memory.rooms[this.name] || {}
-    },
-
-    set: function(value) {
-      if (!Memory.rooms) {
-        Memory.rooms = {}
-      }
-
-      if (!_.isObject(Memory.rooms)) {
-        throw new Error("Could not set room memory")
-      }
-
-      Memory.rooms[this.name] = value
-    }
-  })
-)
-
-/**
  * Adds a `sources` property to `Room` objects that returns the list of sources in the room.
  *
  * Caches the IDs of the `Source` objects in `Memory` on first access. Caches the `Source` objects
