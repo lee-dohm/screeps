@@ -19,7 +19,7 @@ Object.defineProperty(
           this.memory.sources = sourceIds
         }
 
-        const sourceMap = this.memory.sources.reduce((sourceId, map) => {
+        const sourceMap = this.memory.sources.reduce((map, sourceId) => {
           map[sourceId] = Game.getObjectById(sourceId)
 
           return map
