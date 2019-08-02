@@ -11,7 +11,7 @@ function buildCreep(name) {
       }
 
       default: {
-        throw new InvalidRoleError(name, role)
+        throw new InvalidRoleError(name, creep.memory.role)
       }
     }
   }
