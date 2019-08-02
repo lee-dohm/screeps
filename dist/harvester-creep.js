@@ -1,4 +1,3 @@
-const CreepBase = require("./creep-base")
 const DepositBehavior = require("./deposit-behavior")
 const HarvestBehavior = require("./harvest-behavior")
 
