@@ -1,3 +1,4 @@
+const buildCreep = require("./creep-factory")
 const debug = require("./debug")
 const HarvesterCreep = require("./harvester-creep")
 
@@ -20,6 +21,23 @@ class Foreman {
       Game.spawns["Spawn1"].spawnCreep([WORK, MOVE, MOVE, CARRY], `harvester ${Game.time}`, {
         memory: { role: "harvester" }
       })
+    }
+  }
+
+  manageCreeps() {
+    for (let name in Game.creeps) {
+      try {
+        const creep = buildCreep(name)
+
+        if (creep) {
+          creep.run()
+        }
+      } catch (e) {
+        const message = `ERROR: ${e.message}\n${e.stack}`
+
+        console.log(message)
+        Game.notify(message)
+      }
     }
   }
 
