@@ -17,6 +17,9 @@ class Foreman {
     const creeps = this.filterCreeps(creep => creep.memory.role === HarvesterCreep.role)
 
     if (creeps.length < 3) {
+      Game.spawns["Spawn1"].spawnCreep([WORK, MOVE, MOVE, CARRY], `harvester ${Game.time}`, {
+        memory: { role: "harvester" }
+      })
     }
   }
 

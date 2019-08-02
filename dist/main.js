@@ -10,6 +10,7 @@ function loop() {
   foreman.startShift()
 
   foreman.reclaimDeadMemory()
+  foreman.maintainHarvesters()
 
   for (let name in Game.creeps) {
     try {

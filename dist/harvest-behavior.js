@@ -1,3 +1,5 @@
+const debug = require("./debug")
+
 class HarvestBehavior {
   constructor(creep) {
     this.creep = creep
@@ -8,13 +10,17 @@ class HarvestBehavior {
   }
 
   run() {
+    debug.log("Begin HarvestBehavior.run()")
+
     if (!this.creep.target) {
-      this.findNextTarget()
+      this.creep.target = this.findNextTarget()
     } else {
       if (this.creep.harvest(this.creep.target) == ERR_NOT_IN_RANGE) {
         this.creep.moveTo(this.creep.target)
       }
     }
+
+    debug.log("End HarvestBehavior.run()")
   }
 
   findNextTarget() {
