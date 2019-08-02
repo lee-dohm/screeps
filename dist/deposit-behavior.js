@@ -1,6 +1,4 @@
 class DepositBehavior {
-  static mode = "depositing"
-
   constructor(creep) {
     this.creep = creep
   }
@@ -22,3 +20,7 @@ class DepositBehavior {
     }
   }
 }
+
+DepositBehavior.mode = "depositing"
+
+module.exports = DepositBehavior

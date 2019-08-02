@@ -1,6 +1,4 @@
 class HarvestBehavior {
-  static mode = "harvesting"
-
   constructor(creep) {
     this.creep = creep
   }
@@ -23,5 +21,7 @@ class HarvestBehavior {
     return this.creep.pos.findClosestByRange(this.creep.room.sources)
   }
 }
+
+HarvestBehavior.mode = "harvesting"
 
 module.exports = HarvestBehavior

@@ -10,8 +10,6 @@ const BEHAVIOR_TRANSITIONS = {
 const BODY_DEFINITIONS = [[WORK, WORK, WORK, WORK, MOVE, MOVE], [WORK, MOVE, MOVE, CARRY]]
 
 class HarvesterCreep extends Creep {
-  static role = "harvester"
-
   constructor(creep) {
     super(creep.id)
 
@@ -20,5 +18,7 @@ class HarvesterCreep extends Creep {
     this.defaultMode = HarvestBehavior.mode
   }
 }
+
+HarvesterCreep.role = "harvester"
 
 module.exports = HarvesterCreep
