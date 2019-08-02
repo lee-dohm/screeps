@@ -1,4 +1,4 @@
-const InvalidRoleError = require("./involid-role-error")
+const InvalidRoleError = require("./invalid-role-error")
 const HarvesterCreep = require("./harvester-creep")
 
 function buildCreep(name) {
