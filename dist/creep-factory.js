@@ -4,7 +4,7 @@ const HarvesterCreep = require("./harvester-creep")
 function buildCreep(name) {
   const creep = Game.creeps[name]
 
-  if (creep) {
+  if (creep && !creep.spawning) {
     switch (creep.memory.role) {
       case HarvesterCreep.role: {
         return new HarvesterCreep(creep)
