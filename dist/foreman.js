@@ -41,6 +41,18 @@ class Foreman {
     }
   }
 
+  reportCreeps() {
+    for (const name in Game.creeps) {
+      const creep = Game.creeps[name]
+
+      if (creep.target) {
+        const visual = new RoomVisual(creep.room.name)
+
+        visual.line(creep.pos, creep.target.pos, { color: "#0f0", lineStyle: "dashed" })
+      }
+    }
+  }
+
   reclaimDeadMemory() {
     this.reclaimDeadCreepMemory()
     this.reclaimInaccessibleRoomMemory()
