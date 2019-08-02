@@ -10,21 +10,19 @@ class HarvestBehavior {
   }
 
   run() {
-    debug.log("Begin HarvestBehavior.run()")
-
     if (!this.creep.target) {
       this.creep.target = this.findNextTarget()
     } else {
+      debug.log(`Creep ${this.creep.name}: harvest`)
       if (this.creep.harvest(this.creep.target) == ERR_NOT_IN_RANGE) {
+        debug.log(`Creep ${this.creep.name}: moveTo`)
         this.creep.moveTo(this.creep.target)
       }
     }
-
-    debug.log("End HarvestBehavior.run()")
   }
 
   findNextTarget() {
-    return this.creep.pos.findClosestByRange(this.creep.room.sources)
+    return this.creep.pos.findClosestByRange(Object.values(this.creep.room.sources))
   }
 }
 

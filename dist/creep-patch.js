@@ -48,7 +48,7 @@ Object.defineProperty(
     get: function() {
       if (!this._target) {
         if (this.memory.targetId) {
-          this._target = Game.getObjectById(this.memory.target)
+          this._target = Game.getObjectById(this.memory.targetId)
         } else {
           this._target = null
         }
