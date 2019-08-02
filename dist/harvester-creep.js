@@ -12,9 +12,9 @@ class HarvesterCreep extends Creep {
   constructor(creep) {
     super(creep.id)
 
-    this.behaviorTransitions = BEHAVIOR_TRANSITIONS
-    this.bodyDefinitions = BODY_DEFINITIONS
-    this.defaultMode = HarvestBehavior.mode
+    creep.behaviorTransitions = BEHAVIOR_TRANSITIONS
+    creep.bodyDefinitions = BODY_DEFINITIONS
+    creep.defaultMode = HarvestBehavior.mode
   }
 }
 
