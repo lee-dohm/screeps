@@ -17,7 +17,6 @@ class Foreman {
     const creeps = this.filterCreeps(creep => creep.memory.role === HarvesterCreep.role)
 
     if (creeps.length < 3) {
-      
     }
   }
 
