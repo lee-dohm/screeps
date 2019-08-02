@@ -10,7 +10,6 @@ function loop() {
 
   foreman.reclaimDeadMemory()
   foreman.maintainHarvesters()
-
   foreman.manageCreeps()
 
   foreman.endShift()
