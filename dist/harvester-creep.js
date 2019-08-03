@@ -14,7 +14,8 @@ class HarvesterCreep extends Creep {
 
     creep.behaviorTransitions = BEHAVIOR_TRANSITIONS
     creep.bodyDefinitions = BODY_DEFINITIONS
-    creep.defaultMode = HarvestBehavior.mode
+
+    this.defaultMode = HarvestBehavior.mode
   }
 }
 

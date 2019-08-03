@@ -107,6 +107,7 @@ Creep.prototype.run = function() {
   const behavior = buildBehavior(this)
 
   if (behavior.isComplete()) {
+    this.target = null
     this.setNextMode()
   } else {
     behavior.run()
