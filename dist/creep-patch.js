@@ -2,12 +2,8 @@ const Body = require("./body")
 const behaviorFactory = require("./behavior-factory")
 const debug = require("./debug")
 const defineProperty = require("./define-property")
-
-function InvalidTargetError(creep, target) {
-  this.name = "InvalidTargetError"
-  this.message = `Creep ${creep.name} attempted to set an invalid target: ${JSON.stringify(target)}`
-  this.stack = new Error().stack
-}
+const InvalidTargetError = require("./invalid-target-error")
+const roleFactory = require("./role-factory")
 
 /**
  * Represents a creep in the game.
@@ -43,7 +39,11 @@ Object.defineProperty(
   "role",
   defineProperty({
     get: function() {
-      return this.memory.role
+      if (!this._role) {
+        this._role = roleFactory(this)
+      }
+
+      return this._role
     }
   })
 )
@@ -84,14 +84,6 @@ Creep.prototype.clearTarget = function() {
   this.target = null
 }
 
-Creep.prototype.getBestBody = function(energyCapacity) {
-  return this.bodyDefinitions.find(parts => {
-    const body = new Body(parts)
-
-    return energyCapacity > body.getCost()
-  })
-}
-
 /**
  * Determines if the creep's `CARRY` modules are empty.
  */
@@ -123,8 +115,8 @@ Creep.prototype.isFull = function() {
  */
 Creep.prototype.run = function() {
   if (this.behavior.isComplete()) {
-    this.behavior.setNextBehavior()
-  } else {
-    this.behavior.run()
+    this.role.setNextBehavior()
   }
+
+  this.behavior.run()
 }

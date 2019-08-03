@@ -1,6 +1,7 @@
 const buildCreep = require("./creep-factory")
 const debug = require("./debug")
 const HarvesterCreep = require("./harvester-creep")
+const roleFactory = require("./role-factory")
 
 /**
  * Handles the high-level functions of the robot army.
@@ -37,14 +38,14 @@ class Foreman {
   }
 
   /**
-   *
+   * Instruct the creeps to perform their actions.
    */
   manageCreeps() {
     for (let name in Game.creeps) {
       try {
-        const creep = buildCreep(name)
+        const creep = Game.creeps[name]
 
-        if (creep) {
+        if (creep && !creep.spawning) {
           creep.run()
         }
       } catch (e) {

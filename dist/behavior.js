@@ -20,7 +20,7 @@ class Behavior {
   }
 
   /**
-   * Transitions to the next behavior when the current behavior's goal is complete.
+   * Transitions to the behavior with the given `id` when the current behavior's goal is complete.
    *
    * ## Options
    *
