@@ -2,18 +2,30 @@ const buildCreep = require("./creep-factory")
 const debug = require("./debug")
 const HarvesterCreep = require("./harvester-creep")
 
+/**
+ * Handles the high-level functions of the robot army.
+ */
 class Foreman {
+  /**
+   * Runs cleanup at the end of the game loop.
+   */
   endShift() {
     debug.logStats()
     debug.log("End game loop")
   }
 
+  /**
+   * Force all creeps in the robot army to suicide.
+   */
   killAllCreeps() {
     for (const name in Game.creeps) {
       Game.creeps[name].suicide()
     }
   }
 
+  /**
+   * Maintain appropriate harvester levels.
+   */
   maintainHarvesters() {
     const creeps = this.filterCreeps(creep => creep.role === HarvesterCreep.role)
 
@@ -24,6 +36,9 @@ class Foreman {
     }
   }
 
+  /**
+   *
+   */
   manageCreeps() {
     for (let name in Game.creeps) {
       try {
@@ -33,10 +48,7 @@ class Foreman {
           creep.run()
         }
       } catch (e) {
-        const message = `ERROR: ${e.message}\n${e.stack}`
-
-        console.log(message)
-        Game.notify(message)
+        debug.logException(e)
       }
     }
   }
@@ -65,17 +77,7 @@ class Foreman {
   }
 
   filterCreeps(fn) {
-    let creeps = []
-
-    for (const name in Game.creeps) {
-      const creep = Game.creeps[name]
-
-      if (fn(creep)) {
-        creeps.push(creep)
-      }
-    }
-
-    return creeps
+    return Object.keys(Game.creeps).map(name => Game.creeps[name]).filter(fn)
   }
 
   install() {
@@ -88,6 +90,7 @@ class Foreman {
     for (const name in Memory.creeps) {
       if (!Game.creeps[name]) {
         debug.log(`Delete dead creep from memory: ${name}`)
+
         delete Memory.creeps[name]
       }
     }
@@ -97,6 +100,7 @@ class Foreman {
     for (const name in Memory.rooms) {
       if (!Game.rooms[name]) {
         debug.log(`Delete inaccessible room from memory: ${name}`)
+
         delete Memory.rooms[name]
       }
     }

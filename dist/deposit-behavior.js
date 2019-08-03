@@ -1,12 +1,25 @@
-class DepositBehavior {
+const Behavior = require("./behavior")
+
+/**
+ * Deposits the energy it carries in structures that can use energy.
+ */
+class DepositBehavior extends Behavior {
   constructor(creep) {
-    this.creep = creep
+    super(creep)
   }
 
+  /**
+   * Returns `true` if the creep is empty.
+   */
   isComplete() {
     return this.creep.isEmpty()
   }
 
+  /**
+   * Moves to the current target and deposits energy.
+   *
+   * If there is no target set, it finds the first energy-receiving structure and deposits energy.
+   */
   run() {
     if (!this.creep.target) {
       this.findNextTarget()
@@ -21,7 +34,7 @@ class DepositBehavior {
   }
 
   findNextTarget() {
-    let targets = this.creep.room.find(FIND_STRUCTURES, {
+    const targets = this.creep.room.find(FIND_STRUCTURES, {
       filter: structure => {
         return (
           (structure.structureType == STRUCTURE_EXTENSION ||
@@ -36,6 +49,6 @@ class DepositBehavior {
   }
 }
 
-DepositBehavior.mode = "depositing"
+DepositBehavior.id = "depositing"
 
 module.exports = DepositBehavior
