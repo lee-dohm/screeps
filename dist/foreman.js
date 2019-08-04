@@ -25,8 +25,8 @@ class Foreman {
   }
 
   maintainCreeps() {
-    this.maintainHarvesters()
     this.maintainUpgraders()
+    this.maintainHarvesters()
   }
 
   /**
