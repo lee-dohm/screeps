@@ -34,6 +34,12 @@ class Foreman {
     }
   }
 
+  /**
+   * Maintains the appropriate number of creeps by role.
+   *
+   * The creep roles are in order from lowest priority to highest because later commands to the
+   * same creep or structure in the same tick override earlier commands.
+   */
   maintainCreeps() {
     this.maintainRole(UpgraderRole, 3)
     this.maintainRole(HarvesterRole, 3)
