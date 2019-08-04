@@ -11,7 +11,7 @@ function loop() {
   foreman.reclaimDeadMemory()
   foreman.maintainHarvesters()
   foreman.manageCreeps()
-  foreman.reportCreeps()
+  foreman.visualizeCreeps()
 
   foreman.endShift()
 }

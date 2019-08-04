@@ -25,7 +25,7 @@ class Foreman {
   }
 
   /**
-   * Maintain appropriate harvester levels.
+   * Maintain the appropriate number of harvester creeps.
    */
   maintainHarvesters() {
     const creeps = this.filterCreeps(creep => creep.role === HarvesterCreep.role)
@@ -54,27 +54,32 @@ class Foreman {
     }
   }
 
-  reportCreeps() {
-    for (const name in Game.creeps) {
-      const creep = Game.creeps[name]
-
-      if (creep.target) {
-        const visual = new RoomVisual(creep.room.name)
-
-        visual.line(creep.pos, creep.target.pos, { color: "#0f0", lineStyle: "dashed" })
-      }
-    }
-  }
-
+  /**
+   * Reclaims memory space dedicated to dead or unreachable objects.
+   */
   reclaimDeadMemory() {
     this.reclaimDeadCreepMemory()
     this.reclaimInaccessibleRoomMemory()
   }
 
+  /**
+   * Initializes everything before the start of the game loop.
+   */
   startShift() {
     debug.log("Begin game loop")
 
     this.install()
+  }
+
+  /**
+   * Visualizes the creeps' activities.
+   */
+  visualizeCreeps() {
+    for (const name in Game.creeps) {
+      const creep = Game.creeps[name]
+
+      creep.role.visualize()
+    }
   }
 
   filterCreeps(fn) {
