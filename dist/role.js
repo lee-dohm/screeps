@@ -11,6 +11,7 @@
  * ## Subclass requirements
  *
  * * `id` - `[static]` A unique `string` identifying the subclass for the factory function
+ * * `bodyDefinitions` - `[static]` An `Array` of body part arrays, from most expensive to least
  *
  * ## Overrides
  *
@@ -24,16 +25,14 @@ class Role {
    * * `creep` - The creep that is fulfilling this role
    * * `defaultBehavior` - Behavior the role should use if one is not set
    * * `behaviorTransitions` - A `string, string` map of current behavior to next behavior
-   * * `bodyDefinitions` - An `Array` of body part arrays, from most expensive to least expensive
    */
-  constructor(creep, defaultBehavior, behaviorTransitions, bodyDefinitions) {
+  constructor(creep, defaultBehavior, behaviorTransitions) {
     if (!creep || !(creep instanceof Creep)) {
       throw new Error(`No creep passed to Role constructor: ${JSON.stringify(creep)}`)
     }
 
     this.creep = creep
     this.behaviorTransitions = behaviorTransitions
-    this.bodyDefinitions = bodyDefinitions
 
     if (!this.creep.memory.behaviorId) {
       this.creep.memory.behaviorId = defaultBehavior

@@ -14,7 +14,7 @@ const BODY_DEFINITIONS = [[CARRY, MOVE, MOVE, MOVE, WORK, WORK], [CARRY, MOVE, M
  */
 class UpgraderRole extends Role {
   constructor(creep) {
-    super(creep, HarvestBehavior.id, BEHAVIOR_TRANSITIONS, BODY_DEFINITIONS)
+    super(creep, HarvestBehavior.id, BEHAVIOR_TRANSITIONS)
   }
 
   /**
@@ -27,6 +27,7 @@ class UpgraderRole extends Role {
   }
 }
 
+UpgraderRole.bodyDefinitions = BODY_DEFINITIONS
 UpgraderRole.id = "upgrader"
 
 module.exports = UpgraderRole
