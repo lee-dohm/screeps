@@ -1,5 +1,6 @@
 const Behavior = require("./behavior")
 const debug = require("./debug")
+const IdleError = require("./idle-error")
 
 /**
  * Deposits the energy it carries in structures that can use energy.
@@ -45,6 +46,10 @@ class DepositBehavior extends Behavior {
         )
       }
     })
+
+    if (targets.length === 0) {
+      throw new IdleError(this.creep, "No structures needing energy found")
+    }
 
     this.creep.target = targets[0]
   }

@@ -116,13 +116,17 @@ class Foreman {
    * If a `role` is given, lists only creeps of that `role`.
    */
   listCreeps(role) {
-    let creeps = Object.keys(Game.creeps).map(name => Game.creeps[name])
+    let creeps = Object.keys(Game.creeps)
+      .map(name => Game.creeps[name])
+      .sort((a, b) => (a.name < b.name ? -1 : 1))
 
     if (role) {
       creeps = creeps.filter(creep => creep.role instanceof role)
     }
 
-    return creeps
+    for (const creep of creeps) {
+      console.log(`${creep.name} is ${creep.memory.behaviorId} -> ${creep.target}`)
+    }
   }
 
   /*
