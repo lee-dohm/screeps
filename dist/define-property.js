@@ -1,3 +1,5 @@
+"use strict"
+
 function defineProperty(obj) {
   return Object.assign({ enumerable: false, configurable: true }, obj)
 }

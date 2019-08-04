@@ -1,3 +1,5 @@
+"use strict"
+
 class InvalidBehaviorError {
   constructor(creep, mode) {
     this.name = "InvalidBehaviorError"

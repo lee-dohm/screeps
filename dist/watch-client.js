@@ -1,3 +1,5 @@
+"use strict"
+
 /*
  * Copied with permission from
  * https://github.com/screepers/screeps-multimeter/blob/3acc45e2c0ca3c2f4bddd0dc795daa05e03fe01b/lib/watch-client.js

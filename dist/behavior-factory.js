@@ -1,3 +1,5 @@
+"use strict"
+
 const CheckSignBehavior = require("./check-sign-behavior")
 const DepositBehavior = require("./deposit-behavior")
 const HarvestBehavior = require("./harvest-behavior")

@@ -1,3 +1,5 @@
+"use strict"
+
 const Behavior = require("./behavior")
 const debug = require("./debug")
 const username = require("./username")

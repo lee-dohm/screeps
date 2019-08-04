@@ -1,3 +1,5 @@
+"use strict"
+
 const Body = require("./body")
 const debug = require("./debug")
 const HarvesterRole = require("./harvester-role")

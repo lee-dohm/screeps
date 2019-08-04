@@ -1,3 +1,5 @@
+"use strict"
+
 class IdleError {
   constructor(creep, message) {
     this.name = "IdleError"

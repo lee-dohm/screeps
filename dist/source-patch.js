@@ -1,3 +1,5 @@
+"use strict"
+
 const defineProperty = require("./define-property")
 
 /**

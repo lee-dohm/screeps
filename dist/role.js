@@ -1,3 +1,5 @@
+"use strict"
+
 /**
  * Represents the role the creep plays in the robot army.
  *

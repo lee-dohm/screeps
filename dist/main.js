@@ -1,3 +1,5 @@
+"use strict"
+
 require("./creep-patch")
 require("./room-patch")
 require("./room-position-patch")
