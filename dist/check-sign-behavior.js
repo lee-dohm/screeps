@@ -38,7 +38,7 @@ class CheckSignBehavior extends Behavior {
       this.findRoomController()
     } else {
       const sign = this.creep.target.sign
-      debug.log(`Check controller sign: ${JSON.stringify(sign)}`)
+      debug.log(`Check controller sign: {green-fg}${JSON.stringify(sign)}{/green-fg}`)
 
       if (!sign || sign.username !== username) {
         if (this.creep.signController(this.randomQuote()) == ERR_NOT_IN_RANGE) {
