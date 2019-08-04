@@ -44,6 +44,9 @@ class Foreman {
     }
   }
 
+  /**
+   * Maintain the appropriate number of upgrader creeps
+   */
   maintainUpgraders() {
     const creeps = this.filterCreeps(creep => creep.roleId === UpgraderRole.id)
 
