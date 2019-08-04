@@ -35,46 +35,8 @@ class Foreman {
   }
 
   maintainCreeps() {
-    this.maintainUpgraders()
-    this.maintainHarvesters()
-  }
-
-  /**
-   * Maintain the appropriate number of harvester creeps.
-   */
-  maintainHarvesters() {
-    const creeps = this.filterCreeps(creep => creep.role instanceof HarvesterRole)
-
-    if (creeps.length < 3) {
-      const spawn = Game.spawns["Spawn1"]
-      const maxEnergy = spawn.room.getMaxSpawnEnergy()
-      const body = this.getBestBody(HarvesterRole.bodyDefinitions, maxEnergy)
-
-      if (!spawn.spawning) {
-        spawn.spawnCreep(body, this.getCreepName(HarvesterRole.id), {
-          memory: { roleId: HarvesterRole.id }
-        })
-      }
-    }
-  }
-
-  /**
-   * Maintain the appropriate number of upgrader creeps
-   */
-  maintainUpgraders() {
-    const creeps = this.filterCreeps(creep => creep.role instanceof UpgraderRole)
-
-    if (creeps.length < 3) {
-      const spawn = Game.spawns["Spawn1"]
-      const maxEnergy = spawn.room.getMaxSpawnEnergy()
-      const body = this.getBestBody(UpgraderRole.bodyDefinitions, maxEnergy)
-
-      if (!spawn.spawning) {
-        spawn.spawnCreep(body, this.getCreepName(UpgraderRole.id), {
-          memory: { roleId: UpgraderRole.id }
-        })
-      }
-    }
+    this.maintainRole(UpgraderRole, 3)
+    this.maintainRole(HarvesterRole, 3)
   }
 
   /**
@@ -192,6 +154,16 @@ class Foreman {
     global.foreman = this
   }
 
+  maintainRole(role, count) {
+    const creeps = this.filterCreeps(creep => creep.role instanceof role)
+
+    if (creeps.length < count) {
+      const spawn = Game.spawns["Spawn1"]
+
+      this.spawnAt(spawn, role)
+    }
+  }
+
   reclaimDeadCreepMemory() {
     for (const name in Memory.creeps) {
       if (!Game.creeps[name]) {
@@ -209,6 +181,17 @@ class Foreman {
 
         delete Memory.rooms[name]
       }
+    }
+  }
+
+  spawnAt(spawn, role) {
+    if (!spawn.spawning) {
+      const maxEnergy = spawn.room.getMaxSpawnEnergy()
+      const body = this.getBestBody(role.bodyDefinitions, maxEnergy)
+
+      spawn.spawnCreep(body, this.getCreepName(role.id), {
+        memory: { roleId: role.id }
+      })
     }
   }
 }
