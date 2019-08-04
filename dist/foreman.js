@@ -31,7 +31,7 @@ class Foreman {
 
     if (creeps.length < 3) {
       Game.spawns["Spawn1"].spawnCreep([WORK, MOVE, MOVE, CARRY], `harvester ${Game.time}`, {
-        memory: { role: "harvester" }
+        memory: { roleId: HarvesterRole.id }
       })
     }
   }
