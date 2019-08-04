@@ -1,4 +1,5 @@
 const Behavior = require("./behavior")
+const debug = require("./debug")
 
 /**
  * Deposits the energy it carries in structures that can use energy.
@@ -25,8 +26,9 @@ class DepositBehavior extends Behavior {
       this.findNextTarget()
     } else {
       const target = this.creep.target
-      const amount = target.energyCapacity - target.energy
+      const amount = Math.max(target.energyCapacity - target.energy, _.sum(this.creep.carry))
 
+      debug.log(`Attempt to transfer ${amount} into ${target.name}`)
       if (this.creep.transfer(target, RESOURCE_ENERGY, amount) == ERR_NOT_IN_RANGE) {
         this.creep.moveTo(target)
       }

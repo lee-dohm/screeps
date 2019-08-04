@@ -1,3 +1,4 @@
+const debug = require("./debug")
 const DepositBehavior = require("./deposit-behavior")
 const HarvestBehavior = require("./harvest-behavior")
 const Role = require("./role")
@@ -15,6 +16,8 @@ class HarvesterRole extends Role {
   }
 
   setNextBehavior() {
+    debug.log(`Creep ${this.creep.name}: Setting next behavior for HarvesterRole`)
+
     this.creep.clearTarget()
 
     super.setNextBehavior()
