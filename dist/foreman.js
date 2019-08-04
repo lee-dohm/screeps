@@ -1,6 +1,6 @@
 const buildCreep = require("./creep-factory")
 const debug = require("./debug")
-const HarvesterCreep = require("./harvester-creep")
+const HarvesterRole = require("./harvester-role")
 const roleFactory = require("./role-factory")
 
 /**
@@ -28,7 +28,7 @@ class Foreman {
    * Maintain the appropriate number of harvester creeps.
    */
   maintainHarvesters() {
-    const creeps = this.filterCreeps(creep => creep.role === HarvesterCreep.role)
+    const creeps = this.filterCreeps(creep => creep.role === HarvesterRole.id)
 
     if (creeps.length < 3) {
       Game.spawns["Spawn1"].spawnCreep([WORK, MOVE, MOVE, CARRY], `harvester ${Game.time}`, {

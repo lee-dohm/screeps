@@ -1,5 +1,5 @@
 const InvalidRoleError = require("./invalid-role-error")
-const HarvesterCreep = require("./harvester-creep")
+const HarvesterRole = require("./harvester-role")
 
 function roleFactory(creep) {
   switch (creep.memory.roleId) {
