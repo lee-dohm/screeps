@@ -1,6 +1,6 @@
-const DepositBehavior = require("./deposit-behavior")
 const HarvestBehavior = require("./harvest-behavior")
 const Role = require("./role")
+const UpgradeBehavior = require("./upgrade-behavior")
 
 const BEHAVIOR_TRANSITIONS = {
   [HarvestBehavior.id]: UpgradeBehavior.id,
