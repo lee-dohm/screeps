@@ -9,6 +9,12 @@ const UpgraderRole = require("./upgrader-role")
  * Handles the high-level functions of the robot army.
  */
 class Foreman {
+  /*
+   *
+   * Section: Game loop
+   *
+   */
+
   /**
    * Runs cleanup at the end of the game loop.
    */
@@ -109,6 +115,33 @@ class Foreman {
       creep.role.visualize()
     }
   }
+
+  /*
+   *
+   * Section: Command-line helpers
+   *
+   */
+
+  /**
+   * Lists all creeps.
+   *
+   * If a `role` is given, lists only creeps of that `role`.
+   */
+  listCreeps(role) {
+    let creeps = Object.keys(Game.creeps).map(name => Game.creeps[name])
+
+    if (role) {
+      creeps = creeps.filter(creep => creep.role instanceof role)
+    }
+
+    return creeps
+  }
+
+  /*
+   *
+   * Section: Private functions
+   *
+   */
 
   filterCreeps(fn) {
     return Object.keys(Game.creeps)
