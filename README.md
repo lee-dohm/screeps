@@ -1,6 +1,6 @@
 # Screeps
 
-All my code for my [Screeps](http://screeps.com).
+All my code for [Screeps](http://screeps.com).
 
 ## Use
 
