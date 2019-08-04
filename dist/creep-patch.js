@@ -3,6 +3,7 @@ const behaviorFactory = require("./behavior-factory")
 const debug = require("./debug")
 const defineProperty = require("./define-property")
 const InvalidTargetError = require("./invalid-target-error")
+const names = require("./names")
 const roleFactory = require("./role-factory")
 
 /**
@@ -82,6 +83,13 @@ Object.defineProperty(
  */
 Creep.prototype.clearTarget = function() {
   this.target = null
+}
+
+/**
+ * Generates a name for the creep.
+ */
+Creep.prototype.generateName = function() {
+  return `${this.role.id} ${names.getName()}`
 }
 
 /**
