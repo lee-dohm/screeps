@@ -178,9 +178,7 @@ class Foreman {
   }
 
   install() {
-    if (!Memory.foreman || Memory.foreman != this) {
-      Memory.foreman = this
-    }
+    global.foreman = this
   }
 
   reclaimDeadCreepMemory() {
