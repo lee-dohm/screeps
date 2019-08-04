@@ -45,9 +45,11 @@ class Foreman {
 
     if (creeps.length < 3) {
       const spawn = Game.spawns["Spawn1"]
+      const maxEnergy = spawn.room.getMaxSpawnEnergy()
+      const body = this.getBestBody(HarvesterRole.bodyDefinitions, maxEnergy)
 
       if (!spawn.spawning) {
-        spawn.spawnCreep([CARRY, MOVE, MOVE, WORK], this.getCreepName(HarvesterRole.id), {
+        spawn.spawnCreep(body, this.getCreepName(HarvesterRole.id), {
           memory: { roleId: HarvesterRole.id }
         })
       }
@@ -62,9 +64,11 @@ class Foreman {
 
     if (creeps.length < 3) {
       const spawn = Game.spawns["Spawn1"]
+      const maxEnergy = spawn.room.getMaxSpawnEnergy()
+      const body = this.getBestBody(UpgraderRole.bodyDefinitions, maxEnergy)
 
       if (!spawn.spawning) {
-        spawn.spawnCreep([CARRY, MOVE, MOVE, WORK], this.getCreepName(UpgraderRole.id), {
+        spawn.spawnCreep(body, this.getCreepName(UpgraderRole.id), {
           memory: { roleId: UpgraderRole.id }
         })
       }
