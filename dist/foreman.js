@@ -35,7 +35,7 @@ class Foreman {
    * Maintain the appropriate number of harvester creeps.
    */
   maintainHarvesters() {
-    const creeps = this.filterCreeps(creep => creep.roleId === HarvesterRole.id)
+    const creeps = this.filterCreeps(creep => creep.role instanceof HarvesterRole)
 
     if (creeps.length < 3) {
       const spawn = Game.spawns["Spawn1"]
@@ -52,7 +52,7 @@ class Foreman {
    * Maintain the appropriate number of upgrader creeps
    */
   maintainUpgraders() {
-    const creeps = this.filterCreeps(creep => creep.roleId === UpgraderRole.id)
+    const creeps = this.filterCreeps(creep => creep.role instanceof UpgraderRole)
 
     if (creeps.length < 3) {
       const spawn = Game.spawns["Spawn1"]
