@@ -7,10 +7,10 @@ function log(message) {
 }
 
 function logException(e) {
-  const message = `ERROR: ${e.message}\n${e.stack}`
+  const message = `{red-fg}{bold}ERROR:{/} ${e.message}\n${e.stack}`
 
   console.log(message)
-  Game.notify(message)
+  Game.notify(message, e.groupInterval)
 }
 
 function logStats() {
