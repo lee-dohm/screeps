@@ -83,7 +83,9 @@ class Foreman {
   }
 
   filterCreeps(fn) {
-    return Object.keys(Game.creeps).map(name => Game.creeps[name]).filter(fn)
+    return Object.keys(Game.creeps)
+      .map(name => Game.creeps[name])
+      .filter(fn)
   }
 
   install() {

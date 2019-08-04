@@ -27,7 +27,7 @@ class Behavior {
    * * `clearTarget` - When `true` clears the creep's target before transitioning to the new
    *   behavior. _(Default: `true`)_
    */
-  setNextBehavior(id, opts = {clearTarget: true}) {
+  setNextBehavior(id, opts = { clearTarget: true }) {
     if (opts.clearTarget) {
       this.creep.clearTarget()
     }

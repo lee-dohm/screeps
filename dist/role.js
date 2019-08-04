@@ -69,7 +69,10 @@ class Role {
    */
   visualize() {
     if (this.creep.target) {
-      this.creep.room.visual.line(this.creep.pos, this.creep.target.pos, { color: "#0f0", lineStyle: "dashed" })
+      this.creep.room.visual.line(this.creep.pos, this.creep.target.pos, {
+        color: "#0f0",
+        lineStyle: "dashed"
+      })
     }
   }
 }

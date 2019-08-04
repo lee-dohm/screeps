@@ -1,4 +1,3 @@
-
 /**
  * Represents a position within a room.
  *
