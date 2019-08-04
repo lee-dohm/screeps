@@ -1,4 +1,3 @@
-const buildCreep = require("./creep-factory")
 const debug = require("./debug")
 const HarvesterRole = require("./harvester-role")
 const roleFactory = require("./role-factory")
