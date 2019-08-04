@@ -62,3 +62,7 @@ class CheckSignBehavior extends Behavior {
     return GITHUB_ZEN[Math.floor(Math.random() * GITHUB_ZEN.length)]
   }
 }
+
+CheckSignBehavior.id = "checkingSign"
+
+module.exports = CheckSignBehavior
