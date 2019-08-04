@@ -25,8 +25,8 @@ class UpgradeBehavior extends Behavior {
     if (!this.creep.target) {
       this.findNextTarget()
     } else {
-      if (this.creep.upgradeController(target) == ERR_NOT_IN_RANGE) {
-        this.creep.moveTo(target)
+      if (this.creep.upgradeController(this.creep.target) == ERR_NOT_IN_RANGE) {
+        this.creep.moveTo(this.creep.target)
       }
     }
   }
