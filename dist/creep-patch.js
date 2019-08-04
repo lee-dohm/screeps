@@ -123,7 +123,7 @@ Creep.prototype.isFull = function() {
 Creep.prototype.run = function() {
   if (this.behavior.isComplete()) {
     this.role.setNextBehavior()
+  } else {
+    this.behavior.run()
   }
-
-  this.behavior.run()
 }
