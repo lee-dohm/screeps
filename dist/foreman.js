@@ -4,6 +4,7 @@ const HarvesterRole = require("./harvester-role")
 const names = require("./names")
 const roleFactory = require("./role-factory")
 const UpgraderRole = require("./upgrader-role")
+const watcher = require("./watch-client")
 
 /**
  * Handles the high-level functions of the robot army.
@@ -20,6 +21,7 @@ class Foreman {
    */
   endShift() {
     debug.logStats()
+    watcher()
     debug.log("End game loop")
   }
 
