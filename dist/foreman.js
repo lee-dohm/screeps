@@ -1,6 +1,7 @@
 const debug = require("./debug")
 const HarvesterRole = require("./harvester-role")
 const roleFactory = require("./role-factory")
+const UpgraderRole = require("./upgrader-role")
 
 /**
  * Handles the high-level functions of the robot army.
@@ -23,17 +24,37 @@ class Foreman {
     }
   }
 
+  maintainCreeps() {
+    this.maintainUpgraders()
+    this.maintainHarvesters()
+  }
+
   /**
    * Maintain the appropriate number of harvester creeps.
    */
   maintainHarvesters() {
-    const creeps = this.filterCreeps(creep => creep.role === HarvesterRole.id)
+    const creeps = this.filterCreeps(creep => creep.roleId === HarvesterRole.id)
 
     if (creeps.length < 3) {
       const spawn = Game.spawns["Spawn1"]
 
       spawn.spawnCreep([WORK, MOVE, MOVE, CARRY], `harvester ${Game.time}`, {
         memory: { roleId: HarvesterRole.id }
+      })
+    }
+  }
+
+  /**
+   * Maintain the appropriate number of upgrader creeps
+   */
+  maintainUpgraders() {
+    const creeps = this.filterCreeps(creep => creep.roleId === UpgraderRole.id)
+
+    if (creeps.length < 3) {
+      const spawn = Game.spawns["Spawn1"]
+
+      spawn.spawnCreep([WORK, MOVE, MOVE, CARRY], `upgrader ${Game.time}`, {
+        memory: { roleId: UpgraderRole.id }
       })
     }
   }
