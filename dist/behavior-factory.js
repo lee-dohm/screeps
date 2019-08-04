@@ -1,6 +1,7 @@
 const DepositBehavior = require("./deposit-behavior")
 const HarvestBehavior = require("./harvest-behavior")
 const InvalidBehaviorError = require("./invalid-behavior-error")
+const UpgradeBehavior = require("./upgrade-behavior")
 
 function behaviorFactory(creep) {
   switch (creep.memory.behaviorId) {
@@ -10,6 +11,10 @@ function behaviorFactory(creep) {
 
     case HarvestBehavior.id: {
       return new HarvestBehavior(creep)
+    }
+
+    case UpgradeBehavior.id: {
+      return new UpgradeBehavior(creep)
     }
 
     default: {

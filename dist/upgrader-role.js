@@ -3,16 +3,16 @@ const HarvestBehavior = require("./harvest-behavior")
 const Role = require("./role")
 
 const BEHAVIOR_TRANSITIONS = {
-  [HarvestBehavior.id]: DepositBehavior.id,
-  [DepositBehavior.id]: HarvestBehavior.id
+  [HarvestBehavior.id]: UpgradeBehavior.id,
+  [UpgradeBehavior.id]: HarvestBehavior.id
 }
 
 const BODY_DEFINITIONS = [[CARRY, MOVE, MOVE, MOVE, WORK, WORK], [CARRY, MOVE, MOVE, WORK]]
 
 /**
- * Defines an energy harvester.
+ * Defines a room controller upgrader.
  */
-class HarvesterRole extends Role {
+class UpgraderRole extends Role {
   constructor(creep) {
     super(creep, HarvestBehavior.id, BEHAVIOR_TRANSITIONS, BODY_DEFINITIONS)
   }
@@ -27,6 +27,6 @@ class HarvesterRole extends Role {
   }
 }
 
-HarvesterRole.id = "harvester"
+UpgraderRole.id = "upgrader"
 
-module.exports = HarvesterRole
+module.exports = UpgraderRole
