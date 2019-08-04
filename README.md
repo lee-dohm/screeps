@@ -4,11 +4,17 @@ All my code for [Screeps](http://screeps.com).
 
 ## Use
 
+There are [much more mature Screeps codebases out there](https://github.com/search?o=desc&q=topic%3Ascreeps+topic%3Aai&s=stars&type=Repositories) if you want an introduction to serious AI concepts and logic. But if you want to learn from the ground up like I'm doing, feel free to fork my codebase and use it as your own starting point.
+
+> :rotating_light: **Note:** This is not intended to be a stable platform. I reserve the right to completely burn the whole thing down and start over. I've done it twice already :grinning:
+
 ### Getting started
 
 1. Install Node (see [the Screeps documentation for which version to use](https://docs.screeps.com/architecture.html))
 1. Clone the repository
 1. Run `npm install`
+1. Copy `dist/username.js.example` to `dist/username.js`
+1. Replace the example username in `dist/username.js` with your own Screeps username
 
 ### Building
 
