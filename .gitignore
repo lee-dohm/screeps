@@ -1,6 +1,12 @@
+# Ignore deployment configuration
 /.screeps.json
 
+# Ignore node modules cache
 node_modules
 
+# Ignore multimeter configuration files
 .screeps-multimeter.history
 screeps-multimeter.json
+
+# Ignore username declaration
+dist/username.js

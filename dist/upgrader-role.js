@@ -1,10 +1,12 @@
+const CheckSignBehavior = require("./check-sign-behavior")
 const HarvestBehavior = require("./harvest-behavior")
 const Role = require("./role")
 const UpgradeBehavior = require("./upgrade-behavior")
 
 const BEHAVIOR_TRANSITIONS = {
   [HarvestBehavior.id]: UpgradeBehavior.id,
-  [UpgradeBehavior.id]: HarvestBehavior.id
+  [UpgradeBehavior.id]: CheckSignBehavior.id,
+  [CheckSignBehavior.id]: HarvestBehavior.id
 }
 
 const BODY_DEFINITIONS = [[CARRY, MOVE, MOVE, WORK], [CARRY, MOVE, MOVE, MOVE, WORK, WORK]]
@@ -18,10 +20,11 @@ class UpgraderRole extends Role {
   }
 
   /**
-   * Clears the current target before setting the next behavior.
+   * Clears the current target and the `mySign` check before setting the next behavior.
    */
   setNextBehavior() {
     this.creep.clearTarget()
+    delete this.creep.memory.mySign
 
     super.setNextBehavior()
   }
