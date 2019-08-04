@@ -22,7 +22,7 @@ class Foreman {
   endShift() {
     debug.logStats()
     watcher()
-    debug.log("End game loop")
+    debug.log("-----  End game loop  -----")
   }
 
   /**
@@ -106,7 +106,7 @@ class Foreman {
    * Initializes everything before the start of the game loop.
    */
   startShift() {
-    debug.log("Begin game loop")
+    debug.log("----- Begin game loop -----")
 
     this.install()
   }
@@ -127,6 +127,20 @@ class Foreman {
    * Section: Command-line helpers
    *
    */
+
+  /**
+   * Disables debug mode.
+   */
+  disableDebug() {
+    delete Memory.debug
+  }
+
+  /**
+   * Enables debug mode.
+   */
+  enableDebug() {
+    Memory.debug = true
+  }
 
   /**
    * Lists all creeps.
