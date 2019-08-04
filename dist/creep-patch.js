@@ -1,32 +1,35 @@
 const Body = require("./body")
-const buildBehavior = require("./behavior-factory")
+const behaviorFactory = require("./behavior-factory")
 const defineProperty = require("./define-property")
-
-function InvalidTargetError(creep, target) {
-  this.name = "InvalidTargetError"
-  this.message = `Creep ${creep.name} attempted to set an invalid target: ${JSON.stringify(target)}`
-  this.stack = new Error().stack
-}
+const InvalidTargetError = require("./invalid-target-error")
+const names = require("./names")
+const roleFactory = require("./role-factory")
 
 /**
  * Represents a creep in the game.
  *
  * @typedef {Object} Creep
- * @property {string} mode Current mode of the creep
- * @property {string} role Immutable role that the creep fulfills
- * @property {Object} target Object that the creep has targeted for its current mode
+ * @property {Behavior} behavior Behavior governing the creep's actions
+ * @property {Role} role Immutable role that the creep fulfills in the robot army
+ * @property {Object} target Object that the creep has targeted for its current behavior
  */
 
 Object.defineProperty(
   Creep.prototype,
-  "mode",
+  "behavior",
   defineProperty({
     get: function() {
-      return this.memory.mode
+      if (!this._behavior) {
+        this._behavior = behaviorFactory(this)
+      }
+
+      return this._behavior
     },
 
-    set: function(newMode) {
-      this.memory.mode = newMode
+    set: function(id) {
+      this.memory.behaviorId = id
+
+      this._behavior = behaviorFactory(this)
     }
   })
 )
@@ -36,7 +39,11 @@ Object.defineProperty(
   "role",
   defineProperty({
     get: function() {
-      return this.memory.role
+      if (!this._role) {
+        this._role = roleFactory(this)
+      }
+
+      return this._role
     }
   })
 )
@@ -70,12 +77,18 @@ Object.defineProperty(
   })
 )
 
-Creep.prototype.getBestBody = function(energyCapacity) {
-  return this.bodyDefinitions.find(parts => {
-    const body = new Body(parts)
+/**
+ * Clears the creep's current target.
+ */
+Creep.prototype.clearTarget = function() {
+  this.target = null
+}
 
-    return energyCapacity > body.getCost()
-  })
+/**
+ * Generates a name for the creep.
+ */
+Creep.prototype.generateName = function() {
+  return `${this.role.id} ${names.getName()}`
 }
 
 /**
@@ -101,21 +114,16 @@ Creep.prototype.isFull = function() {
 }
 
 /**
- * Executes the creep's currently assigned behavior.
+ * Executes the creep's behavior actions.
+ *
+ * First checks to see if the current behavior's goals are complete, if so, it transitions to the
+ * next appropriate behavior. If the behavior's goals are not complete, it executes the behavior's
+ * actions.
  */
 Creep.prototype.run = function() {
-  const behavior = buildBehavior(this)
-
-  if (behavior.isComplete()) {
-    this.setNextMode()
+  if (this.behavior.isComplete()) {
+    this.role.setNextBehavior()
   } else {
-    behavior.run()
+    this.behavior.run()
   }
-}
-
-/**
- * Transitions to the next behavior mode.
- */
-Creep.prototype.setNextMode = function() {
-  this.mode = this.behaviorTransitions[this.mode]
 }

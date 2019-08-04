@@ -6,6 +6,13 @@ function log(message) {
   }
 }
 
+function logException(e) {
+  const message = `ERROR: ${e.message}\n${e.stack}`
+
+  console.log(message)
+  Game.notify(message)
+}
+
 function logStats() {
   const percentUsed = Math.round((Game.cpu.getUsed() / Game.cpu.tickLimit) * 100)
 
@@ -33,4 +40,4 @@ function _log(message) {
   console.log(`DEBUG: ${message}`)
 }
 
-module.exports = { log, logStats }
+module.exports = { log, logException, logStats }

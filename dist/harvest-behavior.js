@@ -1,21 +1,31 @@
+const Behavior = require("./behavior")
 const debug = require("./debug")
 
-class HarvestBehavior {
+/**
+ * Harvests energy until the creep's `CARRY` parts are full.
+ */
+class HarvestBehavior extends Behavior {
   constructor(creep) {
-    this.creep = creep
+    super(creep)
   }
 
+  /**
+   * Returns `true` when the creep is full.
+   */
   isComplete() {
     return this.creep.isFull()
   }
 
+  /**
+   * Moves to the current target and harvests from it.
+   *
+   * If there is no target set, it finds the closest energy source in the room the creep is in.
+   */
   run() {
     if (!this.creep.target) {
       this.creep.target = this.findNextTarget()
     } else {
-      debug.log(`Creep ${this.creep.name}: harvest`)
       if (this.creep.harvest(this.creep.target) == ERR_NOT_IN_RANGE) {
-        debug.log(`Creep ${this.creep.name}: moveTo`)
         this.creep.moveTo(this.creep.target)
       }
     }
@@ -26,6 +36,6 @@ class HarvestBehavior {
   }
 }
 
-HarvestBehavior.mode = "harvesting"
+HarvestBehavior.id = "harvesting"
 
 module.exports = HarvestBehavior

@@ -2,26 +2,20 @@ const DepositBehavior = require("./deposit-behavior")
 const HarvestBehavior = require("./harvest-behavior")
 const InvalidBehaviorError = require("./invalid-behavior-error")
 
-function buildBehavior(creep) {
-  switch (creep.mode) {
-    case DepositBehavior.mode: {
+function behaviorFactory(creep) {
+  switch (creep.memory.behaviorId) {
+    case DepositBehavior.id: {
       return new DepositBehavior(creep)
     }
 
-    case HarvestBehavior.mode: {
+    case HarvestBehavior.id: {
       return new HarvestBehavior(creep)
     }
 
     default: {
-      if (creep.defaultMode) {
-        creep.mode = creep.defaultMode
-
-        return buildBehavior(creep)
-      } else {
-        throw new InvalidBehaviorError(creep, mode)
-      }
+      throw new InvalidBehaviorError(creep, mode)
     }
   }
 }
 
-module.exports = buildBehavior
+module.exports = behaviorFactory
