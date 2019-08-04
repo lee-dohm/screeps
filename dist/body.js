@@ -18,9 +18,7 @@ class Body {
    * Calculate the energy cost required to spawn this body.
    */
   getCost() {
-    this.parts.reduce((total, part) => {
-      return COST_FOR_PART[part] + total
-    }, 0)
+    this.parts.reduce((total, part) => COST_FOR_PART[part] + total)
   }
 
   /**

@@ -1,6 +1,7 @@
 const Body = require("./body")
 const debug = require("./debug")
 const HarvesterRole = require("./harvester-role")
+const names = require("./names")
 const roleFactory = require("./role-factory")
 const UpgraderRole = require("./upgrader-role")
 
@@ -39,9 +40,11 @@ class Foreman {
     if (creeps.length < 3) {
       const spawn = Game.spawns["Spawn1"]
 
-      spawn.spawnCreep([WORK, MOVE, MOVE, CARRY], `harvester ${Game.time}`, {
-        memory: { roleId: HarvesterRole.id }
-      })
+      if (!spawn.spawning) {
+        spawn.spawnCreep([CARRY, MOVE, MOVE, WORK], this.getCreepName(HarvesterRole.id), {
+          memory: { roleId: HarvesterRole.id }
+        })
+      }
     }
   }
 
@@ -54,9 +57,11 @@ class Foreman {
     if (creeps.length < 3) {
       const spawn = Game.spawns["Spawn1"]
 
-      spawn.spawnCreep([WORK, MOVE, MOVE, CARRY], `upgrader ${Game.time}`, {
-        memory: { roleId: UpgraderRole.id }
-      })
+      if (!spawn.spawning) {
+        spawn.spawnCreep([CARRY, MOVE, MOVE, WORK], this.getCreepName(UpgraderRole.id), {
+          memory: { roleId: UpgraderRole.id }
+        })
+      }
     }
   }
 
@@ -112,11 +117,25 @@ class Foreman {
   }
 
   getBestBody(definitions, energy) {
-    return bodyDefinitions.find(parts => {
+    const possibleBodies = definitions.filter(parts => {
       const body = new Body(parts)
 
       return energy > body.getCost()
     })
+
+    debug.log(`Harvester bodies: ${JSON.stringify(HarvesterRole.bodyDefinitions)}`)
+    debug.log(`Possible bodies: ${JSON.stringify(possibleBodies)}`)
+
+    return possibleBodies.sort((a, b) => {
+      const bodyA = new Body(a)
+      const bodyB = new Body(b)
+
+      return bodyA.getCost() - bodyB.getCost()
+    })[0]
+  }
+
+  getCreepName(roleId) {
+    return `${roleId} ${names.getName()}`
   }
 
   install() {

@@ -7,7 +7,7 @@ const BEHAVIOR_TRANSITIONS = {
   [UpgradeBehavior.id]: HarvestBehavior.id
 }
 
-const BODY_DEFINITIONS = [[CARRY, MOVE, MOVE, MOVE, WORK, WORK], [CARRY, MOVE, MOVE, WORK]]
+const BODY_DEFINITIONS = [[CARRY, MOVE, MOVE, WORK], [CARRY, MOVE, MOVE, MOVE, WORK, WORK]]
 
 /**
  * Defines a room controller upgrader.
