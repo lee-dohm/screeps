@@ -4,9 +4,19 @@ Part of the fun of Screeps is the process of learning the little tidbits of know
 
 ## API
 
-### Don't overfill
+### Don't over- or under-fill
 
-The [`Creep.transfer()` function](https://docs.screeps.com/api/#Creep.transfer) accepts an optional `amount` parameter. The default value for `amount` is "everything the creep is carrying", meaning that if you transfer more than the target can accept, you've wasted the excess.
+The [`Creep.transfer()` function](https://docs.screeps.com/api/#Creep.transfer) accepts an optional `amount` parameter. The default value for `amount` is "everything the creep is carrying", meaning that if you transfer more than the target can accept, you've wasted the excess. On the other hand, if you try to transfer more than the creep has, the transfer will fail.
+
+### Spawning
+
+Determining what creep body a given spawn can create is tricky. Since spawns can draw energy from any spawn or extension anywhere in the room, you have to use some "can I spawn this?" logic:
+
+```javascript
+return spawn.spawnCreep(body, name, { dryRun: true }) === OK)
+```
+
+But this only tells you that the spawn can create the creep with the energy it has **now**. It can't tell you what the spawn is _capable_ of creating if all energy structures were full of energy. Since it is often more important to build the largest creep you can, even if you have to wait, then you have to calculate the total energy capacity of all the energy structures in the room.
 
 ## Control levels
 
