@@ -2,7 +2,7 @@ const USED_HISTORY_LENGTH = 10
 
 function log(message) {
   if (Memory.debug) {
-    _log(`DEBUG: ${message}`)
+    _log(message)
   }
 }
 
