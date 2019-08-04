@@ -176,9 +176,6 @@ class Foreman {
       return energy > body.getCost()
     })
 
-    debug.log(`Harvester bodies: ${JSON.stringify(HarvesterRole.bodyDefinitions)}`)
-    debug.log(`Possible bodies: ${JSON.stringify(possibleBodies)}`)
-
     return possibleBodies.sort((a, b) => {
       const bodyA = new Body(a)
       const bodyB = new Body(b)
