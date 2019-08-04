@@ -131,6 +131,10 @@ class Foreman {
    *
    */
 
+  capFirst(text) {
+    return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase()
+  }
+
   filterCreeps(fn) {
     return Object.keys(Game.creeps)
       .map(name => Game.creeps[name])
@@ -153,7 +157,7 @@ class Foreman {
   }
 
   getCreepName(roleId) {
-    return `${roleId} ${names.getName()}`
+    return `${this.capFirst(roleId)} ${this.capFirst(names.getName())}`
   }
 
   install() {
