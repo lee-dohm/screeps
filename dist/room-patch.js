@@ -33,6 +33,21 @@ Object.defineProperty(
   })
 )
 
+/**
+ * Calculates the maximum amount of energy that can be used to spawn a creep in this room.
+ */
+Room.prototype.getMaxSpawnEnergy = function() {
+  const structures = this.find(FIND_STRUCTURES, {
+    filter: structure =>
+      structure.structureType == STRUCTURE_SPAWN || structure.structureType == STRUCTURE_EXTENSION
+  })
+
+  return structures.reduce((total, structure) => total + structure.energyCapacity, 0)
+}
+
+/**
+ * Determines whether the room has friendly spawns.
+ */
 Room.prototype.hasFriendlySpawns = function() {
   return this.find(FIND_MY_SPAWNS).length > 0
 }

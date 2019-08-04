@@ -7,14 +7,14 @@ const BEHAVIOR_TRANSITIONS = {
   [UpgradeBehavior.id]: HarvestBehavior.id
 }
 
-const BODY_DEFINITIONS = [[CARRY, MOVE, MOVE, MOVE, WORK, WORK], [CARRY, MOVE, MOVE, WORK]]
+const BODY_DEFINITIONS = [[CARRY, MOVE, MOVE, WORK], [CARRY, MOVE, MOVE, MOVE, WORK, WORK]]
 
 /**
  * Defines a room controller upgrader.
  */
 class UpgraderRole extends Role {
   constructor(creep) {
-    super(creep, HarvestBehavior.id, BEHAVIOR_TRANSITIONS, BODY_DEFINITIONS)
+    super(creep, HarvestBehavior.id, BEHAVIOR_TRANSITIONS)
   }
 
   /**
@@ -27,6 +27,7 @@ class UpgraderRole extends Role {
   }
 }
 
+UpgraderRole.bodyDefinitions = BODY_DEFINITIONS
 UpgraderRole.id = "upgrader"
 
 module.exports = UpgraderRole

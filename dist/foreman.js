@@ -1,18 +1,28 @@
+const Body = require("./body")
 const debug = require("./debug")
 const HarvesterRole = require("./harvester-role")
+const names = require("./names")
 const roleFactory = require("./role-factory")
 const UpgraderRole = require("./upgrader-role")
+const watcher = require("./watch-client")
 
 /**
  * Handles the high-level functions of the robot army.
  */
 class Foreman {
+  /*
+   *
+   * Section: Game loop
+   *
+   */
+
   /**
    * Runs cleanup at the end of the game loop.
    */
   endShift() {
     debug.logStats()
-    debug.log("End game loop")
+    watcher()
+    debug.log("-----  End game loop  -----")
   }
 
   /**
@@ -24,39 +34,15 @@ class Foreman {
     }
   }
 
+  /**
+   * Maintains the appropriate number of creeps by role.
+   *
+   * The creep roles are in order from lowest priority to highest because later commands to the
+   * same creep or structure in the same tick override earlier commands.
+   */
   maintainCreeps() {
-    this.maintainUpgraders()
-    this.maintainHarvesters()
-  }
-
-  /**
-   * Maintain the appropriate number of harvester creeps.
-   */
-  maintainHarvesters() {
-    const creeps = this.filterCreeps(creep => creep.roleId === HarvesterRole.id)
-
-    if (creeps.length < 3) {
-      const spawn = Game.spawns["Spawn1"]
-
-      spawn.spawnCreep([WORK, MOVE, MOVE, CARRY], `harvester ${Game.time}`, {
-        memory: { roleId: HarvesterRole.id }
-      })
-    }
-  }
-
-  /**
-   * Maintain the appropriate number of upgrader creeps
-   */
-  maintainUpgraders() {
-    const creeps = this.filterCreeps(creep => creep.roleId === UpgraderRole.id)
-
-    if (creeps.length < 3) {
-      const spawn = Game.spawns["Spawn1"]
-
-      spawn.spawnCreep([WORK, MOVE, MOVE, CARRY], `upgrader ${Game.time}`, {
-        memory: { roleId: UpgraderRole.id }
-      })
-    }
+    this.maintainRole(UpgraderRole, 3)
+    this.maintainRole(HarvesterRole, 3)
   }
 
   /**
@@ -88,7 +74,7 @@ class Foreman {
    * Initializes everything before the start of the game loop.
    */
   startShift() {
-    debug.log("Begin game loop")
+    debug.log("----- Begin game loop -----")
 
     this.install()
   }
@@ -104,15 +90,87 @@ class Foreman {
     }
   }
 
+  /*
+   *
+   * Section: Command-line helpers
+   *
+   */
+
+  /**
+   * Disables debug mode.
+   */
+  disableDebug() {
+    delete Memory.debug
+  }
+
+  /**
+   * Enables debug mode.
+   */
+  enableDebug() {
+    Memory.debug = true
+  }
+
+  /**
+   * Lists all creeps.
+   *
+   * If a `role` is given, lists only creeps of that `role`.
+   */
+  listCreeps(role) {
+    let creeps = Object.keys(Game.creeps).map(name => Game.creeps[name])
+
+    if (role) {
+      creeps = creeps.filter(creep => creep.role instanceof role)
+    }
+
+    return creeps
+  }
+
+  /*
+   *
+   * Section: Private functions
+   *
+   */
+
+  capFirst(text) {
+    return text.charAt(0).toUpperCase() + text.slice(1).toLowerCase()
+  }
+
   filterCreeps(fn) {
     return Object.keys(Game.creeps)
       .map(name => Game.creeps[name])
       .filter(fn)
   }
 
+  getBestBody(definitions, energy) {
+    const possibleBodies = definitions.filter(parts => {
+      const body = new Body(parts)
+
+      return energy > body.getCost()
+    })
+
+    return possibleBodies.sort((a, b) => {
+      const bodyA = new Body(a)
+      const bodyB = new Body(b)
+
+      return bodyA.getCost() - bodyB.getCost()
+    })[0]
+  }
+
+  getCreepName(roleId) {
+    return `${this.capFirst(roleId)} ${this.capFirst(names.getName())}`
+  }
+
   install() {
-    if (!Memory.foreman || Memory.foreman != this) {
-      Memory.foreman = this
+    global.foreman = this
+  }
+
+  maintainRole(role, count) {
+    const creeps = this.filterCreeps(creep => creep.role instanceof role)
+
+    if (creeps.length < count) {
+      const spawn = Game.spawns["Spawn1"]
+
+      this.spawnAt(spawn, role)
     }
   }
 
@@ -133,6 +191,17 @@ class Foreman {
 
         delete Memory.rooms[name]
       }
+    }
+  }
+
+  spawnAt(spawn, role) {
+    if (!spawn.spawning) {
+      const maxEnergy = spawn.room.getMaxSpawnEnergy()
+      const body = this.getBestBody(role.bodyDefinitions, maxEnergy)
+
+      spawn.spawnCreep(body, this.getCreepName(role.id), {
+        memory: { roleId: role.id }
+      })
     }
   }
 }
