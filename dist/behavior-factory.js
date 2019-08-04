@@ -25,7 +25,7 @@ function behaviorFactory(creep) {
     }
 
     default: {
-      throw new InvalidBehaviorError(creep, mode)
+      throw new InvalidBehaviorError(creep, creep.memory.behaviorId)
     }
   }
 }
