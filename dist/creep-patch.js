@@ -1,4 +1,3 @@
-const Body = require("./body")
 const behaviorFactory = require("./behavior-factory")
 const defineProperty = require("./define-property")
 const InvalidTargetError = require("./invalid-target-error")

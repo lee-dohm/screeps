@@ -1,3 +1,4 @@
+const Body = require("./body")
 const debug = require("./debug")
 const HarvesterRole = require("./harvester-role")
 const roleFactory = require("./role-factory")
@@ -108,6 +109,14 @@ class Foreman {
     return Object.keys(Game.creeps)
       .map(name => Game.creeps[name])
       .filter(fn)
+  }
+
+  getBestBody(definitions, energy) {
+    return bodyDefinitions.find(parts => {
+      const body = new Body(parts)
+
+      return energy > body.getCost()
+    })
   }
 
   install() {

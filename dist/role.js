@@ -40,17 +40,6 @@ class Role {
   }
 
   /**
-   * Finds the best body for this role that can be built with the given amount of `energy`.
-   */
-  getBestBody(energy) {
-    return this.bodyDefinitions.find(parts => {
-      const body = new Body(parts)
-
-      return energy > body.getCost()
-    })
-  }
-
-  /**
    * Default handling of changing from one behavior to the next.
    *
    * Subclasses should override this function if they need to do something beyond simply
