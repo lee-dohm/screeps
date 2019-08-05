@@ -5,7 +5,7 @@
  *
  * The creep's role defines:
  *
- * * How to constructe the creep, based on an amount of energy
+ * * How to construct the creep, based on an amount of energy
  * * What the creep's default behavior is if it does not have one set
  * * What behavior should be adopted next if the current behavior's goals are complete
  * * Any visualizations that should be maintained for the creep
