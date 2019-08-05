@@ -1,3 +1,5 @@
+"use strict"
+
 class InvalidRoleError {
   constructor(creep, role) {
     this.name = "InvalidRoleError"

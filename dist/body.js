@@ -1,3 +1,5 @@
+"use strict"
+
 const COST_FOR_PART = {
   move: 50,
   work: 100,

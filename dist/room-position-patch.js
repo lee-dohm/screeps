@@ -1,3 +1,5 @@
+"use strict"
+
 /**
  * Represents a position within a room.
  *

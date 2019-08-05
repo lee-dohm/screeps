@@ -1,3 +1,5 @@
+"use strict"
+
 const CheckSignBehavior = require("./check-sign-behavior")
 const DepositBehavior = require("./deposit-behavior")
 const HarvestBehavior = require("./harvest-behavior")
@@ -23,7 +25,7 @@ function behaviorFactory(creep) {
     }
 
     default: {
-      throw new InvalidBehaviorError(creep, mode)
+      throw new InvalidBehaviorError(creep, creep.memory.behaviorId)
     }
   }
 }

@@ -1,3 +1,5 @@
+"use strict"
+
 class InvalidTargetError {
   constructor(creep, target) {
     this.name = "InvalidTargetError"

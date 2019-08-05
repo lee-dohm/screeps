@@ -1,3 +1,5 @@
+"use strict"
+
 const InvalidRoleError = require("./invalid-role-error")
 const HarvesterRole = require("./harvester-role")
 const UpgraderRole = require("./upgrader-role")

@@ -1,3 +1,5 @@
+"use strict"
+
 const USED_HISTORY_LENGTH = 10
 
 function log(message) {

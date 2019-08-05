@@ -1,3 +1,5 @@
+"use strict"
+
 const DepositBehavior = require("./deposit-behavior")
 const HarvestBehavior = require("./harvest-behavior")
 const Role = require("./role")
