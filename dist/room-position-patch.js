@@ -42,3 +42,10 @@ RoomPosition.prototype.isWalkable = function() {
 RoomPosition.prototype.isOccupied = function() {
   return this.lookFor(LOOK_CREEPS).length != 0
 }
+
+/**
+ * Gets the `RoomPosition` at the relative position to this one.
+ */
+RoomPosition.prototype.getRelative = function(dx, dy) {
+  return this.room.getPositionAt(this.x + dx, this.y + dy)
+}

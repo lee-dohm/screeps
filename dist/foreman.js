@@ -8,6 +8,19 @@ const roleFactory = require("./role-factory")
 const UpgraderRole = require("./upgrader-role")
 const watcher = require("./watch-client")
 
+/** See https://docs.screeps.com/control.html#Available-structures-per-RCL */
+const EXTENSIONS_BY_RCL = [
+  0,
+  0,
+  5,
+  10,
+  20,
+  30,
+  40,
+  50,
+  60
+]
+
 /**
  * Handles the high-level functions of the robot army.
  */
@@ -60,6 +73,21 @@ class Foreman {
         }
       } catch (e) {
         debug.logException(e)
+      }
+    }
+  }
+
+  plotExtensions() {
+    for (const name in Game.rooms) {
+      const room = Game.rooms[name]
+
+      if (room.controller && room.controller.my) {
+        const maxExtensions = EXTENSIONS_BY_RCL[room.controller.level]
+        const currentOrPlannedExtensions = room.getExtensionCount({ includeConstructionSites: true })
+
+        if (currentOrPlannedExtensions < maxExtensions) {
+          
+        }
       }
     }
   }
