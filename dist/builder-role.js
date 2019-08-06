@@ -6,7 +6,7 @@ const Role = require("./role")
 
 const BEHAVIOR_TRANSITIONS = {
   [HarvestBehavior.id]: BuildBehavior.id,
-  [BuildBehavior.id]: HarvestBehavior.id,
+  [BuildBehavior.id]: HarvestBehavior.id
 }
 
 const BODY_DEFINITIONS = [[CARRY, MOVE, MOVE, WORK], [CARRY, MOVE, MOVE, MOVE, WORK, WORK]]

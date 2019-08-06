@@ -2,24 +2,11 @@
 
 const Body = require("./body")
 const debug = require("./debug")
+const generateExtensionPos = require("./extension-generator")
 const HarvesterRole = require("./harvester-role")
 const names = require("./names")
-const roleFactory = require("./role-factory")
 const UpgraderRole = require("./upgrader-role")
 const watcher = require("./watch-client")
-
-/** See https://docs.screeps.com/control.html#Available-structures-per-RCL */
-const EXTENSIONS_BY_RCL = [
-  0,
-  0,
-  5,
-  10,
-  20,
-  30,
-  40,
-  50,
-  60
-]
 
 /**
  * Handles the high-level functions of the robot army.
@@ -80,13 +67,23 @@ class Foreman {
   plotExtensions() {
     for (const name in Game.rooms) {
       const room = Game.rooms[name]
+      const controller = room.controller
 
-      if (room.controller && room.controller.my) {
-        const maxExtensions = EXTENSIONS_BY_RCL[room.controller.level]
-        const currentOrPlannedExtensions = room.getExtensionCount({ includeConstructionSites: true })
+      if (controller && controller.my) {
+        const maxExtensions = CONTROLLER_STRUCTURES[STRUCTURE_EXTENSION][controller.level]
+        const currentOrPlannedExtensions = room.getExtensionCount({
+          includeConstructionSites: true
+        })
 
         if (currentOrPlannedExtensions < maxExtensions) {
-          
+          if (!global.extensionGenerator) {
+            const spawn = room.find(FIND_MY_SPAWNS)[0]
+            global.extensionGenerator = generateExtensionPos(room, spawn.pos)
+          }
+
+          const pos = global.extensionGenerator().next().value
+
+          room.createConstructionSite(pos, STRUCTURE_EXTENSION)
         }
       }
     }
