@@ -70,7 +70,7 @@ class Foreman {
       const controller = room.controller
 
       if (controller && controller.my) {
-        const maxExtensions = CONTROLLER_STRUCTURES[STRUCTURE_EXTENSION][controller.level]
+        const maxExtensions = this.getMaxStructByRcl(STRUCTURE_EXTENSION, controller.level)
         const currentOrPlannedExtensions = room.getExtensionCount({
           includeConstructionSites: true
         })
@@ -189,6 +189,10 @@ class Foreman {
 
   getCreepName(roleId) {
     return `${this.capFirst(roleId)} ${this.capFirst(names.getName())}`
+  }
+
+  getMaxStructByRcl(structure, level) {
+    return CONTROLLER_STRUCTURES[structure][level]
   }
 
   install() {
