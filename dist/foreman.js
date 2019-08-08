@@ -1,6 +1,7 @@
 "use strict"
 
 const Body = require("./body")
+const BuilderRole = require("./builder-role")
 const debug = require("./debug")
 const extension = require("./extension")
 const HarvesterRole = require("./harvester-role")
@@ -43,6 +44,7 @@ class Foreman {
    * same creep or structure in the same tick override earlier commands.
    */
   maintainCreeps() {
+    this.maintainRole(BuilderRole, 3)
     this.maintainRole(UpgraderRole, 3)
     this.maintainRole(HarvesterRole, 3)
   }
