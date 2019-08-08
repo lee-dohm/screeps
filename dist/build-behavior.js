@@ -25,7 +25,7 @@ class BuildBehavior extends Behavior {
    */
   run() {
     if (!this.creep.target) {
-      this.creep.target = this.findNextTarget()
+      this.findNextTarget()
     } else {
       if (this.creep.build(this.creep.target) == ERR_NOT_IN_RANGE) {
         this.creep.moveTo(this.creep.target)
@@ -34,7 +34,14 @@ class BuildBehavior extends Behavior {
   }
 
   findNextTarget() {
-    return this.creep.pos.findClosestByRange(FIND_MY_CONSTRUCTION_SITES)
+    const targets = this.creep.pos.findClosestByRange(FIND_MY_CONSTRUCTION_SITES)
+
+    if (!targets || targets.length === 0) {
+      const sourcePos = Object.values(this.creep.room.sources).map(source => source.pos)
+      this.creep.flee(sourcePos, 3)
+    } else {
+      this.creep.target = targets[0]
+    }
   }
 }
 
