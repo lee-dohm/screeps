@@ -1,6 +1,7 @@
 "use strict"
 
 const Body = require("./body")
+const BootstrapHarvesterRole = require("./bootstrap-harvester-role")
 const BuilderRole = require("./builder-role")
 const debug = require("./debug")
 const extension = require("./extension")
@@ -27,8 +28,10 @@ class Foreman {
     const spawn = Game.spawns["Spawn1"]
 
     if (!spawn.spawning && Object.values(Game.creeps).length === 0) {
-      spawn.spawnCreep([CARRY, MOVE, MOVE, WORK], this.getCreepName("harvester"), {
-        memory: { roleId: "harvester" }
+      const body = BootstrapHarvesterRole.bodyDefinitions[0]
+
+      spawn.spawnCreep(body, this.getCreepName(BootstrapHarvesterRole.id), {
+        memory: { roleId: BootstrapHarvesterRole.id }
       })
     }
   }
