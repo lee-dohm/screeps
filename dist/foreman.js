@@ -212,7 +212,7 @@ class Foreman {
     const possibleBodies = definitions.filter(parts => {
       const body = new Body(parts)
 
-      return energy > body.getCost()
+      return energy >= body.getCost()
     })
 
     return possibleBodies.sort((a, b) => {
