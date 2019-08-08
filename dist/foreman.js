@@ -150,7 +150,31 @@ class Foreman {
     }
 
     for (const creep of creeps) {
-      console.log(`${creep.name} is ${creep.memory.behaviorId} -> ${creep.target}`)
+      console.log(creep.status)
+    }
+  }
+
+  showStatus() {
+    for (const room of Object.values(Game.rooms)) {
+      console.log(`===== Room ${room.name} =====\n`)
+
+      this.showConstructionSiteStatus(room)
+
+      console.log("\n")
+    }
+  }
+
+  showConstructionSiteStatus(room) {
+    const sites = room.find(FIND_MY_CONSTRUCTION_SITES)
+
+    if (sites.length > 0) {
+      console.log("----- Construction -----")
+
+      for (const site of sites) {
+        console.log(site.status)
+      }
+
+      console.log("\n")
     }
   }
 

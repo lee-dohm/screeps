@@ -1,5 +1,6 @@
 "use strict"
 
+require("./construction-site-patch")
 require("./creep-patch")
 require("./room-patch")
 require("./room-position-patch")
