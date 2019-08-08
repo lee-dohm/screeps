@@ -50,6 +50,20 @@ Object.defineProperty(
 
 Object.defineProperty(
   Creep.prototype,
+  "status",
+  defineProperty({
+    get: function() {
+      if (!this._status) {
+        this._status = `${this.name} is ${this.memory.behaviorId} -> ${this.target}`
+      }
+
+      return this._status
+    }
+  })
+)
+
+Object.defineProperty(
+  Creep.prototype,
   "target",
   defineProperty({
     get: function() {

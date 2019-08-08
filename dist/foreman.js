@@ -150,9 +150,11 @@ class Foreman {
     }
 
     for (const creep of creeps) {
-      console.log(`${creep.name} is ${creep.memory.behaviorId} -> ${creep.target}`)
+      console.log(creep.status)
     }
   }
+
+  showStatus() {}
 
   /*
    *
