@@ -34,7 +34,23 @@ class HarvestBehavior extends Behavior {
   }
 
   findNextTarget() {
-    return this.creep.pos.findClosestByRange(Object.values(this.creep.room.sources))
+    const sources = Object.values(this.creep.room.sources)
+    const targets = this.createWeightedTargetList(sources)
+    const targetId = targets[Math.floor(Math.random() * targets.length)]
+
+    return Game.getObjectById(targetId)
+  }
+
+  createWeightedTargetList(sources) {
+    let list = []
+
+    for (const source of sources) {
+      for (let i = 0; i < source.getHarvestablePositions().length; i++) {
+        list.push(source.id)
+      }
+    }
+
+    return list
   }
 }
 

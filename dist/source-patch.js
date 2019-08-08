@@ -53,26 +53,6 @@ Object.defineProperty(
   })
 )
 
-Object.defineProperty(
-  Source.prototype,
-  "harvestablePositionCount",
-  defineProperty({
-    get: function() {
-      if (!this._harvestablePositionCount) {
-        if (!this.memory.harvestablePositionCount) {
-          const count = this.getHarvestablePositions().length
-
-          this.memory.harvestablePositionCount = count
-        }
-
-        this._harvestablePositionCount = this.memory.harvestablePositionCount
-      }
-
-      return this._harvestablePositionCount
-    }
-  })
-)
-
 Source.prototype.assignHarvester = function(harvesterOrName, pos) {
   const harvester =
     harvesterOrName instanceof HarvesterCreep ? harvesterOrName : Game.creeps[harvesterOrName]
