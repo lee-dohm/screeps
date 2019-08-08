@@ -102,4 +102,17 @@ function* generateExtensionPos(room, pos) {
   }
 }
 
-module.exports = generateExtensionPos
+/**
+ * Generates the next extension `RoomPosition` in the sequence and returns it.
+ *
+ * Caches the generator function in `global.extensionGenerator` if it hasn't been already.
+ */
+function generatePos(room, center) {
+  if (!global.extensionGenerator) {
+    global.extensionGenerator = generateExtensionPos(room, center)
+  }
+
+  return global.extensionGenerator.next().value
+}
+
+module.exports = { generatePos }

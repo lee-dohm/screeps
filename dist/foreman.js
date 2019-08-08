@@ -2,7 +2,7 @@
 
 const Body = require("./body")
 const debug = require("./debug")
-const generateExtensionPos = require("./extension-generator")
+const extension = require("./extension")
 const HarvesterRole = require("./harvester-role")
 const names = require("./names")
 const UpgraderRole = require("./upgrader-role")
@@ -76,12 +76,8 @@ class Foreman {
         })
 
         if (currentOrPlannedExtensions < maxExtensions) {
-          if (!global.extensionGenerator) {
-            const spawn = room.find(FIND_MY_SPAWNS)[0]
-            global.extensionGenerator = generateExtensionPos(room, spawn.pos)
-          }
-
-          const pos = global.extensionGenerator().next().value
+          const spawn = room.find(FIND_MY_SPAWNS)[0]
+          const pos = extension.generatePos(room, spawn.pos)
 
           room.createConstructionSite(pos, STRUCTURE_EXTENSION)
         }
