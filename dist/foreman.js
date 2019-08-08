@@ -20,6 +20,20 @@ class Foreman {
    */
 
   /**
+   * Spawns a simple harvester if all the creeps are dead and the main spawn isn't spawning
+   * anything else.
+   */
+  emergencyBootstrap() {
+    const spawn = Game.spawns["Spawn1"]
+
+    if (!spawn.spawning && Object.values(Game.creeps).length === 0) {
+      spawn.spawnCreep([CARRY, MOVE, MOVE, WORK], this.getCreepName("harvester"), {
+        memory: { roleId: "harvester" }
+      })
+    }
+  }
+
+  /**
    * Runs cleanup at the end of the game loop.
    */
   endShift() {
@@ -47,6 +61,7 @@ class Foreman {
     this.maintainRole(BuilderRole, 3)
     this.maintainRole(UpgraderRole, 3)
     this.maintainRole(HarvesterRole, 3)
+    this.emergencyBootstrap()
   }
 
   /**
