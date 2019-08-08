@@ -219,7 +219,7 @@ class Foreman {
       const bodyA = new Body(a)
       const bodyB = new Body(b)
 
-      return bodyA.getCost() - bodyB.getCost()
+      return bodyB.getCost() - bodyA.getCost()
     })[0]
   }
 
