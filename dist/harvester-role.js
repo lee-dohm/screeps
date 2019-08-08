@@ -1,5 +1,6 @@
 "use strict"
 
+const Body = require("./body")
 const DepositBehavior = require("./deposit-behavior")
 const HarvestBehavior = require("./harvest-behavior")
 const Role = require("./role")
@@ -9,7 +10,7 @@ const BEHAVIOR_TRANSITIONS = {
   [DepositBehavior.id]: HarvestBehavior.id
 }
 
-const BODY_DEFINITIONS = [[CARRY, MOVE, MOVE, WORK], [CARRY, MOVE, MOVE, MOVE, WORK, WORK]]
+const BODY_DEFINITIONS = [Body.parse("1c 2m 1w"), Body.parse("1c 4m 3w")]
 
 /**
  * Defines an energy harvester.
