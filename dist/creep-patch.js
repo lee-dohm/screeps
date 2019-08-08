@@ -98,6 +98,25 @@ Creep.prototype.clearTarget = function() {
   this.target = null
 }
 
+Creep.prototype.flee = function(goal, range) {
+  if (goal instanceof Array) {
+    const newGoal = goal.map(subgoal => {
+      return {
+        pos: subgoal,
+        range: range
+      }
+    })
+
+    goal = newGoal
+  } else {
+    const newGoal = { pos: goal, range: range }
+    goal = newGoal
+  }
+
+  const path = PathFinder.search(this.pos, goal, { flee: true }).path
+  this.moveByPath(path)
+}
+
 /**
  * Determines if the creep's `CARRY` modules are empty.
  */
