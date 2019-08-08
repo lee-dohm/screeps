@@ -1,5 +1,6 @@
 "use strict"
 
+const Body = require("./body")
 const BuildBehavior = require("./build-behavior")
 const HarvestBehavior = require("./harvest-behavior")
 const Role = require("./role")
@@ -9,7 +10,7 @@ const BEHAVIOR_TRANSITIONS = {
   [BuildBehavior.id]: HarvestBehavior.id
 }
 
-const BODY_DEFINITIONS = [[CARRY, MOVE, MOVE, WORK], [CARRY, MOVE, MOVE, MOVE, WORK, WORK]]
+const BODY_DEFINITIONS = [Body.fromString("1c 2m 1w"), Body.fromString("1c 4m 3w")]
 
 /**
  * Defines a creep that builds construction sites.

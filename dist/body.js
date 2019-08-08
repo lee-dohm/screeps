@@ -1,6 +1,40 @@
 "use strict"
 
 class Body {
+  static fromString(text) {
+    const pattern = new RegExp("([0-9]+)([a-z])", "g")
+    let match
+    let result = []
+
+    while ((match = pattern.exec(text)) !== null) {
+      const count = parseInt(match[1], 10)
+      let part
+
+      switch (match[2].toLowerCase()) {
+        case "c": {
+          part = CARRY
+          break
+        }
+
+        case "m": {
+          part = MOVE
+          break
+        }
+
+        case "w": {
+          part = WORK
+          break
+        }
+      }
+
+      for (let i = 0; i < count; i++) {
+        result.push(part)
+      }
+    }
+
+    return new Body(result)
+  }
+
   constructor(parts) {
     this.parts = parts
   }
