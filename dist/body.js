@@ -1,8 +1,37 @@
 "use strict"
 
+/**
+ * Represents a body definition for a creep.
+ *
+ * A body definition is described as a collection of [parts.](https://docs.screeps.com/api/#Creep)
+ * This can be expressed as an array of Screep constants or as a string encoded as a series of
+ * number/character pairs. The characters are:
+ *
+ * * `A` for `ATTACK`
+ * * `C` for `CARRY`
+ * * `H` for `HEAL`
+ * * `K` or `X` for `CLAIM`
+ * * `M` for `MOVE`
+ * * `R` for `RANGED_ATTACK`
+ * * `T` for `TOUGH`
+ * * `W` for `WORK`
+ *
+ * So, for example, the text: `3c 2m 1w` would be converted to the array `[CARRY, CARRY, CARRY,
+ * MOVE, MOVE, WORK]`. The text format is not case-sensitive.
+ */
 class Body {
+  /**
+   * Converts from text form into a `Body` instance.
+   */
   static fromString(text) {
-    const pattern = new RegExp("([0-9]+)([a-z])", "g")
+    return new Body(Body.parse(text))
+  }
+
+  /**
+   * Converts from text form into an array of body part constants.
+   */
+  static parse(text) {
+    const pattern = new RegExp("([0-9]+)([a-zA-Z])", "g")
     let match
     let result = []
 
@@ -11,13 +40,39 @@ class Body {
       let part
 
       switch (match[2].toLowerCase()) {
+        case "a": {
+          part = ATTACK
+          break
+        }
+
         case "c": {
           part = CARRY
           break
         }
 
+        case "h": {
+          part = HEAL
+          break
+        }
+
+        case "k":
+        case "x": {
+          part = CLAIM
+          break
+        }
+
         case "m": {
           part = MOVE
+          break
+        }
+
+        case "r": {
+          part = RANGED_ATTACK
+          break
+        }
+
+        case "t": {
+          part = TOUGH
           break
         }
 

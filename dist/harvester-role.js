@@ -10,7 +10,7 @@ const BEHAVIOR_TRANSITIONS = {
   [DepositBehavior.id]: HarvestBehavior.id
 }
 
-const BODY_DEFINITIONS = [Body.fromString("1c 2m 1w"), Body.fromString("1c 4m 3w")]
+const BODY_DEFINITIONS = [Body.parse("1c 2m 1w"), Body.parse("1c 4m 3w")]
 
 /**
  * Defines an energy harvester.
