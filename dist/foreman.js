@@ -1,10 +1,11 @@
 "use strict"
 
 const Body = require("./body")
+const BuilderRole = require("./builder-role")
 const debug = require("./debug")
+const extension = require("./extension")
 const HarvesterRole = require("./harvester-role")
 const names = require("./names")
-const roleFactory = require("./role-factory")
 const UpgraderRole = require("./upgrader-role")
 const watcher = require("./watch-client")
 
@@ -43,6 +44,7 @@ class Foreman {
    * same creep or structure in the same tick override earlier commands.
    */
   maintainCreeps() {
+    this.maintainRole(BuilderRole, 3)
     this.maintainRole(UpgraderRole, 3)
     this.maintainRole(HarvesterRole, 3)
   }
@@ -60,6 +62,27 @@ class Foreman {
         }
       } catch (e) {
         debug.logException(e)
+      }
+    }
+  }
+
+  plotExtensions() {
+    for (const name in Game.rooms) {
+      const room = Game.rooms[name]
+      const controller = room.controller
+
+      if (controller && controller.my) {
+        const maxExtensions = this.getMaxStructByRcl(STRUCTURE_EXTENSION, controller.level)
+        const currentOrPlannedExtensions = room.getExtensionCount({
+          includeConstructionSites: true
+        })
+
+        if (currentOrPlannedExtensions < maxExtensions) {
+          const spawn = room.find(FIND_MY_SPAWNS)[0]
+          const pos = extension.generatePos(room, spawn.pos)
+
+          room.createConstructionSite(pos, STRUCTURE_EXTENSION)
+        }
       }
     }
   }
@@ -164,6 +187,10 @@ class Foreman {
 
   getCreepName(roleId) {
     return `${this.capFirst(roleId)} ${this.capFirst(names.getName())}`
+  }
+
+  getMaxStructByRcl(structure, level) {
+    return CONTROLLER_STRUCTURES[structure][level]
   }
 
   install() {

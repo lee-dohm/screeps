@@ -28,10 +28,33 @@ RoomPosition.prototype.getAdjacent = function() {
 /**
  * Determines whether the position is walkable.
  *
- * A position is walkable if it does not contain a wall.
+ * A position is walkable if it does not contain one of the many obstruction types.
  */
 RoomPosition.prototype.isWalkable = function() {
-  return this.lookFor(LOOK_TERRAIN)[0] !== "wall"
+  const contents = this.look()
+  const found = contents.find(obj => {
+    return (
+      (obj.type == LOOK_STRUCTURES &&
+        (obj.structure.structureType == STRUCTURE_SPAWN ||
+          obj.structure.structureType == STRUCTURE_CONTROLLER ||
+          obj.structure.structureType == STRUCTURE_WALL ||
+          obj.structure.structureType == STRUCTURE_EXTENSION ||
+          obj.structure.structureType == STRUCTURE_LINK ||
+          obj.structure.structureType == STRUCTURE_STORAGE ||
+          obj.structure.structureType == STRUCTURE_TOWER ||
+          obj.structure.structureType == STRUCTURE_OBSERVER ||
+          obj.structure.structureType == STRUCTURE_POWER_SPAWN ||
+          obj.structure.structureType == STRUCTURE_POWER_BANK ||
+          obj.structure.structureType == STRUCTURE_LAB ||
+          obj.structure.structureType == STRUCTURE_TERMINAL ||
+          obj.structure.structureType == STRUCTURE_NUKER)) ||
+      obj.type == LOOK_SOURCES ||
+      obj.type == LOOK_MINERALS ||
+      (obj.type == LOOK_TERRAIN && obj.terrain == "wall")
+    )
+  })
+
+  return !found
 }
 
 /**
@@ -41,4 +64,11 @@ RoomPosition.prototype.isWalkable = function() {
  */
 RoomPosition.prototype.isOccupied = function() {
   return this.lookFor(LOOK_CREEPS).length != 0
+}
+
+/**
+ * Gets the `RoomPosition` at the relative position to this one.
+ */
+RoomPosition.prototype.getRelative = function(dx, dy) {
+  return this.room.getPositionAt(this.x + dx, this.y + dy)
 }

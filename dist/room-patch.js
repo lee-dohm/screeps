@@ -35,6 +35,18 @@ Object.defineProperty(
   })
 )
 
+Room.prototype.getExtensionCount = function(opts = {}) {
+  const extensionFilter = structure => structure.structureType == STRUCTURE_EXTENSION
+
+  let count = this.find(FIND_MY_STRUCTURES, { filter: extensionFilter }).length
+
+  if (opts.includeConstructionSites) {
+    count += this.find(FIND_MY_CONSTRUCTION_SITES, { filter: extensionFilter }).length
+  }
+
+  return count
+}
+
 /**
  * Calculates the maximum amount of energy that can be used to spawn a creep in this room.
  */

@@ -1,16 +1,5 @@
 "use strict"
 
-const COST_FOR_PART = {
-  move: 50,
-  work: 100,
-  carry: 50,
-  attack: 80,
-  ranged_attack: 150,
-  heal: 250,
-  claim: 600,
-  tough: 10
-}
-
 class Body {
   constructor(parts) {
     this.parts = parts
@@ -20,7 +9,7 @@ class Body {
    * Calculate the energy cost required to spawn this body.
    */
   getCost() {
-    return this.parts.reduce((total, part) => COST_FOR_PART[part] + total, 0)
+    return this.parts.reduce((total, part) => BODYPART_COST[part] + total, 0)
   }
 
   /**

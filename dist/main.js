@@ -14,6 +14,7 @@ function loop() {
   try {
     foreman.reclaimDeadMemory()
     foreman.maintainCreeps()
+    foreman.plotExtensions()
     foreman.manageCreeps()
     foreman.visualizeCreeps()
   } catch (e) {
