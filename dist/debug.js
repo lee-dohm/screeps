@@ -11,7 +11,10 @@ function log(message) {
 function logException(e) {
   const message = `{red-fg}{bold}ERROR:{/} ${e.message}\n${e.stack}`
 
-  console.log(message)
+  if (!Memory.suppressExceptionLogging) {
+    console.log(message)
+  }
+
   Game.notify(message, e.groupInterval)
 }
 
