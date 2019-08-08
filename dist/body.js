@@ -32,7 +32,7 @@ class Body {
       }
     }
 
-    return new Body(result)
+    return result
   }
 
   constructor(parts) {
