@@ -154,7 +154,29 @@ class Foreman {
     }
   }
 
-  showStatus() {}
+  showStatus() {
+    for (const room of Object.values(Game.rooms)) {
+      console.log(`===== Room ${room.name} =====\n`)
+
+      this.showConstructionSiteStatus(room)
+
+      console.log("\n")
+    }
+  }
+
+  showConstructionSiteStatus(room) {
+    const sites = room.find(FIND_MY_CONSTRUCTION_SITES)
+
+    if (sites.length > 0) {
+      console.log("----- Construction -----")
+
+      for (const site of sites) {
+        console.log(site.status)
+      }
+
+      console.log("\n")
+    }
+  }
 
   /*
    *
