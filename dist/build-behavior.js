@@ -25,7 +25,7 @@ class BuildBehavior extends Behavior {
    */
   run() {
     if (!this.creep.target) {
-      this.findNextTarget()
+      this.creep.target = this.findNextTarget()
     } else {
       if (this.creep.build(this.creep.target) == ERR_NOT_IN_RANGE) {
         this.creep.moveTo(this.creep.target)
