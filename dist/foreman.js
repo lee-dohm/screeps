@@ -155,13 +155,8 @@ class Foreman {
   }
 
   showStatus() {
-    for (const room of Object.values(Game.rooms)) {
-      console.log(`===== Room ${room.name} =====\n`)
-
-      this.showConstructionSiteStatus(room)
-
-      console.log("\n")
-    }
+    this.showGlobalStatus()
+    this.showRoomStatus()
   }
 
   showConstructionSiteStatus(room) {
@@ -173,6 +168,25 @@ class Foreman {
       for (const site of sites) {
         console.log(site.status)
       }
+
+      console.log("\n")
+    }
+  }
+
+  showGlobalStatus() {
+    console.log(`{bold}===== Global ====={/bold}`)
+    console.log(
+      `{bold}GCL:{/bold} ${Game.gcl.level} + ${Math.floor(
+        (Game.gcl.progress / Game.gcl.progressTotal) * 100
+      )}%\n`
+    )
+  }
+
+  showRoomStatus() {
+    for (const room of Object.values(Game.rooms)) {
+      console.log(`{bold}===== Room ${room.name} ====={/bold}\n`)
+
+      this.showConstructionSiteStatus(room)
 
       console.log("\n")
     }
