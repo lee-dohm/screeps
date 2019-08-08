@@ -49,11 +49,13 @@ class DepositBehavior extends Behavior {
       }
     })
 
-    if (targets.length === 0) {
-      throw new IdleError(this.creep, "No structures needing energy found")
+    if (!targets || targets.length === 0) {
+      // Move away from all sources
+      const sourcePos = Object.values(this.creep.room.sources).map(source => source.pos)
+      this.creep.flee(sourcePos, 3)
+    } else {
+      this.creep.target = targets[0]
     }
-
-    this.creep.target = targets[0]
   }
 }
 
