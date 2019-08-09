@@ -51,6 +51,10 @@ class Role {
     this.creep.memory.behaviorId = this.behaviorTransitions[this.creep.memory.behaviorId]
   }
 
+  toString() {
+    return `[Role ${this.constructor.id}]`
+  }
+
   /**
    * Draws the appropriate room visualizations for the creep's role.
    *
