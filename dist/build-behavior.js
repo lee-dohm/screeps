@@ -34,7 +34,11 @@ class BuildBehavior extends Behavior {
   }
 
   findNextTarget() {
-    const target = this.creep.pos.findClosestByRange(FIND_MY_CONSTRUCTION_SITES)
+    const target =
+      this.creep.pos.findClosestByRange(FIND_MY_CONSTRUCTION_SITES) ||
+      this.creep.pos.findClosestByRange(FIND_MY_STRUCTURES, {
+        filter: struct => struct.hits < struct.hitsMax
+      })
 
     if (!target) {
       const sourcePos = Object.values(this.creep.room.sources).map(source => source.pos)
