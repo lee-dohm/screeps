@@ -15,6 +15,22 @@ function getCostMatrix(roomName) {
 }
 
 class Road {
+  static deserialize(obj) {
+    let road = new Road(obj.a, obj.b)
+
+    if (obj.path) {
+      const room = Game.rooms[obj.a.roomName]
+
+      road.path = room.deserializePath(obj.path)
+    }
+
+    if (obj.paved) {
+      road.paved = true
+    }
+
+    return road
+  }
+
   constructor(a, b) {
     this.a = this.getPosition(a)
     this.b = this.getPosition(b)
@@ -44,6 +60,17 @@ class Road {
         pos.createConstructionSite(STRUCTURE_ROAD)
       }
     })
+
+    this.paved = true
+  }
+
+  serialize() {
+    return {
+      a: this.a,
+      b: this.b,
+      path: this.path ? Game.rooms[this.path[0]].serializePath(this.path) : undefined,
+      paved: this.paved
+    }
   }
 
   getPosition(obj) {
