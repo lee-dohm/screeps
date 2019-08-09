@@ -1,10 +1,54 @@
 "use strict"
 
+const defineProperty = require("./define-property")
+
 /**
  * Represents a position within a room.
  *
  * @typedef {Object} RoomPosition
  */
+
+Object.defineProperty(
+  RoomPosition.prototype,
+  "constructionSites",
+  defineProperty({
+    get: function() {
+      if (!this._constructionSites) {
+        this._constructionSites = this.lookFor(LOOK_CONSTRUCTION_SITES)
+      }
+
+      return this._constructionSites
+    }
+  })
+)
+
+Object.defineProperty(
+  RoomPosition.prototype,
+  "structures",
+  defineProperty({
+    get: function() {
+      if (!this._structures) {
+        this._structures = this.lookFor(LOOK_STRUCTURES)
+      }
+
+      return this._structures
+    }
+  })
+)
+
+Object.defineProperty(
+  RoomPosition.prototype,
+  "terrain",
+  defineProperty({
+    get: function() {
+      if (!this._terrain) {
+        this._terrain = this.lookFor(LOOK_TERRAIN)[0]
+      }
+
+      return this._terrain
+    }
+  })
+)
 
 /**
  * Gets the list of adjacent `RoomPosition` objects.

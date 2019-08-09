@@ -84,6 +84,36 @@ class Foreman {
     }
   }
 
+  paveHarvestablePositions() {
+    for (const name in Game.rooms) {
+      const room = Game.rooms[name]
+      const controller = room.controller
+
+      if (controller && controller.my) {
+        const sources = Object.values(room.sources)
+
+        for (const source of sources) {
+          const positions = source.getHarvestablePositions()
+
+          for (const pos of positions) {
+            if (pos.terrain === "swamp") {
+              const roadConstructionSites = pos.constructionSites.filter(
+                site => site.structureType == STRUCTURE_ROAD
+              )
+              const roadStructures = pos.structures.filter(
+                struct => struct.structureType == STRUCTURE_ROAD
+              )
+
+              if (roadConstructionSites.length == 0 && roadStructures.length == 0) {
+                pos.createConstructionSite(STRUCTURE_ROAD)
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
   plotExtensions() {
     for (const name in Game.rooms) {
       const room = Game.rooms[name]

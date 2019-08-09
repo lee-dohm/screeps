@@ -38,7 +38,13 @@ class Road {
       const room = Game.rooms[this.a.roomName]
 
       PathFinder.use(true)
-      this.path = room.findPath(this.a, this.b, { ignoreCreeps: true, ignoreRoads: true, costCallback: costCallback, range: 1, swampCost: 1 })
+      this.path = room.findPath(this.a, this.b, {
+        ignoreCreeps: true,
+        ignoreRoads: true,
+        costCallback: costCallback,
+        range: 1,
+        swampCost: 1
+      })
     }
 
     return this.path
