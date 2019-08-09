@@ -230,6 +230,20 @@ class Foreman {
     )
   }
 
+  showMaintenanceStatus(room) {
+    const structures = room.find(FIND_STRUCTURES, {
+      filter: struct => struct.hits < struct.hitsMax
+    })
+
+    if (structures.length > 0) {
+      console.log(`{bold}----- Maintenance -----{/bold}`)
+
+      structures.forEach(struct => {
+        console.log(`${struct} ${Math.floor((struct.hits / struct.hitsMax) * 100)}%`)
+      })
+    }
+  }
+
   showRoomStatus() {
     for (const room of Object.values(Game.rooms)) {
       console.log(`{bold}===== Room ${room.name} ====={/bold}`)
@@ -243,6 +257,7 @@ class Foreman {
       }
 
       this.showConstructionSiteStatus(room)
+      this.showMaintenanceStatus(room)
 
       console.log("\n")
     }
