@@ -19,17 +19,32 @@ class BuildBehavior extends Behavior {
   }
 
   /**
-   * Moves to the current target and builds it.
+   * Moves to the current target and builds or repairs it.
    *
-   * If there is no target set, it finds the nearest incomplete construction site and builds it.
+   * If there is no target set, it finds the nearest incomplete construction site or damaged
+   * structure.
    */
   run() {
     if (!this.creep.target) {
-      this.findNextTarget()
-    } else {
-      if (this.creep.build(this.creep.target) == ERR_NOT_IN_RANGE) {
-        this.creep.moveTo(this.creep.target)
+      const target = this.findNextTarget()
+
+      if (target) {
+        this.creep.target = target
+      } else {
+        this.fleeSources()
       }
+    } else {
+      if (this.creep.target instanceof ConstructionSite) {
+        this.buildConstructionSite()
+      } else {
+        this.repairStructure()
+      }
+    }
+  }
+
+  buildConstructionSite() {
+    if (this.creep.build(this.creep.target) == ERR_NOT_IN_RANGE) {
+      this.creep.moveTo(this.creep.target)
     }
   }
 
@@ -40,11 +55,17 @@ class BuildBehavior extends Behavior {
         filter: struct => struct.hits < struct.hitsMax
       })
 
-    if (!target) {
-      const sourcePos = Object.values(this.creep.room.sources).map(source => source.pos)
-      this.creep.flee(sourcePos, 3)
-    } else {
-      this.creep.target = target
+    return target
+  }
+
+  fleeSources() {
+    const sourcePos = Object.values(this.creep.room.sources).map(source => source.pos)
+    this.creep.flee(sourcePos, 3)
+  }
+
+  repairStructure() {
+    if (this.creep.repair(this.creep.target) == ERR_NOT_IN_RANGE) {
+      this.creep.moveTo(this.creep.target)
     }
   }
 }
