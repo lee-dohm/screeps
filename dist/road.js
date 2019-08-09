@@ -56,7 +56,7 @@ class Road {
     }
 
     this.path.forEach(pos => {
-      if (pos.lookFor(LOOK_TERRAIN)[0] === "swamp") {
+      if (pos.terrain === "swamp") {
         pos.createConstructionSite(STRUCTURE_ROAD)
       }
     })
