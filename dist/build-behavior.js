@@ -34,13 +34,13 @@ class BuildBehavior extends Behavior {
   }
 
   findNextTarget() {
-    const targets = this.creep.pos.findClosestByRange(FIND_MY_CONSTRUCTION_SITES)
+    const target = this.creep.pos.findClosestByRange(FIND_MY_CONSTRUCTION_SITES)
 
-    if (!targets || targets.length === 0) {
+    if (!target) {
       const sourcePos = Object.values(this.creep.room.sources).map(source => source.pos)
       this.creep.flee(sourcePos, 3)
     } else {
-      this.creep.target = targets[0]
+      this.creep.target = target
     }
   }
 }
