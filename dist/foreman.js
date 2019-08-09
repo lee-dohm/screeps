@@ -232,7 +232,15 @@ class Foreman {
 
   showRoomStatus() {
     for (const room of Object.values(Game.rooms)) {
-      console.log(`{bold}===== Room ${room.name} ====={/bold}\n`)
+      console.log(`{bold}===== Room ${room.name} ====={/bold}`)
+      const controller = room.controller
+      if (controller && controller.my) {
+        console.log(
+          `{bold}RCL:{/bold} ${controller.level} + ${Math.floor(
+            (controller.progress / controller.progressTotal) * 100
+          )}%\n`
+        )
+      }
 
       this.showConstructionSiteStatus(room)
 
