@@ -25,7 +25,7 @@ class Road {
       const result = PathFinder.search(
         this.a,
         { pos: this.b, range: 1 },
-        { roomCallback: getCostMatrix }
+        { roomCallback: getCostMatrix, swampCost: 1 }
       )
 
       this.path = result.path
