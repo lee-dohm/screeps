@@ -37,8 +37,8 @@ class Road {
 
   static equals(road, other) {
     return (
-      (_.isEqual(road.a, other.a) && _.isEqual(road.b, other.b)) ||
-      (_.isEqual(road.a, other.b) && _.isEqual(road.b, other.a))
+      (RoomPosition.equals(road.a, other.a) && RoomPosition.equals(road.b, other.b)) ||
+      (RoomPosition.equals(road.a, other.b) && RoomPosition.equals(road.b, other.a))
     )
   }
 

@@ -54,6 +54,8 @@ Object.defineProperty(
     },
 
     set: function(newRoads) {
+      console.log(`Room ${this} set roads to ${newRoads}`)
+
       this.memory.roads = newRoads.map(road => road.serialize())
       this._roads = newRoads
     }

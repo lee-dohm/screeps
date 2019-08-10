@@ -50,6 +50,10 @@ Object.defineProperty(
   })
 )
 
+RoomPosition.equals = function(posA, posB) {
+  return posA.x === posB.x && posA.y === posB.y && posA.roomName === posB.roomName
+}
+
 /**
  * Gets the list of adjacent `RoomPosition` objects.
  */
