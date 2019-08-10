@@ -1,5 +1,6 @@
 "use strict"
 
+const AttackBehavior = require("./attack-behavior")
 const BuildBehavior = require("./build-behavior")
 const CheckSignBehavior = require("./check-sign-behavior")
 const DepositBehavior = require("./deposit-behavior")
@@ -9,6 +10,10 @@ const UpgradeBehavior = require("./upgrade-behavior")
 
 function behaviorFactory(creep) {
   switch (creep.memory.behaviorId) {
+    case AttackBehavior.id: {
+      return new AttackBehavior(creep)
+    }
+
     case BuildBehavior.id: {
       return new BuildBehavior(creep)
     }

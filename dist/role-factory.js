@@ -4,6 +4,7 @@ const BootstrapHarvesterRole = require("./bootstrap-harvester-role")
 const BuilderRole = require("./builder-role")
 const InvalidRoleError = require("./invalid-role-error")
 const HarvesterRole = require("./harvester-role")
+const SoldierRole = require("./soldier-role")
 const UpgraderRole = require("./upgrader-role")
 
 function roleFactory(creep) {
@@ -18,6 +19,10 @@ function roleFactory(creep) {
 
     case HarvesterRole.id: {
       return new HarvesterRole(creep)
+    }
+
+    case SoldierRole.id: {
+      return new SoldierRole(creep)
     }
 
     case UpgraderRole.id: {
