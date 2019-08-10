@@ -1,6 +1,7 @@
 "use strict"
 
 const defineProperty = require("./define-property")
+const Road = require("./road")
 
 /**
  * This is my room if the room controller is mine.
@@ -32,6 +33,29 @@ Object.defineProperty(
       }
 
       return this._owner
+    }
+  })
+)
+
+Object.defineProperty(
+  Room.prototype,
+  "roads",
+  defineProperty({
+    get: function() {
+      if (!this._roads) {
+        if (!this.memory.roads) {
+          this.memory.roads = []
+        }
+
+        this._roads = this.memory.roads.map(obj => Road.deserialize(obj))
+      }
+
+      return this._roads
+    },
+
+    set: function(newRoads) {
+      this._roads = newRoads
+      this.memory.roads = this._roads.map(road => road.serialize())
     }
   })
 )
@@ -68,6 +92,13 @@ Object.defineProperty(
     }
   })
 )
+
+Room.prototype.addRoad = function(a, b) {
+  const road = new Road(a, b)
+  road.pave()
+
+  this.roads.push(road)
+}
 
 /**
  * Gets the count of extensions in the room.
@@ -106,4 +137,13 @@ Room.prototype.getMaxSpawnEnergy = function() {
  */
 Room.prototype.hasFriendlySpawns = function() {
   return this.find(FIND_MY_SPAWNS).length > 0
+}
+
+/**
+ * Determines if this room has a road between `a` and `b`.
+ */
+Room.prototype.hasRoad = function(a, b) {
+  const road = new Road(a, b)
+
+  return this.roads.find(other => Road.equals(road, other)) ? true : false
 }

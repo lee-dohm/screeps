@@ -7,6 +7,7 @@ const debug = require("./debug")
 const extension = require("./extension")
 const HarvesterRole = require("./harvester-role")
 const names = require("./names")
+const Road = require("./road")
 const UpgraderRole = require("./upgrader-role")
 const watcher = require("./watch-client")
 
@@ -131,6 +132,27 @@ class Foreman {
 
           room.createConstructionSite(pos, STRUCTURE_EXTENSION)
         }
+      }
+    }
+  }
+
+  plotRoads() {
+    for (const name in Game.rooms) {
+      const room = Game.rooms[name]
+
+      if (room.my) {
+        this.plotSourceToControllerRoads(room)
+        // this.plotSourceToSpawnRoads(room)
+      }
+    }
+  }
+
+  plotSourceToControllerRoads(room) {
+    for (const source of Object.values(room.sources)) {
+      const controller = room.controller
+
+      if (!room.hasRoad(source, controller)) {
+        room.addRoad(source, controller)
       }
     }
   }
