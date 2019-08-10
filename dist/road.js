@@ -43,6 +43,14 @@ class Road {
   }
 
   constructor(a, b) {
+    if (!a) {
+      throw new Error("`a` must be defined")
+    }
+
+    if (!b) {
+      throw new Error("`b` must be defined")
+    }
+
     this.a = this.getPosition(a)
     this.b = this.getPosition(b)
   }
@@ -134,7 +142,15 @@ class Road {
   }
 
   getPosition(obj) {
-    return obj instanceof RoomPosition ? obj : obj.pos
+    if (obj instanceof RoomPosition) {
+      return obj
+    } else if (obj.pos) {
+      return obj.pos
+    } else if (obj.x && obj.y && obj.roomName) {
+      return new RoomPosition(obj.x, obj.y, obj.roomName)
+    } else {
+      throw new Error(`Unrecognized position type: ${JSON.stringify(obj)}`)
+    }
   }
 }
 

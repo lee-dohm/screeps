@@ -97,7 +97,7 @@ Room.prototype.addRoad = function(a, b) {
   const road = new Road(a, b)
   road.pave()
 
-  this.roads.push(road)
+  this.roads = this.roads.concat([road])
 }
 
 /**
