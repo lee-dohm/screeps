@@ -7,6 +7,7 @@ const debug = require("./debug")
 const extension = require("./extension")
 const HarvesterRole = require("./harvester-role")
 const names = require("./names")
+const SoldierRole = require("./soldier-role")
 const UpgraderRole = require("./upgrader-role")
 const utils = require("./utils")
 const watcher = require("./watch-client")
@@ -65,6 +66,23 @@ class Foreman {
 
         if (hostileCreeps.length > 0) {
           room.activateSafeMode()
+
+          const spawns = room.find(FIND_MY_SPAWNS)
+          if (spawns.length > 0) {
+            const spawn = spawns[0]
+
+            for (let i = SoldierRole.bodyDefinitions.length - 1; i > -1; i--) {
+              const definition = SoldierRole.bodyDefinitions[i]
+
+              if (
+                spawn.spawnCreep(definition, this.getCreepName(SoldierRole.id), {
+                  memory: { roleId: SoldierRole.id }
+                }) == OK
+              ) {
+                break
+              }
+            }
+          }
         }
       }
     }

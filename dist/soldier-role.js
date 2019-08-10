@@ -1,3 +1,5 @@
+const AttackBehavior = require("./attack-behavior")
+const Body = require("./body")
 const Role = require("./role")
 
 const BEHAVIOR_TRANSITIONS = {
