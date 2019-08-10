@@ -7,6 +7,7 @@ const debug = require("./debug")
 const extension = require("./extension")
 const HarvesterRole = require("./harvester-role")
 const names = require("./names")
+const SoldierRole = require("./soldier-role")
 const UpgraderRole = require("./upgrader-role")
 const utils = require("./utils")
 const watcher = require("./watch-client")
@@ -26,7 +27,7 @@ class Foreman {
    * anything else.
    */
   emergencyBootstrap() {
-    const spawn = Game.spawns["Spawn1"]
+    const spawn = Object.values(Game.spawns)[0]
 
     if (!spawn.spawning && Object.values(Game.creeps).length === 0) {
       const body = BootstrapHarvesterRole.bodyDefinitions[0]
@@ -52,6 +53,38 @@ class Foreman {
   killAllCreeps() {
     for (const name in Game.creeps) {
       Game.creeps[name].suicide()
+    }
+  }
+
+  /**
+   * Handle invaders in my rooms.
+   */
+  handleInvaders() {
+    for (const room in Object.values(Game.rooms)) {
+      if (room.my) {
+        const hostileCreeps = room.find(FIND_HOSTILE_CREEPS)
+
+        if (hostileCreeps.length > 0) {
+          room.activateSafeMode()
+
+          const spawns = room.find(FIND_MY_SPAWNS)
+          if (spawns.length > 0) {
+            const spawn = spawns[0]
+
+            for (let i = SoldierRole.bodyDefinitions.length - 1; i > -1; i--) {
+              const definition = SoldierRole.bodyDefinitions[i]
+
+              if (
+                spawn.spawnCreep(definition, this.getCreepName(SoldierRole.id), {
+                  memory: { roleId: SoldierRole.id }
+                }) == OK
+              ) {
+                break
+              }
+            }
+          }
+        }
+      }
     }
   }
 
@@ -93,7 +126,6 @@ class Foreman {
         const extensions = room.find(FIND_MY_STRUCTURES, {
           filter: struct => struct.structureType == STRUCTURE_EXTENSION
         })
-        let positionSet = new Set()
 
         for (const extension of extensions) {
           for (const pos of extension.pos.getAdjacent()) {

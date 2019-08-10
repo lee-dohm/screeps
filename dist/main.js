@@ -14,7 +14,9 @@ function loop() {
 
   try {
     foreman.reclaimDeadMemory()
+
     foreman.maintainCreeps()
+    foreman.handleInvaders()
 
     foreman.plotExtensions()
     foreman.plotRoads()
