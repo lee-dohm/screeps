@@ -1,4 +1,11 @@
 /**
+ * Formats `current` and `max` as a percentage.
+ */
+function percentage(current, max) {
+  return `${Math.floor((current / max) * 100)}%`
+}
+
+/**
  * Returns a `RoomPosition` if the given object is a `RoomPosition`, has a `RoomPosition`, or is
  * convertible to one.
  */
@@ -14,4 +21,4 @@ function toPos(obj) {
   }
 }
 
-module.exports = { toPos }
+module.exports = { percentage, toPos }

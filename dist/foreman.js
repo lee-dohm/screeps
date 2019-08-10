@@ -8,6 +8,7 @@ const extension = require("./extension")
 const HarvesterRole = require("./harvester-role")
 const names = require("./names")
 const UpgraderRole = require("./upgrader-role")
+const utils = require("./utils")
 const watcher = require("./watch-client")
 
 /**
@@ -80,6 +81,38 @@ class Foreman {
         }
       } catch (e) {
         debug.logException(e)
+      }
+    }
+  }
+
+  paveAroundExtensions() {
+    for (const name in Game.rooms) {
+      const room = Game.rooms[name]
+
+      if (room.my) {
+        const extensions = room.find(FIND_MY_STRUCTURES, {
+          filter: struct => struct.structureType == STRUCTURE_EXTENSION
+        })
+        let positionSet = new Set()
+
+        for (const extension of extensions) {
+          for (const pos of extension.pos.getAdjacent()) {
+            if (pos.terrain === "swamp" && pos.isWalkable()) {
+              const contents = pos.look()
+              const found = contents.find(obj => {
+                return (
+                  (obj.type == LOOK_CONSTRUCTION_SITES &&
+                    obj.constructionSite.structureType == STRUCTURE_ROAD) ||
+                  (obj.type == LOOK_STRUCTURES && obj.structure.structureType == STRUCTURE_ROAD)
+                )
+              })
+
+              if (!found) {
+                pos.createConstructionSite(STRUCTURE_ROAD)
+              }
+            }
+          }
+        }
       }
     }
   }
@@ -242,7 +275,7 @@ class Foreman {
     const sites = room.find(FIND_MY_CONSTRUCTION_SITES)
 
     if (sites.length > 0) {
-      console.log("----- Construction -----")
+      console.log("{bold}----- Construction -----{/bold}")
 
       for (const site of sites) {
         console.log(site.status)
@@ -255,10 +288,13 @@ class Foreman {
   showGlobalStatus() {
     console.log(`{bold}===== Global ====={/bold}`)
     console.log(
-      `{bold}GCL:{/bold} ${Game.gcl.level} + ${Math.floor(
-        (Game.gcl.progress / Game.gcl.progressTotal) * 100
-      )}%\n`
+      `{bold}GCL:{/bold} ${Game.gcl.level} + ${utils.percentage(
+        Game.gcl.progress,
+        Game.gcl.progressTotal
+      )}`
     )
+    console.log(`{bold}Bucket:{/bold} ${utils.percentage(Game.cpu.bucket, 10000)}`)
+    console.log(" ")
   }
 
   showMaintenanceStatus(room) {
@@ -270,7 +306,7 @@ class Foreman {
       console.log(`{bold}----- Maintenance -----{/bold}`)
 
       structures.forEach(struct => {
-        console.log(`${struct} ${Math.floor((struct.hits / struct.hitsMax) * 100)}%`)
+        console.log(`${struct} ${utils.percentage(struct.hits, struct.hitsMax)}`)
       })
     }
   }
@@ -281,9 +317,10 @@ class Foreman {
       const controller = room.controller
       if (controller && controller.my) {
         console.log(
-          `{bold}RCL:{/bold} ${controller.level} + ${Math.floor(
-            (controller.progress / controller.progressTotal) * 100
-          )}%\n`
+          `{bold}RCL:{/bold} ${controller.level} + ${utils.percentage(
+            controller.progress,
+            controller.progressTotal
+          )}\n`
         )
       }
 
