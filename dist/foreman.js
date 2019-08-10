@@ -90,9 +90,7 @@ class Foreman {
       const controller = room.controller
 
       if (controller && controller.my) {
-        const sources = Object.values(room.sources)
-
-        for (const source of sources) {
+        for (const source of room.sources) {
           const positions = source.getHarvestablePositions()
 
           for (const pos of positions) {
@@ -147,7 +145,7 @@ class Foreman {
   }
 
   plotSourceToControllerRoads(room) {
-    for (const source of Object.values(room.sources)) {
+    for (const source of room.sources) {
       const controller = room.controller
 
       if (!room.hasRoad(source, controller)) {
@@ -157,7 +155,7 @@ class Foreman {
   }
 
   plotSourceToSpawnRoads(room) {
-    for (const source of Object.values(room.sources)) {
+    for (const source of room.sources) {
       const spawns = room.find(FIND_MY_SPAWNS)
 
       for (const spawn of spawns) {

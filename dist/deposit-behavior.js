@@ -66,7 +66,7 @@ class DepositBehavior extends Behavior {
 
     if (!targets || targets.length === 0) {
       // Move away from all sources
-      const sourcePos = Object.values(this.creep.room.sources).map(source => source.pos)
+      const sourcePos = this.creep.room.sources.map(source => source.pos)
       this.creep.flee(sourcePos, 3)
     } else {
       this.creep.target = targets[0]

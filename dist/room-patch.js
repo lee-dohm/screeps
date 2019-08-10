@@ -73,19 +73,10 @@ Object.defineProperty(
     get: function() {
       if (!this._sources) {
         if (!this.memory.sources) {
-          const sources = this.find(FIND_SOURCES)
-          const sourceIds = sources.map(source => source.id)
-
-          this.memory.sources = sourceIds
+          this.memory.sources = this.find(FIND_SOURCES).map(source => source.id)
         }
 
-        const sourceMap = this.memory.sources.reduce((map, sourceId) => {
-          map[sourceId] = Game.getObjectById(sourceId)
-
-          return map
-        }, {})
-
-        this._sources = sourceMap
+        this._sources = this.memory.sources.map(id => Game.getObjectById(id))
       }
 
       return this._sources

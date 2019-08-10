@@ -63,7 +63,7 @@ class BuildBehavior extends Behavior {
   }
 
   fleeSources() {
-    const sourcePos = Object.values(this.creep.room.sources).map(source => source.pos)
+    const sourcePos = this.creep.room.sources.map(source => source.pos)
     this.creep.flee(sourcePos, 3)
   }
 
