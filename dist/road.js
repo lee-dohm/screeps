@@ -1,3 +1,5 @@
+const utils = require("./utils")
+
 function costCallback(roomName, matrix) {
   const room = Game.rooms[roomName]
 
@@ -43,16 +45,8 @@ class Road {
   }
 
   constructor(a, b) {
-    if (!a) {
-      throw new Error("`a` must be defined")
-    }
-
-    if (!b) {
-      throw new Error("`b` must be defined")
-    }
-
-    this.a = this.getPosition(a)
-    this.b = this.getPosition(b)
+    this.a = utils.toPos(a)
+    this.b = utils.toPos(b)
   }
 
   /**
