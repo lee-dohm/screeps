@@ -141,7 +141,7 @@ class Foreman {
 
       if (room.my) {
         this.plotSourceToControllerRoads(room)
-        // this.plotSourceToSpawnRoads(room)
+        this.plotSourceToSpawnRoads(room)
       }
     }
   }
@@ -152,6 +152,18 @@ class Foreman {
 
       if (!room.hasRoad(source, controller)) {
         room.addRoad(source, controller)
+      }
+    }
+  }
+
+  plotSourceToSpawnRoads(room) {
+    for (const source of Object.values(room.sources)) {
+      const spawns = room.find(FIND_MY_SPAWNS)
+
+      for (const spawn of spawns) {
+        if (!room.hasRoad(source, spawn)) {
+          room.addRoad(source, spawn)
+        }
       }
     }
   }
