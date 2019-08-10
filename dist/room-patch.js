@@ -54,8 +54,8 @@ Object.defineProperty(
     },
 
     set: function(newRoads) {
+      this.memory.roads = newRoads.map(road => road.serialize())
       this._roads = newRoads
-      this.memory.roads = this._roads.map(road => road.serialize())
     }
   })
 )
