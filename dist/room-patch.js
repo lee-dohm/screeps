@@ -35,6 +35,14 @@ Object.defineProperty(
   })
 )
 
+/**
+ * Gets the count of extensions in the room.
+ *
+ * ## Options
+ *
+ * * `includeConstructionSites` - If set to `true`, then extension construction sites are included
+ * in the count. Otherwise, only built extensions are counted. Default is `false`.
+ */
 Room.prototype.getExtensionCount = function(opts = {}) {
   const extensionFilter = structure => structure.structureType == STRUCTURE_EXTENSION
 

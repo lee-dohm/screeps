@@ -4,7 +4,7 @@ const Behavior = require("./behavior")
 const debug = require("./debug")
 
 /**
- * Uses the energy it carries to construct things.
+ * Uses the energy it carries to construct or repair things.
  */
 class BuildBehavior extends Behavior {
   constructor(creep) {
@@ -37,7 +37,11 @@ class BuildBehavior extends Behavior {
       if (this.creep.target instanceof ConstructionSite) {
         this.buildConstructionSite()
       } else {
-        this.repairStructure()
+        if (this.creep.target.hits == this.creep.target.hitsMax) {
+          this.creep.target = this.findNextTarget()
+        } else {
+          this.repairStructure()
+        }
       }
     }
   }
@@ -49,13 +53,13 @@ class BuildBehavior extends Behavior {
   }
 
   findNextTarget() {
-    const target =
+    return (
       this.creep.pos.findClosestByRange(FIND_MY_CONSTRUCTION_SITES) ||
-      this.creep.pos.findClosestByRange(FIND_MY_STRUCTURES, {
-        filter: struct => struct.hits < struct.hitsMax
+      this.creep.pos.findClosestByRange(FIND_STRUCTURES, {
+        filter: struct =>
+          (struct.structureType == STRUCTURE_ROAD || struct.my) && struct.hits < struct.hitsMax
       })
-
-    return target
+    )
   }
 
   fleeSources() {
