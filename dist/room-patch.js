@@ -138,3 +138,9 @@ Room.prototype.hasRoad = function(a, b) {
 
   return this.roads.find(other => Road.equals(road, other)) ? true : false
 }
+
+Room.prototype.activateSafeMode = function() {
+  if (this.my) {
+    this.controller.activateSafeMode()
+  }
+}

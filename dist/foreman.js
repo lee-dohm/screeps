@@ -26,7 +26,7 @@ class Foreman {
    * anything else.
    */
   emergencyBootstrap() {
-    const spawn = Game.spawns["Spawn1"]
+    const spawn = Object.values(Game.spawns)[0]
 
     if (!spawn.spawning && Object.values(Game.creeps).length === 0) {
       const body = BootstrapHarvesterRole.bodyDefinitions[0]
@@ -52,6 +52,21 @@ class Foreman {
   killAllCreeps() {
     for (const name in Game.creeps) {
       Game.creeps[name].suicide()
+    }
+  }
+
+  /**
+   * Handle invaders in my rooms.
+   */
+  handleInvaders() {
+    for (const room in Object.values(Game.rooms)) {
+      if (room.my) {
+        const hostileCreeps = room.find(FIND_HOSTILE_CREEPS)
+
+        if (hostileCreeps.length > 0) {
+          room.activateSafeMode()
+        }
+      }
     }
   }
 
