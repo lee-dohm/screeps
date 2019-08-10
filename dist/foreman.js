@@ -268,7 +268,22 @@ class Foreman {
 
   showStatus() {
     this.showGlobalStatus()
+    this.showCreepStatus()
     this.showRoomStatus()
+  }
+
+  showCreepStatus() {
+    const creeps = Object.values(Game.creeps).sort((a, b) => (a.name < b.name ? -1 : 1))
+
+    if (creeps.length > 0) {
+      console.log("{bold}===== Creeps ====={/bold}")
+
+      for (const creep of creeps) {
+        console.log(creep.status)
+      }
+
+      console.log(" ")
+    }
   }
 
   showConstructionSiteStatus(room) {
