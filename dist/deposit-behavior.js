@@ -29,15 +29,26 @@ class DepositBehavior extends Behavior {
       this.findNextTarget()
     } else {
       const target = this.creep.target
-      const amount = Math.min(target.energyCapacity - target.energy, _.sum(this.creep.carry))
+      const amount = this.depositAmount()
 
-      if (amount === 0) {
+      if (!amount || amount === 0) {
         this.findNextTarget()
       } else {
         if (this.creep.transfer(target, RESOURCE_ENERGY, amount) == ERR_NOT_IN_RANGE) {
           this.creep.moveTo(target)
         }
       }
+    }
+  }
+
+  /**
+   * Determines the amount of energy to deposit into the target.
+   */
+  depositAmount() {
+    if (this.creep.target) {
+      const target = this.creep.target
+
+      return Math.min(target.energyCapacity - target.energy, _.sum(this.creep.carry))
     }
   }
 

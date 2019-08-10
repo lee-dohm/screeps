@@ -84,6 +84,36 @@ class Foreman {
     }
   }
 
+  paveHarvestablePositions() {
+    for (const name in Game.rooms) {
+      const room = Game.rooms[name]
+      const controller = room.controller
+
+      if (controller && controller.my) {
+        const sources = Object.values(room.sources)
+
+        for (const source of sources) {
+          const positions = source.getHarvestablePositions()
+
+          for (const pos of positions) {
+            if (pos.terrain === "swamp") {
+              const roadConstructionSites = pos.constructionSites.filter(
+                site => site.structureType == STRUCTURE_ROAD
+              )
+              const roadStructures = pos.structures.filter(
+                struct => struct.structureType == STRUCTURE_ROAD
+              )
+
+              if (roadConstructionSites.length == 0 && roadStructures.length == 0) {
+                pos.createConstructionSite(STRUCTURE_ROAD)
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
   plotExtensions() {
     for (const name in Game.rooms) {
       const room = Game.rooms[name]
@@ -100,6 +130,39 @@ class Foreman {
           const pos = extension.generatePos(room, spawn.pos)
 
           room.createConstructionSite(pos, STRUCTURE_EXTENSION)
+        }
+      }
+    }
+  }
+
+  plotRoads() {
+    for (const name in Game.rooms) {
+      const room = Game.rooms[name]
+
+      if (room.my) {
+        this.plotSourceToControllerRoads(room)
+        this.plotSourceToSpawnRoads(room)
+      }
+    }
+  }
+
+  plotSourceToControllerRoads(room) {
+    for (const source of Object.values(room.sources)) {
+      const controller = room.controller
+
+      if (!room.hasRoad(source, controller)) {
+        room.addRoad(source, controller)
+      }
+    }
+  }
+
+  plotSourceToSpawnRoads(room) {
+    for (const source of Object.values(room.sources)) {
+      const spawns = room.find(FIND_MY_SPAWNS)
+
+      for (const spawn of spawns) {
+        if (!room.hasRoad(source, spawn)) {
+          room.addRoad(source, spawn)
         }
       }
     }
@@ -200,11 +263,34 @@ class Foreman {
     )
   }
 
+  showMaintenanceStatus(room) {
+    const structures = room.find(FIND_STRUCTURES, {
+      filter: struct => struct.hits < struct.hitsMax
+    })
+
+    if (structures.length > 0) {
+      console.log(`{bold}----- Maintenance -----{/bold}`)
+
+      structures.forEach(struct => {
+        console.log(`${struct} ${Math.floor((struct.hits / struct.hitsMax) * 100)}%`)
+      })
+    }
+  }
+
   showRoomStatus() {
     for (const room of Object.values(Game.rooms)) {
-      console.log(`{bold}===== Room ${room.name} ====={/bold}\n`)
+      console.log(`{bold}===== Room ${room.name} ====={/bold}`)
+      const controller = room.controller
+      if (controller && controller.my) {
+        console.log(
+          `{bold}RCL:{/bold} ${controller.level} + ${Math.floor(
+            (controller.progress / controller.progressTotal) * 100
+          )}%\n`
+        )
+      }
 
       this.showConstructionSiteStatus(room)
+      this.showMaintenanceStatus(room)
 
       console.log("\n")
     }

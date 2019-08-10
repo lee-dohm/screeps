@@ -1,6 +1,64 @@
 "use strict"
 
 const defineProperty = require("./define-property")
+const Road = require("./road")
+
+/**
+ * This is my room if the room controller is mine.
+ */
+Object.defineProperty(
+  Room.prototype,
+  "my",
+  defineProperty({
+    get: function() {
+      if (!this._my) {
+        this._my = this.controller && this.controller.my
+      }
+
+      return this._my
+    }
+  })
+)
+
+/**
+ * The owner of the room is the owner of the room controller.
+ */
+Object.defineProperty(
+  Room.prototype,
+  "owner",
+  defineProperty({
+    get: function() {
+      if (!this._owner) {
+        this._owner = this.controller && this.controller.owner
+      }
+
+      return this._owner
+    }
+  })
+)
+
+Object.defineProperty(
+  Room.prototype,
+  "roads",
+  defineProperty({
+    get: function() {
+      if (!this._roads) {
+        if (!this.memory.roads) {
+          this.memory.roads = []
+        }
+
+        this._roads = this.memory.roads.map(obj => Road.deserialize(obj))
+      }
+
+      return this._roads
+    },
+
+    set: function(newRoads) {
+      this.memory.roads = newRoads.map(road => road.serialize())
+      this._roads = newRoads
+    }
+  })
+)
 
 /**
  * Adds a `sources` property to `Room` objects that returns the list of sources in the room.
@@ -35,6 +93,21 @@ Object.defineProperty(
   })
 )
 
+Room.prototype.addRoad = function(a, b) {
+  const road = new Road(a, b)
+  road.pave()
+
+  this.roads = this.roads.concat([road])
+}
+
+/**
+ * Gets the count of extensions in the room.
+ *
+ * ## Options
+ *
+ * * `includeConstructionSites` - If set to `true`, then extension construction sites are included
+ * in the count. Otherwise, only built extensions are counted. Default is `false`.
+ */
 Room.prototype.getExtensionCount = function(opts = {}) {
   const extensionFilter = structure => structure.structureType == STRUCTURE_EXTENSION
 
@@ -64,4 +137,13 @@ Room.prototype.getMaxSpawnEnergy = function() {
  */
 Room.prototype.hasFriendlySpawns = function() {
   return this.find(FIND_MY_SPAWNS).length > 0
+}
+
+/**
+ * Determines if this room has a road between `a` and `b`.
+ */
+Room.prototype.hasRoad = function(a, b) {
+  const road = new Road(a, b)
+
+  return this.roads.find(other => Road.equals(road, other)) ? true : false
 }

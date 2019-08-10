@@ -36,6 +36,13 @@ class Behavior {
 
     this.creep.behavior = id
   }
+
+  /**
+   * Describes the behavior in console logs.
+   */
+  toString() {
+    return `[Behavior ${this.constructor.id} ${this.creep.target}]`
+  }
 }
 
 module.exports = Behavior
