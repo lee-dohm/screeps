@@ -3,6 +3,40 @@
 const defineProperty = require("./define-property")
 
 /**
+ * This is my room if the room controller is mine.
+ */
+Object.defineProperty(
+  Room.prototype,
+  "my",
+  defineProperty({
+    get: function() {
+      if (!this._my) {
+        this._my = this.controller && this.controller.my
+      }
+
+      return this._my
+    }
+  })
+)
+
+/**
+ * The owner of the room is the owner of the room controller.
+ */
+Object.defineProperty(
+  Room.prototype,
+  "owner",
+  defineProperty({
+    get: function() {
+      if (!this._owner) {
+        this._owner = this.controller && this.controller.owner
+      }
+
+      return this._owner
+    }
+  })
+)
+
+/**
  * Adds a `sources` property to `Room` objects that returns the list of sources in the room.
  *
  * Caches the IDs of the `Source` objects in `Memory` on first access. Caches the `Source` objects
