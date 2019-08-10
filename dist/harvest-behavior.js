@@ -34,7 +34,7 @@ class HarvestBehavior extends Behavior {
   }
 
   findNextTarget() {
-    const sources = Object.values(this.creep.room.sources)
+    const sources = this.creep.room.sources
     const targets = this.createWeightedTargetList(sources)
     const targetId = targets[Math.floor(Math.random() * targets.length)]
 
