@@ -93,7 +93,6 @@ class Foreman {
         const extensions = room.find(FIND_MY_STRUCTURES, {
           filter: struct => struct.structureType == STRUCTURE_EXTENSION
         })
-        let positionSet = new Set()
 
         for (const extension of extensions) {
           for (const pos of extension.pos.getAdjacent()) {
