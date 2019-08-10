@@ -17,6 +17,7 @@ function loop() {
     foreman.maintainCreeps()
 
     foreman.plotExtensions()
+    foreman.plotRoads()
     foreman.paveHarvestablePositions()
 
     foreman.manageCreeps()

@@ -7,7 +7,6 @@ const debug = require("./debug")
 const extension = require("./extension")
 const HarvesterRole = require("./harvester-role")
 const names = require("./names")
-const Road = require("./road")
 const UpgraderRole = require("./upgrader-role")
 const watcher = require("./watch-client")
 
