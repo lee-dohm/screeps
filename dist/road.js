@@ -37,8 +37,8 @@ class Road {
 
   static equals(road, other) {
     return (
-      (_.isEqual(road.a, other.a) && _is.Equal(road.b, other.b)) ||
-      (_.isEqual(road.a, other.b) && _is.Equal(road.b, other.a))
+      (_.isEqual(road.a, other.a) && _.isEqual(road.b, other.b)) ||
+      (_.isEqual(road.a, other.b) && _.isEqual(road.b, other.a))
     )
   }
 
