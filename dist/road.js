@@ -129,6 +129,10 @@ class Road {
     }
   }
 
+  toString() {
+    return `[Road ${this.a} => ${this.b}]`
+  }
+
   getPosition(obj) {
     return obj instanceof RoomPosition ? obj : obj.pos
   }
