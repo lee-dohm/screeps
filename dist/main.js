@@ -19,6 +19,7 @@ function loop() {
     foreman.plotExtensions()
     foreman.plotRoads()
     foreman.paveHarvestablePositions()
+    foreman.paveAroundExtensions()
 
     foreman.manageCreeps()
     foreman.visualizeCreeps()

@@ -58,18 +58,16 @@ RoomPosition.equals = function(posA, posB) {
  * Gets the list of adjacent `RoomPosition` objects.
  */
 RoomPosition.prototype.getAdjacent = function() {
-  const room = Game.rooms[this.roomName]
-
   return [
-    room.getPositionAt(this.x - 1, this.y - 1),
-    room.getPositionAt(this.x, this.y - 1),
-    room.getPositionAt(this.x + 1, this.y - 1),
-    room.getPositionAt(this.x - 1, this.y),
-    // room.getPositionAt(this.x, this.y),
-    room.getPositionAt(this.x + 1, this.y),
-    room.getPositionAt(this.x - 1, this.y + 1),
-    room.getPositionAt(this.x, this.y + 1),
-    room.getPositionAt(this.x + 1, this.y + 1)
+    new RoomPosition(this.x - 1, this.y - 1, this.roomName),
+    new RoomPosition(this.x, this.y - 1, this.roomName),
+    new RoomPosition(this.x + 1, this.y - 1, this.roomName),
+    new RoomPosition(this.x - 1, this.y, this.roomName),
+    // new RoomPosition(this.x, this.y, this.roomName),
+    new RoomPosition(this.x + 1, this.y, this.roomName),
+    new RoomPosition(this.x - 1, this.y + 1, this.roomName),
+    new RoomPosition(this.x, this.y + 1, this.roomName),
+    new RoomPosition(this.x + 1, this.y + 1, this.roomName)
   ]
 }
 
@@ -82,23 +80,11 @@ RoomPosition.prototype.isWalkable = function() {
   const contents = this.look()
   const found = contents.find(obj => {
     return (
-      (obj.type == LOOK_STRUCTURES &&
-        (obj.structure.structureType == STRUCTURE_SPAWN ||
-          obj.structure.structureType == STRUCTURE_CONTROLLER ||
-          obj.structure.structureType == STRUCTURE_WALL ||
-          obj.structure.structureType == STRUCTURE_EXTENSION ||
-          obj.structure.structureType == STRUCTURE_LINK ||
-          obj.structure.structureType == STRUCTURE_STORAGE ||
-          obj.structure.structureType == STRUCTURE_TOWER ||
-          obj.structure.structureType == STRUCTURE_OBSERVER ||
-          obj.structure.structureType == STRUCTURE_POWER_SPAWN ||
-          obj.structure.structureType == STRUCTURE_POWER_BANK ||
-          obj.structure.structureType == STRUCTURE_LAB ||
-          obj.structure.structureType == STRUCTURE_TERMINAL ||
-          obj.structure.structureType == STRUCTURE_NUKER)) ||
-      obj.type == LOOK_SOURCES ||
-      obj.type == LOOK_MINERALS ||
-      (obj.type == LOOK_TERRAIN && obj.terrain == "wall")
+      (obj.type == LOOK_TERRAIN && obj.terrain == "wall") ||
+      OBSTACLE_OBJECT_TYPES.includes(obj.type) ||
+      (obj.constructionSite &&
+        OBSTACLE_OBJECT_TYPES.includes(obj.constructionSite.structureType)) ||
+      (obj.structure && OBSTACLE_OBJECT_TYPES.includes(obj.structure.structureType))
     )
   })
 
