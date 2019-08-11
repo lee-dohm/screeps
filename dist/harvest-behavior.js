@@ -2,6 +2,7 @@
 
 const Behavior = require("./behavior")
 const debug = require("./debug")
+const { randomItem } = require("./utils")
 
 /**
  * Harvests energy until the creep's `CARRY` parts are full.
@@ -27,16 +28,20 @@ class HarvestBehavior extends Behavior {
     if (!this.creep.target) {
       this.creep.target = this.findNextTarget()
     } else {
-      if (this.creep.harvest(this.creep.target) == ERR_NOT_IN_RANGE) {
-        this.creep.moveTo(this.creep.target)
+      if (this.creep.target.energy == 0) {
+        this.creep.target = this.findNextTarget()
+      } else {
+        if (this.creep.harvest(this.creep.target) == ERR_NOT_IN_RANGE) {
+          this.creep.moveTo(this.creep.target)
+        }
       }
     }
   }
 
   findNextTarget() {
     const sources = this.creep.room.sources
-    const targets = this.createWeightedTargetList(sources)
-    const targetId = targets[Math.floor(Math.random() * targets.length)]
+    const targets = this.createWeightedTargetList(sources.filter(source => source.energy > 0))
+    const targetId = randomItem(targets)
 
     return Game.getObjectById(targetId)
   }
