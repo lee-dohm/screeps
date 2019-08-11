@@ -11,7 +11,8 @@ const roleFactory = require("./role-factory")
  * @typedef {Object} Creep
  * @property {Behavior} behavior Behavior governing the creep's actions
  * @property {Role} role Immutable role that the creep fulfills in the robot army
- * @property {Object} target Object that the creep has targeted for its current behavior
+ * @property {string} status Current status of the creep for display in the console
+ * @property {RoomObject} target Object that the creep has targeted for its current behavior
  */
 
 Object.defineProperty(
@@ -98,6 +99,9 @@ Creep.prototype.clearTarget = function() {
   this.target = null
 }
 
+/**
+ * Flee `range` tiles from the `goal`.
+ */
 Creep.prototype.flee = function(goal, range) {
   if (goal instanceof Array) {
     const newGoal = goal.map(subgoal => {
