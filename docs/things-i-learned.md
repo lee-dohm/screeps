@@ -2,11 +2,31 @@
 
 Part of the fun of Screeps is the process of learning the little tidbits of knowledge you need in order to make better use of the API or the strategies that you discover along the way. This is where I record the things I figure out.
 
+## Creeps
+
+### Lifespan
+
+Creeps have a limited lifespan. Once spawned, they live for only 1,500 ticks. Because a creep costs energy to spawn, every tick a creep spends idle is wasted energy; specifically, 0.067% of the energy you spent to build the creep.
+
+### Body definitions
+
+A creep is constructed from an array of body parts. Normally, the order of the body parts in the array is insignificant because only the presence of a part matters for whether a creep can perform a given action. But when a creep encounters combat, body parts are damaged or destroyed, in order, from the beginning to the end of the array. So if you create a creep with all of its `TOUGH` parts at the end of the array, then they aren't doing the creep any good because all the parts that perform actions are destroyed before the `TOUGH` parts can absorb any damage.
+
+## Energy
+
+A standard energy source in an owned room generates 3,000 energy every 300 ticks. So you must average 10 energy harvested every tick to maximize the amount of energy harvested. But harvesting more than 10 energy per tick also wastes energy because that means your harvesters are going to spend time idle waiting for the energy source to regenerate.
+
+Given that:
+
+* 1 `WORK` part harvests 2 energy per tick
+* A source generates 10 energy per tick
+* You need 5 `WORK` parts harvesting a source every tick
+
 ## API
 
 ### Don't over- or under-fill
 
-The [`Creep.transfer()` function](https://docs.screeps.com/api/#Creep.transfer) accepts an optional `amount` parameter. The default value for `amount` is "everything the creep is carrying", meaning that if you transfer more than the target can accept, you've wasted the excess. On the other hand, if you try to transfer more than the creep has, the transfer will fail.
+The [`Creep.transfer()` function](https://docs.screeps.com/api/#Creep.transfer) accepts an optional `amount` parameter. The default value for `amount` is "everything the creep is carrying", meaning that if you transfer more than the target can accept, you've wasted the excess. On the other hand, if you try to transfer more than the creep has, the transfer will not execute.
 
 ### Spawning
 
