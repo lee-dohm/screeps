@@ -1,5 +1,17 @@
 "use strict"
 
+const SHORTCODE_TO_BODYPART = {
+  a: ATTACK,
+  c: CARRY,
+  h: HEAL,
+  k: CLAIM,
+  x: CLAIM,
+  m: MOVE,
+  r: RANGED_ATTACK,
+  t: TOUGH,
+  w: WORK
+}
+
 /**
  * Represents a body definition for a creep.
  *
@@ -37,50 +49,7 @@ class Body {
 
     while ((match = pattern.exec(text)) !== null) {
       const count = parseInt(match[1], 10)
-      let part
-
-      switch (match[2].toLowerCase()) {
-        case "a": {
-          part = ATTACK
-          break
-        }
-
-        case "c": {
-          part = CARRY
-          break
-        }
-
-        case "h": {
-          part = HEAL
-          break
-        }
-
-        case "k":
-        case "x": {
-          part = CLAIM
-          break
-        }
-
-        case "m": {
-          part = MOVE
-          break
-        }
-
-        case "r": {
-          part = RANGED_ATTACK
-          break
-        }
-
-        case "t": {
-          part = TOUGH
-          break
-        }
-
-        case "w": {
-          part = WORK
-          break
-        }
-      }
+      let part = SHORTCODE_TO_BODYPART[match[2].toLowerCase()]
 
       for (let i = 0; i < count; i++) {
         result.push(part)
@@ -99,25 +68,6 @@ class Body {
    */
   getCost() {
     return this.parts.reduce((total, part) => BODYPART_COST[part] + total, 0)
-  }
-
-  /**
-   * Calculate the base movement speed per tick for this body.
-   *
-   * The base movement rate is the speed that the creep will move on plains. The creep will move
-   * at twice the base on roads and one-fifth the base rate on swamps.
-   *
-   * ## Options
-   *
-   * * `laden` - If `true` calculates the laden movement speed, _default: false_
-   */
-  getMoveRate(opts) {
-    const move = this.parts.filter(part => part === MOVE).length
-    const weight = this.parts.filter(part => {
-      return part !== CARRY || opts["laden"]
-    }).length
-
-    return weight / move
   }
 }
 
