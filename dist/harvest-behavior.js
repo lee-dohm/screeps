@@ -23,7 +23,8 @@ class HarvestBehavior extends Behavior {
    * Finds energy within the room and gathers or harvests it.
    */
   run() {
-    const resource = this.findDroppedResources()
+    // Prioritize gathering dropped resources over harvesting from sources
+    const resource = this.findDroppedEnergy()
 
     if (resource) {
       this.creep.target = resource
@@ -32,7 +33,7 @@ class HarvestBehavior extends Behavior {
     if (!this.creep.target) {
       this.creep.target = this.findNextTarget()
     } else {
-      if (this.creep.target.energy == 0) {
+      if (this.creep.target instanceof Source && this.creep.target.isEmpty()) {
         this.creep.target = this.findNextTarget()
       } else {
         this.act(this.creep.target)
@@ -71,10 +72,12 @@ class HarvestBehavior extends Behavior {
   }
 
   /**
-   * Finds the closest dropped resource in the room.
+   * Finds the closest dropped energy in the room.
    */
-  findDroppedResources() {
-    return this.creep.pos.findClosestByRange(FIND_DROPPED_RESOURCES)
+  findDroppedEnergy() {
+    return this.creep.pos.findClosestByRange(FIND_DROPPED_RESOURCES, {
+      filter: res => res.resourceType == RESOURCE_ENERGY
+    })
   }
 
   /**
