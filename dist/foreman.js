@@ -4,6 +4,7 @@ const Body = require("./body")
 const BootstrapHarvesterRole = require("./bootstrap-harvester-role")
 const BuilderRole = require("./builder-role")
 const debug = require("./debug")
+const exitWalls = require("./exit-walls")
 const extension = require("./extension")
 const HarvesterRole = require("./harvester-role")
 const names = require("./names")
@@ -173,6 +174,38 @@ class Foreman {
               }
             }
           }
+        }
+      }
+    }
+  }
+
+  plotExitWalls() {
+    for (const name in Game.rooms) {
+      const room = Game.rooms[name]
+
+      if (room.my) {
+        let next = exitWalls.generatePos(room, TOP, room.exits[TOP])
+
+        if (!next.done) {
+          next.value.createConstructionSite(STRUCTURE_WALL)
+        }
+
+        next = exitWalls.generatePos(room, RIGHT, room.exits[RIGHT])
+
+        if (!next.done) {
+          next.value.createConstructionSite(STRUCTURE_WALL)
+        }
+
+        next = exitWalls.generatePos(room, BOTTOM, room.exits[BOTTOM])
+
+        if (!next.done) {
+          next.value.createConstructionSite(STRUCTURE_WALL)
+        }
+
+        next = exitWalls.generatePos(room, LEFT, room.exits[LEFT])
+
+        if (!next.done) {
+          next.value.createConstructionSite(STRUCTURE_WALL)
         }
       }
     }

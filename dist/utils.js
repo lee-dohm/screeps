@@ -1,3 +1,12 @@
+"use strict"
+
+/**
+ * Returns the opposite of the given `direction`.
+ */
+function oppositeDirection(direction) {
+  return rotateClockwise(direction, 4)
+}
+
 /**
  * Formats `current` and `max` as a percentage.
  */
@@ -10,6 +19,26 @@ function percentage(current, max) {
  */
 function randomItem(array) {
   return array[Math.floor(Math.random() * array.length)]
+}
+
+/**
+ * Rotates the given `direction` clockwise by `steps`.
+ *
+ * Each step rotates the direction 45 degrees and the default number of steps rotates the direction
+ * by 90 degrees.
+ */
+function rotateClockwise(direction, steps = 2) {
+  return ((direction - 1 + steps) % 8) + 1
+}
+
+/**
+ * Rotates the given `direction` counterclockwise by `steps`.
+ *
+ * Each step rotates the direction 45 degrees and the default number of steps rotates the direction
+ * by 90 degrees.
+ */
+function rotateCounterClockwise(direction, steps = 2) {
+  return ((direction - 1 + 8 - steps) % 8) + 1
 }
 
 /**
@@ -28,4 +57,11 @@ function toPos(obj) {
   }
 }
 
-module.exports = { percentage, randomItem, toPos }
+module.exports = {
+  percentage,
+  oppositeDirection,
+  randomItem,
+  rotateClockwise,
+  rotateCounterClockwise,
+  toPos
+}

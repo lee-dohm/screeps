@@ -12,10 +12,12 @@ Object.defineProperty(
         if (!this.memory.exits) {
           this.memory.exits = {}
 
-          this.memory.exits[TOP] = this.find(FIND_EXIT_TOP)
-          this.memory.exits[RIGHT] = this.find(FIND_EXIT_RIGHT)
-          this.memory.exits[BOTTOM] = this.find(FIND_EXIT_BOTTOM)
-          this.memory.exits[LEFT] = this.find(FIND_EXIT_LEFT)
+          this.memory.exits[TOP] = this.find(FIND_EXIT_TOP).sort((a, b) => (a.x < b.x ? -1 : 1))
+          this.memory.exits[RIGHT] = this.find(FIND_EXIT_RIGHT).sort((a, b) => (a.y < b.y ? -1 : 1))
+          this.memory.exits[BOTTOM] = this.find(FIND_EXIT_BOTTOM).sort((a, b) =>
+            a.x > b.x ? -1 : 1
+          )
+          this.memory.exits[LEFT] = this.find(FIND_EXIT_LEFT).sort((a, b) => (a.y > b.y ? -1 : 1))
         }
 
         this._exits = {}

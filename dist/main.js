@@ -18,6 +18,7 @@ function loop() {
     foreman.maintainCreeps()
     foreman.handleInvaders()
 
+    foreman.plotExitWalls()
     foreman.plotExtensions()
     foreman.plotRoads()
     foreman.paveHarvestablePositions()
