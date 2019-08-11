@@ -6,6 +6,13 @@ function percentage(current, max) {
 }
 
 /**
+ * Picks a random item from the array and returns it.
+ */
+function randomItem(array) {
+  return array[Math.floor(Math.random() * array.length)]
+}
+
+/**
  * Returns a `RoomPosition` if the given object is a `RoomPosition`, has a `RoomPosition`, or is
  * convertible to one.
  */
@@ -21,4 +28,4 @@ function toPos(obj) {
   }
 }
 
-module.exports = { percentage, toPos }
+module.exports = { percentage, randomItem, toPos }

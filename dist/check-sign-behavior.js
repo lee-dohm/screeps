@@ -2,6 +2,7 @@
 
 const Behavior = require("./behavior")
 const debug = require("./debug")
+const { randomItem } = require("./utils")
 const username = require("./username")
 
 const GITHUB_ZEN = [
@@ -61,7 +62,7 @@ class CheckSignBehavior extends Behavior {
   }
 
   randomQuote() {
-    return GITHUB_ZEN[Math.floor(Math.random() * GITHUB_ZEN.length)]
+    return randomItem(GITHUB_ZEN)
   }
 }
 
