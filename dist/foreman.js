@@ -62,7 +62,9 @@ class Foreman {
    * Handle invaders in my rooms.
    */
   handleInvaders() {
-    for (const room in Object.values(Game.rooms)) {
+    for (const name in Game.rooms) {
+      const room = Game.rooms[name]
+
       if (room.my) {
         const hostileCreeps = room.find(FIND_HOSTILE_CREEPS)
 
@@ -271,7 +273,8 @@ class Foreman {
     const exit = room.exits[direction]
 
     if (spawn && exit && exit.length > 0) {
-      const exitPos = utils.midPoint(exit[0], exit[exit.length - 1])
+      const exitMidPoint = utils.midPoint(_.first(exit), _.last(exit))
+      const exitPos = exitMidPoint.translate(utils.oppositeDirection(direction), 3)
 
       if (!room.hasRoad(exitPos, spawn)) {
         room.addRoad(exitPos, spawn)

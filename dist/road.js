@@ -89,7 +89,6 @@ class Road {
       PathFinder.use(true)
       this.path = room.findPath(this.a, this.b, {
         ignoreCreeps: true,
-        ignoreRoads: true,
         costCallback: costCallback,
         range: 1,
         swampCost: 1
@@ -103,13 +102,19 @@ class Road {
 
   /**
    * Create construction sites to pave the road.
+   *
+   * ## Options
+   *
+   * * `force` - If `true`, the road will be replotted even if it is already mapped out.
    */
-  pave() {
-    if (!this.isPlotted()) {
+  pave(opts = {}) {
+    if (opts.force || !this.isPlotted()) {
       this.plot()
     }
 
-    this.path.forEach(pos => {
+    this.path.forEach(step => {
+      const pos = new RoomPosition(step.x, step.y, this.a.roomName)
+
       if (pos.terrain === "swamp") {
         pos.createConstructionSite(STRUCTURE_ROAD)
       }

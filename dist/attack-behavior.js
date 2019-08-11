@@ -33,7 +33,7 @@ class AttackBehavior extends Behavior {
     }
 
     const hostileConstructionSite = this.creep.pos.findClosestByRange(
-      FIND_HOSTILE_CONSTRUCTION_SITE
+      FIND_HOSTILE_CONSTRUCTION_SITES
     )
 
     if (hostileConstructionSite) {
@@ -41,3 +41,5 @@ class AttackBehavior extends Behavior {
     }
   }
 }
+
+module.exports = AttackBehavior
