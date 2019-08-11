@@ -8,6 +8,7 @@ const extension = require("./extension")
 const HarvesterRole = require("./harvester-role")
 const names = require("./names")
 const SoldierRole = require("./soldier-role")
+const Status = require("./status")
 const UpgraderRole = require("./upgrader-role")
 const utils = require("./utils")
 const watcher = require("./watch-client")
@@ -299,83 +300,9 @@ class Foreman {
   }
 
   showStatus() {
-    this.showGlobalStatus()
-    this.showCreepStatus()
-    this.showRoomStatus()
-  }
+    const status = new Status()
 
-  showCreepStatus() {
-    const creeps = Object.values(Game.creeps).sort((a, b) => (a.name < b.name ? -1 : 1))
-
-    if (creeps.length > 0) {
-      console.log("{bold}===== Creeps ====={/bold}")
-
-      for (const creep of creeps) {
-        console.log(creep.status)
-      }
-
-      console.log(" ")
-    }
-  }
-
-  showConstructionSiteStatus(room) {
-    const sites = room.find(FIND_MY_CONSTRUCTION_SITES)
-
-    if (sites.length > 0) {
-      console.log("{bold}----- Construction -----{/bold}")
-
-      for (const site of sites) {
-        console.log(site.status)
-      }
-
-      console.log("\n")
-    }
-  }
-
-  showGlobalStatus() {
-    console.log(`{bold}===== Global ====={/bold}`)
-    console.log(
-      `{bold}GCL:{/bold} ${Game.gcl.level} + ${utils.percentage(
-        Game.gcl.progress,
-        Game.gcl.progressTotal
-      )}`
-    )
-    console.log(`{bold}Bucket:{/bold} ${utils.percentage(Game.cpu.bucket, 10000)}`)
-    console.log(" ")
-  }
-
-  showMaintenanceStatus(room) {
-    const structures = room.find(FIND_STRUCTURES, {
-      filter: struct => struct.hits < struct.hitsMax
-    })
-
-    if (structures.length > 0) {
-      console.log(`{bold}----- Maintenance -----{/bold}`)
-
-      structures.forEach(struct => {
-        console.log(`${struct} ${utils.percentage(struct.hits, struct.hitsMax)}`)
-      })
-    }
-  }
-
-  showRoomStatus() {
-    for (const room of Object.values(Game.rooms)) {
-      console.log(`{bold}===== Room ${room.name} ====={/bold}`)
-      const controller = room.controller
-      if (controller && controller.my) {
-        console.log(
-          `{bold}RCL:{/bold} ${controller.level} + ${utils.percentage(
-            controller.progress,
-            controller.progressTotal
-          )}\n`
-        )
-      }
-
-      this.showConstructionSiteStatus(room)
-      this.showMaintenanceStatus(room)
-
-      console.log("\n")
-    }
+    status.log()
   }
 
   /*
