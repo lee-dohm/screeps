@@ -26,13 +26,19 @@ class DepositBehavior extends Behavior {
    */
   run() {
     if (!this.creep.target) {
-      this.findNextTarget()
+      const target = this.findNextTarget()
+
+      if (target) {
+        this.creep.target = target
+      } else {
+        this.fleeSources()
+      }
     } else {
       const target = this.creep.target
       const amount = this.depositAmount()
 
       if (!amount || amount === 0) {
-        this.findNextTarget()
+        this.creep.target = this.findNextTarget()
       } else {
         if (this.creep.transfer(target, RESOURCE_ENERGY, amount) == ERR_NOT_IN_RANGE) {
           this.creep.moveTo(target)
@@ -64,13 +70,12 @@ class DepositBehavior extends Behavior {
       }
     })
 
-    if (!targets || targets.length === 0) {
-      // Move away from all sources
-      const sourcePos = this.creep.room.sources.map(source => source.pos)
-      this.creep.flee(sourcePos, 3)
-    } else {
-      this.creep.target = targets[0]
-    }
+    return this.creep.pos.findClosestByRange(targets)
+  }
+
+  fleeSources() {
+    const sourcePos = this.creep.room.sources.map(source => source.pos)
+    this.creep.flee(sourcePos, 3)
   }
 }
 
