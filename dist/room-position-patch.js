@@ -106,3 +106,16 @@ RoomPosition.prototype.isOccupied = function() {
 RoomPosition.prototype.getRelative = function(dx, dy) {
   return this.room.getPositionAt(this.x + dx, this.y + dy)
 }
+
+RoomPosition.prototype._toString = RoomPosition.prototype.toString
+RoomPosition.prototype.toString = function(opts = {}) {
+  if (opts.long) {
+    return `[${Game.shard.name} room ${this.roomName} pos ${this.x},${this.y}]`
+  }
+
+  if (opts.short) {
+    return `${this.x},${this.y}`
+  }
+
+  return this._toString()
+}
