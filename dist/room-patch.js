@@ -3,6 +3,34 @@
 const defineProperty = require("./define-property")
 const Road = require("./road")
 
+Object.defineProperty(
+  Room.prototype,
+  "exits",
+  defineProperty({
+    get: function() {
+      if (!this._exits) {
+        if (!this.memory.exits) {
+          this.memory.exits = {}
+
+          this.memory.exits[TOP] = this.find(FIND_EXIT_TOP)
+          this.memory.exits[RIGHT] = this.find(FIND_EXIT_RIGHT)
+          this.memory.exits[BOTTOM] = this.find(FIND_EXIT_BOTTOM)
+          this.memory.exits[LEFT] = this.find(FIND_EXIT_LEFT)
+        }
+
+        this._exits = {}
+        for (const key of Object.keys(this.memory.exits)) {
+          this._exits[key] = this.memory.exits[key].map(
+            pos => new RoomPosition(pos.x, pos.y, pos.roomName)
+          )
+        }
+      }
+
+      return this._exits
+    }
+  })
+)
+
 /**
  * This is my room if the room controller is mine.
  */
