@@ -1,6 +1,17 @@
 "use strict"
 
 /**
+ * Returns the midpoint between the two `RoomPosition` objects.
+ */
+function midPoint(a, b) {
+  if (a.roomName !== b.roomName) {
+    return null
+  }
+
+  return new RoomPosition(Math.floor((a.x + b.x) / 2), Math.floor((a.y + b.y) / 2), a.roomName)
+}
+
+/**
  * Returns the opposite of the given `direction`.
  */
 function oppositeDirection(direction) {
@@ -58,8 +69,9 @@ function toPos(obj) {
 }
 
 module.exports = {
-  percentage,
+  midPoint,
   oppositeDirection,
+  percentage,
   randomItem,
   rotateClockwise,
   rotateCounterClockwise,

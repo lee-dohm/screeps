@@ -239,6 +239,7 @@ class Foreman {
       if (room.my) {
         this.plotSourceToControllerRoads(room)
         this.plotSourceToSpawnRoads(room)
+        this.plotExitToSpawnRoads(room)
       }
     }
   }
@@ -263,6 +264,26 @@ class Foreman {
         }
       }
     }
+  }
+
+  plotExitToSpawnRoad(room, direction) {
+    const [spawn] = room.find(FIND_MY_SPAWNS)
+    const exit = room.exits[direction]
+
+    if (spawn && exit && exit.length > 0) {
+      const exitPos = utils.midPoint(exit[0], exit[exit.length - 1])
+
+      if (!room.hasRoad(exitPos, spawn)) {
+        room.addRoad(exitPos, spawn)
+      }
+    }
+  }
+
+  plotExitToSpawnRoads(room) {
+    this.plotExitToSpawnRoad(room, TOP)
+    this.plotExitToSpawnRoad(room, RIGHT)
+    this.plotExitToSpawnRoad(room, BOTTOM)
+    this.plotExitToSpawnRoad(room, LEFT)
   }
 
   /**
