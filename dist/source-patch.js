@@ -74,6 +74,13 @@ Source.prototype.getOpenPositions = function() {
   return this.pos.getAdjacent().filter(pos => pos.isWalkable() && !pos.isOccupied())
 }
 
+/**
+ * Returns `true` if the source currently has no energy to be harvested.
+ */
+Source.prototype.isEmpty = function() {
+  return this.energy == 0
+}
+
 Source.prototype.unassignHarvester = function(harvesterOrName) {
   const harvester =
     harvesterOrName instanceof HarvesterCreep ? harvesterOrName : Game.creeps[harvesterOrName]

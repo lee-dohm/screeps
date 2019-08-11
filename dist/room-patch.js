@@ -37,6 +37,9 @@ Object.defineProperty(
   })
 )
 
+/**
+ * List of roads in the room.
+ */
 Object.defineProperty(
   Room.prototype,
   "roads",
@@ -61,10 +64,7 @@ Object.defineProperty(
 )
 
 /**
- * Adds a `sources` property to `Room` objects that returns the list of sources in the room.
- *
- * Caches the IDs of the `Source` objects in `Memory` on first access. Caches the `Source` objects
- * in temporary memory on first access within a tick.
+ * List of sources in the room.
  */
 Object.defineProperty(
   Room.prototype,
@@ -84,6 +84,20 @@ Object.defineProperty(
   })
 )
 
+/**
+ * Activates safe mode in the room if it is available.
+ */
+Room.prototype.activateSafeMode = function() {
+  if (this.my) {
+    this.controller.activateSafeMode()
+  }
+}
+
+/**
+ * Add a road from point `a` to point `b` in the room.
+ *
+ * The parameters can be `RoomPosition` objects or anything that has a `RoomPosition`.
+ */
 Room.prototype.addRoad = function(a, b) {
   const road = new Road(a, b)
   road.pave()
@@ -137,10 +151,4 @@ Room.prototype.hasRoad = function(a, b) {
   const road = new Road(a, b)
 
   return this.roads.find(other => Road.equals(road, other)) ? true : false
-}
-
-Room.prototype.activateSafeMode = function() {
-  if (this.my) {
-    this.controller.activateSafeMode()
-  }
 }
