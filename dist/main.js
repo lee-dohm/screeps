@@ -16,7 +16,7 @@ function loop() {
     foreman.reclaimDeadMemory()
 
     foreman.maintainCreeps()
-    foreman.handleInvaders()
+    foreman.handleHostiles()
 
     foreman.plotExitWalls()
     foreman.plotExtensions()

@@ -73,15 +73,20 @@ class Foreman {
   }
 
   /**
-   * Handle invaders in my rooms.
+   * Handle hostiles in my rooms.
    */
-  handleInvaders() {
+  handleHostiles() {
     this.forEachRoom(room => {
       if (room.my) {
         const hostileCreeps = room.find(FIND_HOSTILE_CREEPS)
 
         if (hostileCreeps && hostileCreeps.length > 0) {
-          room.activateSafeMode()
+          const nonInvaderHostiles = hostileCreeps.filter(creep => creep.owner.username !== "Invader")
+
+          if (nonInvaderHostiles && nonInvaderHostiles.length > 0) {
+            // Only use safe mode on PC hostiles
+            room.activateSafeMode()
+          }
 
           const spawns = room.find(FIND_MY_SPAWNS)
           if (spawns.length > 0) {
@@ -219,7 +224,7 @@ class Foreman {
   plotExtensions() {
     this.forEachRoom(room => {
       if (room.my) {
-        const maxExtensions = this.getMaxStructByRcl(STRUCTURE_EXTENSION, controller.level)
+        const maxExtensions = this.getMaxStructByRcl(STRUCTURE_EXTENSION, room.controller.level)
         const currentOrPlannedExtensions = room.getExtensionCount({
           includeConstructionSites: true
         })
