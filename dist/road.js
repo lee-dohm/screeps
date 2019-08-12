@@ -140,6 +140,15 @@ class Road {
     return `[Road ${this.a} => ${this.b}]`
   }
 
+  visualize(opts = {}) {
+    const positions = this.pathToPositions()
+    const room = Game.rooms[this.a.roomName]
+
+    if (room) {
+      room.visual.poly(positions, { opacity: opts.opacity || 0.4, strokeWidth: 0.3 })
+    }
+  }
+
   getPosition(obj) {
     if (obj instanceof RoomPosition) {
       return obj
@@ -150,6 +159,10 @@ class Road {
     } else {
       throw new Error(`Unrecognized position type: ${JSON.stringify(obj)}`)
     }
+  }
+
+  pathToPositions() {
+    return this.path.map(step => new RoomPosition(step.x, step.y, this.a.roomName))
   }
 }
 

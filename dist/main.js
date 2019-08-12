@@ -26,6 +26,7 @@ function loop() {
 
     foreman.manageCreeps()
     foreman.visualizeCreeps()
+    foreman.visualizeRoads()
   } catch (e) {
     debug.logException(e)
   }

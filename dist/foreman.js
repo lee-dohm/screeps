@@ -318,6 +318,19 @@ class Foreman {
     this.forEachCreep(creep => creep.role.visualize())
   }
 
+  visualizeRoads() {
+    if (Memory.visualizations && Memory.visualizations.roads) {
+      this.forEachRoom(room => {
+        room.roads.forEach(road => road.visualize({ opacity: Memory.visualizations.roads }))
+        Memory.visualizations.roads -= 0.1
+
+        if (Memory.visualizations.roads < 0.1) {
+          delete Memory.visualizations.roads
+        }
+      })
+    }
+  }
+
   /*
    *
    * Section: Command-line helpers
