@@ -57,7 +57,10 @@ class BuildBehavior extends Behavior {
       this.creep.pos.findClosestByRange(FIND_MY_CONSTRUCTION_SITES) ||
       this.creep.pos.findClosestByRange(FIND_STRUCTURES, {
         filter: struct =>
-          (struct.structureType == STRUCTURE_ROAD || struct.my) && struct.hits < struct.hitsMax
+          (struct.structureType == STRUCTURE_ROAD ||
+            struct.structureType == STRUCTURE_WALL ||
+            struct.my) &&
+          struct.hits < struct.hitsMax
       })
     )
   }

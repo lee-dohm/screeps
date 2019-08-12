@@ -109,10 +109,14 @@ function* generateExtensionPos(room, pos) {
  */
 function generatePos(room, center) {
   if (!global.extensionGenerator) {
-    global.extensionGenerator = generateExtensionPos(room, center)
+    global.extensionGenerator = {}
   }
 
-  return global.extensionGenerator.next().value
+  if (!global.extensionGenerator[room.name]) {
+    global.extensionGenerator[room.name] = generateExtensionPos(room, center)
+  }
+
+  return global.extensionGenerator[room.name].next().value
 }
 
 module.exports = { generatePos }
