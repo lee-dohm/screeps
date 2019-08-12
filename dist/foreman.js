@@ -49,26 +49,38 @@ class Foreman {
     debug.log("-----  End game loop  -----")
   }
 
+  forEachCreep(fn) {
+    for (const name in Game.creeps) {
+      const creep = Game.creeps[name]
+
+      fn(creep)
+    }
+  }
+
+  forEachRoom(fn) {
+    for (const name in Game.rooms) {
+      const room = Game.rooms[name]
+
+      fn(room)
+    }
+  }
+
   /**
    * Force all creeps in the robot army to suicide.
    */
   killAllCreeps() {
-    for (const name in Game.creeps) {
-      Game.creeps[name].suicide()
-    }
+    this.forEachCreep(creep => creep.suicide())
   }
 
   /**
    * Handle invaders in my rooms.
    */
   handleInvaders() {
-    for (const name in Game.rooms) {
-      const room = Game.rooms[name]
-
+    this.forEachRoom(room => {
       if (room.my) {
         const hostileCreeps = room.find(FIND_HOSTILE_CREEPS)
 
-        if (hostileCreeps.length > 0) {
+        if (hostileCreeps && hostileCreeps.length > 0) {
           room.activateSafeMode()
 
           const spawns = room.find(FIND_MY_SPAWNS)
@@ -89,7 +101,7 @@ class Foreman {
           }
         }
       }
-    }
+    })
   }
 
   /**
@@ -109,23 +121,19 @@ class Foreman {
    * Instruct the creeps to perform their actions.
    */
   manageCreeps() {
-    for (let name in Game.creeps) {
+    this.forEachCreep(creep => {
       try {
-        const creep = Game.creeps[name]
-
         if (creep && !creep.spawning) {
           creep.run()
         }
       } catch (e) {
         debug.logException(e)
       }
-    }
+    })
   }
 
   paveAroundExtensions() {
-    for (const name in Game.rooms) {
-      const room = Game.rooms[name]
-
+    this.forEachRoom(room => {
       if (room.my) {
         const extensions = room.find(FIND_MY_STRUCTURES, {
           filter: struct => struct.structureType == STRUCTURE_EXTENSION
@@ -150,15 +158,12 @@ class Foreman {
           }
         }
       }
-    }
+    })
   }
 
   paveHarvestablePositions() {
-    for (const name in Game.rooms) {
-      const room = Game.rooms[name]
-      const controller = room.controller
-
-      if (controller && controller.my) {
+    this.forEachRoom(room => {
+      if (room.my) {
         for (const source of room.sources) {
           const positions = source.getHarvestablePositions()
 
@@ -178,13 +183,11 @@ class Foreman {
           }
         }
       }
-    }
+    })
   }
 
   plotExitWalls() {
-    for (const name in Game.rooms) {
-      const room = Game.rooms[name]
-
+    this.forEachRoom(room => {
       if (room.my) {
         let next = exitWalls.generatePos(room, TOP, room.exits[TOP])
 
@@ -210,15 +213,12 @@ class Foreman {
           next.value.createConstructionSite(STRUCTURE_WALL)
         }
       }
-    }
+    })
   }
 
   plotExtensions() {
-    for (const name in Game.rooms) {
-      const room = Game.rooms[name]
-      const controller = room.controller
-
-      if (controller && controller.my) {
+    this.forEachRoom(room => {
+      if (room.my) {
         const maxExtensions = this.getMaxStructByRcl(STRUCTURE_EXTENSION, controller.level)
         const currentOrPlannedExtensions = room.getExtensionCount({
           includeConstructionSites: true
@@ -231,19 +231,17 @@ class Foreman {
           room.createConstructionSite(pos, STRUCTURE_EXTENSION)
         }
       }
-    }
+    })
   }
 
   plotRoads() {
-    for (const name in Game.rooms) {
-      const room = Game.rooms[name]
-
+    this.forEachRoom(room => {
       if (room.my) {
         this.plotSourceToControllerRoads(room)
         this.plotSourceToSpawnRoads(room)
         this.plotExitToSpawnRoads(room)
       }
-    }
+    })
   }
 
   plotSourceToControllerRoads(room) {
@@ -310,11 +308,7 @@ class Foreman {
    * Visualizes the creeps' activities.
    */
   visualizeCreeps() {
-    for (const name in Game.creeps) {
-      const creep = Game.creeps[name]
-
-      creep.role.visualize()
-    }
+    this.forEachCreep(creep => creep.role.visualize())
   }
 
   /*
