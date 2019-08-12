@@ -42,4 +42,6 @@ class AttackBehavior extends Behavior {
   }
 }
 
+AttackBehavior.id = "attacking"
+
 module.exports = AttackBehavior
