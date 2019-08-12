@@ -1,13 +1,13 @@
 "use strict"
 
 const Body = require("./body")
+const BootstrapHarvestBehavior = require("./bootstrap-harvest-behavior")
 const DepositBehavior = require("./deposit-behavior")
-const HarvestBehavior = require("./harvest-behavior")
 const Role = require("./role")
 
 const BEHAVIOR_TRANSITIONS = {
-  [HarvestBehavior.id]: DepositBehavior.id,
-  [DepositBehavior.id]: HarvestBehavior.id
+  [BootstrapHarvestBehavior.id]: DepositBehavior.id,
+  [DepositBehavior.id]: BootstrapHarvestBehavior.id
 }
 
 const BODY_DEFINITIONS = [Body.parse("1c 2m 1w")]
@@ -17,7 +17,7 @@ const BODY_DEFINITIONS = [Body.parse("1c 2m 1w")]
  */
 class BootstrapHarvesterRole extends Role {
   constructor(creep) {
-    super(creep, HarvestBehavior.id, BEHAVIOR_TRANSITIONS)
+    super(creep, BootstrapHarvestBehavior.id, BEHAVIOR_TRANSITIONS)
   }
 
   /**
