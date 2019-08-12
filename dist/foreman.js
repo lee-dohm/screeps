@@ -12,7 +12,6 @@ const SoldierRole = require("./soldier-role")
 const Status = require("./status")
 const UpgraderRole = require("./upgrader-role")
 const utils = require("./utils")
-const watcher = require("./watch-client")
 
 /**
  * Handles the high-level functions of the robot army.
@@ -44,8 +43,6 @@ class Foreman {
    * Runs cleanup at the end of the game loop.
    */
   endShift() {
-    debug.logStats()
-    watcher()
     debug.log("-----  End game loop  -----")
   }
 
