@@ -81,7 +81,9 @@ class Foreman {
         const hostileCreeps = room.find(FIND_HOSTILE_CREEPS)
 
         if (hostileCreeps && hostileCreeps.length > 0) {
-          const nonInvaderHostiles = hostileCreeps.filter(creep => creep.owner.username !== "Invader")
+          const nonInvaderHostiles = hostileCreeps.filter(
+            creep => creep.owner.username !== "Invader"
+          )
 
           if (nonInvaderHostiles && nonInvaderHostiles.length > 0) {
             // Only use safe mode on PC hostiles
