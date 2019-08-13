@@ -37,9 +37,17 @@ class Names {
    * Gets the next name in the list.
    */
   getName() {
-    Memory.namesCounter = (Memory.namesCounter + 1) % NAMES.length
+    if (!Memory.names) {
+      Memory.names = {}
+    }
 
-    return NAMES[Memory.namesCounter]
+    if (!Memory.names.counter) {
+      Memory.names.counter = 0
+    } else {
+      Memory.names.counter = (Memory.names.counter + 1) % NAMES.length
+    }
+
+    return NAMES[Memory.names.counter]
   }
 }
 
