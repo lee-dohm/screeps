@@ -45,17 +45,23 @@ The serialized `Memory` storage structure looks like this:
 ```javascript
 {
   needs: {
+    // An extension needs energy and repair
     "5d4bbc0706b55c2b2440218c": {
       "resource.energy": {
+        // A creep has been assigned to deliver the energy
         assignee: "5d52d30fdc8788211b610e3c"
       },
+      // Nothing is assigned yet to perform the repair
       repair: {}
     },
+    // A constructed wall needs repair
     "5d50b71d8fef3a63886e6bdc": {
       repair: {}
     },
+    // A room `E23N3` needs a builder creep spawned
     "E23N3": {
       "creep.builder": {
+        // A spawn point has been assigned to spawn the creep
         assignee: "5d499c31ec5de17406d26d35"
       }
     }
