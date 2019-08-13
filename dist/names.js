@@ -41,7 +41,7 @@ class Names {
       Memory.names = {}
     }
 
-    if (!Memory.names.counter) {
+    if (typeof Memory.names.counter !== "number") {
       Memory.names.counter = 0
     } else {
       Memory.names.counter = (Memory.names.counter + 1) % NAMES.length
