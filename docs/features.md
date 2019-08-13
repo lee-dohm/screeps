@@ -28,7 +28,7 @@ Because we want to keep unfulfilled needs in a specific order by age or priority
 ### Workflow
 
 1. Deserialize jobs state
-1. Visit all objects by room
+1. Visit all objects by type (see: `Game.constructionSites`, `Game.creeps`, `Game.structures`, etc)
     1. Check current needs
     1. Remove completed needs
     1. Remove needs of destroyed or unavailable objects
