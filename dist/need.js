@@ -39,6 +39,16 @@ class Need {
     return this._type
   }
 
+  /**
+   * Determines if `other` is equivalent to this need.
+   *
+   * Though a single object can have multiple needs, it can only have one need of a given type. For
+   * example: an extension might need repair and need energy, but it can't have two energy needs.
+   */
+  equals(other) {
+    return this.type === other.type && this.target === other.target
+  }
+
   serialize() {
     return {
       assigneeId: this._assignee && this._assignee.id,
