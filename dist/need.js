@@ -21,6 +21,14 @@ class Need {
    * Constructs a new `Need`.
    */
   constructor(type, target, assignee) {
+    if (!type) {
+      throw new Error(`type is a required argument`)
+    }
+
+    if (!target) {
+      throw new Error(`target is a required argument`)
+    }
+
     this._assignee = assignee
     this._target = target
     this._type = type
