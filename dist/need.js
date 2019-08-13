@@ -7,16 +7,19 @@
  *
  * * `type` that describes what is needed: _ex:_ `energy`
  * * `target` that describes what needs this
- * * `assignee` that describes what is assigned to fulfill the need
- *
- * Typically the `assignee` is a creep, but it could be some other piece of code that can perform a
- * task such as a room planner.
+ * * `assignee` that describes the creep assigned to fulfill the need
  */
 class Need {
+  /**
+   * Deserializes `obj` into the equivalent `Need` instance.
+   */
   static deserialize(obj) {
     return new Need(obj.type, Game.getObjectById(obj.targetId), Game.getObjectById(obj.assigneeId))
   }
 
+  /**
+   * Constructs a new `Need`.
+   */
   constructor(type, target, assignee) {
     this._assignee = assignee
     this._target = target
@@ -49,6 +52,9 @@ class Need {
     return this.type === other.type && this.target === other.target
   }
 
+  /**
+   * Serializes this need into a format that is appropriate for storage in `Memory`.
+   */
   serialize() {
     return {
       assigneeId: this._assignee && this._assignee.id,
