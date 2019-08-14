@@ -61,7 +61,7 @@ class BuildBehavior extends Behavior {
 
     // Then repair structures other than walls
     selector.addRule(creep =>
-      creep.room.findClosestByRange(FIND_STRUCTURES, {
+      creep.pos.findClosestByRange(FIND_STRUCTURES, {
         filter: struct =>
           (struct.structureType == STRUCTURE_ROAD || struct.my) && struct.hits < struct.hitsMax
       })
