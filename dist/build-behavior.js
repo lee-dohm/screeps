@@ -53,16 +53,24 @@ class BuildBehavior extends Behavior {
   }
 
   findNextTarget() {
-    return (
-      this.creep.pos.findClosestByRange(FIND_MY_CONSTRUCTION_SITES) ||
-      this.creep.pos.findClosestByRange(FIND_STRUCTURES, {
-        filter: struct =>
-          (struct.structureType == STRUCTURE_ROAD ||
-            struct.structureType == STRUCTURE_WALL ||
-            struct.my) &&
-          struct.hits < struct.hitsMax
-      })
-    )
+    const constructionSite = this.creep.pos.findClosestByRange(FIND_MY_CONSTRUCTION_SITES)
+
+    if (constructionSite) {
+      return constructionSite
+    } else {
+      // Find the structure with the lowest percentage of hits
+      const [structure] = this.creep.room
+        .find(FIND_STRUCTURES, {
+          filter: struct =>
+            (struct.structureType == STRUCTURE_ROAD ||
+              struct.structureType == STRUCTURE_WALL ||
+              struct.my) &&
+            struct.hits < struct.hitsMax
+        })
+        .sort((a, b) => (a.hits / a.hitsMax < b.hits / b.hitsMax ? -1 : 1))
+
+      return structure
+    }
   }
 
   fleeSources() {
