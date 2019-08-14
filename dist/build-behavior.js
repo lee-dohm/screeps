@@ -2,6 +2,7 @@
 
 const Behavior = require("./behavior")
 const debug = require("./debug")
+const TargetSelector = require("./target-selector")
 
 /**
  * Uses the energy it carries to construct or repair things.
@@ -53,24 +54,29 @@ class BuildBehavior extends Behavior {
   }
 
   findNextTarget() {
-    const constructionSite = this.creep.pos.findClosestByRange(FIND_MY_CONSTRUCTION_SITES)
+    const selector = new TargetSelector(this.creep)
 
-    if (constructionSite) {
-      return constructionSite
-    } else {
-      // Find the structure with the lowest percentage of hits
-      const [structure] = this.creep.room
+    // Select construction sites first
+    selector.addRule(creep => creep.pos.findClosestByRange(FIND_MY_CONSTRUCTION_SITES))
+
+    // Then repair structures other than walls
+    selector.addRule(creep =>
+      creep.room.findClosestByRange(FIND_STRUCTURES, {
+        filter: struct =>
+          (struct.structureType == STRUCTURE_ROAD || struct.my) && struct.hits < struct.hitsMax
+      })
+    )
+
+    // Then repair walls sorted by percentage of hits
+    selector.addRule(creep =>
+      creep.room
         .find(FIND_STRUCTURES, {
-          filter: struct =>
-            (struct.structureType == STRUCTURE_ROAD ||
-              struct.structureType == STRUCTURE_WALL ||
-              struct.my) &&
-            struct.hits < struct.hitsMax
+          filter: struct => struct.structureType == STRUCTURE_WALL && struct.hits < struct.hitsMax
         })
         .sort((a, b) => (a.hits / a.hitsMax < b.hits / b.hitsMax ? -1 : 1))
+    )
 
-      return structure
-    }
+    return selector.select()
   }
 
   fleeSources() {

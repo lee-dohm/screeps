@@ -9,10 +9,20 @@ class TargetSelector {
     this.rules = []
   }
 
+  /**
+   * Adds a target selection rule.
+   */
   addRule(ruleFn) {
     this.rules.push(ruleFn)
   }
 
+  /**
+   * Selects a single target based on the given rules.
+   *
+   * If a rule returns an array of targets, only the first element in the array is returned.
+   *
+   * If none of the rules returns a target, `undefined` is returned.
+   */
   select() {
     for (const ruleFn of this.rules) {
       const result = ruleFn(this.creep)
@@ -21,7 +31,7 @@ class TargetSelector {
         const [target] = result
 
         return target
-      } else if (!_.isNil(result)) {
+      } else if (!(_.isNull(result) || _.isUndefined(result))) {
         return result
       }
     }
