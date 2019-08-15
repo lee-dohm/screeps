@@ -90,8 +90,7 @@ class Road {
       this.path = room.findPath(this.a, this.b, {
         ignoreCreeps: true,
         costCallback: costCallback,
-        range: 1,
-        swampCost: 1
+        range: 1
       })
 
       this.plottedAt = Game.time

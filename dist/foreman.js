@@ -191,6 +191,10 @@ class Foreman {
   }
 
   plotExitWalls() {
+    if (Game.time % 25 == 0) {
+      exitWalls.reset()
+    }
+
     this.forEachRoom(room => {
       if (room.my) {
         let next = exitWalls.generatePos(room, TOP, room.exits[TOP])
