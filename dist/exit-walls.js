@@ -101,4 +101,11 @@ function generatePos(room, exitDirection, positions) {
   return global.exitWallGenerators[room.name][exitDirection].next()
 }
 
-module.exports = { generatePos }
+/**
+ * Resets the exit wall generator functions to allow for rebuilding walls that have been destroyed.
+ */
+function reset() {
+  delete global.exitWallGenerators
+}
+
+module.exports = { generatePos, reset }
