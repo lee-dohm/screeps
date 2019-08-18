@@ -22,7 +22,7 @@ function oppositeDirection(direction) {
  * Formats `current` and `max` as a percentage.
  */
 function percentage(current, max) {
-  return `${Math.floor((current / max) * 100)}%`
+  return `${Math.round((current / max) * 1000) / 10}%`
 }
 
 /**
