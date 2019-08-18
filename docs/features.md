@@ -27,7 +27,7 @@ Because we want to keep unfulfilled needs in a specific order by age or priority
 
 ### Workflow
 
-1. Deserialize jobs state
+1. Deserialize needs state
 1. Visit all objects by type (see: `Game.constructionSites`, `Game.creeps`, `Game.structures`, etc)
     1. Check current needs
     1. Remove completed needs
@@ -36,7 +36,7 @@ Because we want to keep unfulfilled needs in a specific order by age or priority
     1. Add new needs
 1. Visit all assignable objects by room
     1. Allow them to assign themselves to needs
-1. Serialize jobs state
+1. Serialize needs state
 
 ### Serialization
 
@@ -49,20 +49,19 @@ The serialized `Memory` storage structure looks like this:
     "5d4bbc0706b55c2b2440218c": {
       "resource.energy": {
         // A creep has been assigned to deliver the energy
-        assignee: "5d52d30fdc8788211b610e3c"
+        assigneeId: "5d52d30fdc8788211b610e3c",
+        // Records the game tick that the need was originally created
+        createdTick: 12340
       },
       // Nothing is assigned yet to perform the repair
-      repair: {}
+      repair: {
+        createdTick: 12343
+      }
     },
     // A constructed wall needs repair
     "5d50b71d8fef3a63886e6bdc": {
-      repair: {}
-    },
-    // A room `E23N3` needs a builder creep spawned
-    "E23N3": {
-      "creep.builder": {
-        // A spawn point has been assigned to spawn the creep
-        assignee: "5d499c31ec5de17406d26d35"
+      repair: {
+        createdTick: 12343
       }
     }
   }
