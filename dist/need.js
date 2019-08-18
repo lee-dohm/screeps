@@ -5,31 +5,30 @@
  *
  * A need has the following properties:
  *
- * * `type` that describes what is needed: _ex:_ `energy`
- * * `target` that describes what needs this
- * * `assignee` that describes the creep assigned to fulfill the need
+ * * `type` - describes what is needed: _ex:_ `energy`
+ * * `target` - describes what needs this
+ * * `created` - when the need was originally recorded
+ * * `assignee` - the object assigned to fulfill the need, if any
  */
 class Need {
   /**
-   * Deserializes `obj` into the equivalent `Need` instance.
-   */
-  static deserialize(obj) {
-    return new Need(obj.type, Game.getObjectById(obj.targetId), Game.getObjectById(obj.assigneeId))
-  }
-
-  /**
    * Constructs a new `Need`.
    */
-  constructor(type, target, assignee) {
+  constructor(type, target, created, assignee) {
     if (!type) {
-      throw new Error(`type is a required argument`)
+      throw new Error("type is a required argument")
     }
 
     if (!target) {
-      throw new Error(`target is a required argument`)
+      throw new Error("target is a required argument")
+    }
+
+    if (!created) {
+      throw new Error("created is a required argument")
     }
 
     this._assignee = assignee
+    this._created = created
     this._target = target
     this._type = type
   }
@@ -40,6 +39,10 @@ class Need {
 
   set assignee(assignee) {
     this._assignee = assignee
+  }
+
+  get created() {
+    return this._created
   }
 
   get target() {
@@ -57,17 +60,6 @@ class Need {
    * example: an extension might need repair and need energy, but it can't have two energy needs.
    */
   equals(other) {
-    return this.type === other.type && this.target === other.target
-  }
-
-  /**
-   * Serializes this need into a format that is appropriate for storage in `Memory`.
-   */
-  serialize() {
-    return {
-      assigneeId: this._assignee && this._assignee.id,
-      targetId: this._target && this._target.id,
-      type: this._type
-    }
+    return this.type === other.type && this.target === other.target && this.created == other.created
   }
 }
